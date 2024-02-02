@@ -14,7 +14,9 @@ final class ViewController: UIViewController {
     // MARK: - UI Properties
     
     private var pagingControlView: PagingControlView!
-
+    private var settingsViewController = SettingsViewController()
+    private var weeklyTableViewController = WeeklyTableViewController()
+    
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
@@ -25,14 +27,27 @@ final class ViewController: UIViewController {
         setUI()
         setLayout()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.navigationController?.isNavigationBarHidden = true
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        self.navigationController?.isNavigationBarHidden = false
+    }
 }
 
 // MARK: - Extensions
 
 extension ViewController {
     private func setUI() {
+        pagingControlView.addTargetSettingMenuButton(self, action: #selector(goToSettingsViewController))
+
         setBackgroundColor()
-        
         self.navigationController?.isNavigationBarHidden = true
         
         [pagingControlView].forEach {
@@ -65,5 +80,17 @@ extension ViewController {
         gradientLayer.frame = view.bounds
         
         view.layer.insertSublayer(gradientLayer, at: 0)
+    }
+}
+
+extension ViewController {
+    @objc
+    func goToSettingsViewController() {
+        self.navigationController?.pushViewController(settingsViewController, animated: true)
+    }
+    
+    @objc
+    func goToWeeklyTableViewController() {
+        self.navigationController?.pushViewController(weeklyTableViewController, animated: true)
     }
 }
