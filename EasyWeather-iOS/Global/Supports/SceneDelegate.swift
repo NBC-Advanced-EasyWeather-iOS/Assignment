@@ -12,19 +12,24 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        guard let _ = (scene as? UIWindowScene) else { return }
+        guard let windowScene = (scene as? UIWindowScene) else { return }
         
-        if let windowScene = scene as? UIWindowScene {
-            
-            let window = UIWindow(windowScene: windowScene)
-            window.overrideUserInterfaceStyle = UIUserInterfaceStyle.light
-            
-            let rootVC = ViewController()
+        let window = UIWindow(windowScene: windowScene)
+        window.overrideUserInterfaceStyle = UIUserInterfaceStyle.light
+        
+        let splashVC = SplashViewController()
+        window.rootViewController = splashVC
+        window.makeKeyAndVisible()
+        
+        self.window = window
+        
+        let rootVC = MainGPSViewController()
+        
+        // 스플래시 화면 2초 노출
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
             let navigationController = UINavigationController(rootViewController: rootVC)
             
-            window.rootViewController = navigationController
-            window.makeKeyAndVisible()
-            self.window = window
+            self.window?.rootViewController = navigationController
         }
     }
     
@@ -38,4 +43,3 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     func sceneDidEnterBackground(_ scene: UIScene) { }
 }
-
