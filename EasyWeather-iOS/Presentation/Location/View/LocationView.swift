@@ -152,7 +152,7 @@ final class LocationView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: .zero)
-
+        
         checkPermission()
         setDelegate()
         setUI()
@@ -350,7 +350,12 @@ extension LocationView: UITextFieldDelegate {
     }
 
     func updateSearchResults(for searchText: String) {
-        print("검색 결과: \(searchText)")
+        
+        CityList.shared.search(term: searchText)
+        
+        print("검색 결과: \(CityList.shared.searchedCity)")
+        
+        searchResultTableView.reloadData()
     }
 }
 
@@ -362,7 +367,7 @@ extension LocationView: UITableViewDelegate, UITableViewDataSource {
         if tableView == addedCityListTableView {
             return 3
         } else if tableView == searchResultTableView {
-            return 2
+            return CityList.shared.searchedCity.count
         }
         return 0
     }
@@ -379,7 +384,7 @@ extension LocationView: UITableViewDelegate, UITableViewDataSource {
         } else if tableView == searchResultTableView {
             
             if let cell = tableView.dequeueReusableCell(withIdentifier: "ResultList", for: indexPath) as? searchResultTableViewCell {
-                cell.setCell()
+                cell.setCell(indexPath: indexPath)
                 
                 return cell
             }
@@ -404,5 +409,14 @@ extension LocationView: UITableViewDelegate, UITableViewDataSource {
             return swipeActionsConfiguration
         }
         return nil
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        if tableView == searchResultTableView {
+            let selectedCity = CityList.shared.searchedCity[indexPath.row]
+            
+            CityList.shared.add(city: selectedCity)
+        }
     }
 }
