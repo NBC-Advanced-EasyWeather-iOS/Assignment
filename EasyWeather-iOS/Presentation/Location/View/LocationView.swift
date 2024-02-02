@@ -152,8 +152,6 @@ final class LocationView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: .zero)
-        
-        print (UIScreen.screenHeight)
 
         checkPermission()
         setDelegate()
