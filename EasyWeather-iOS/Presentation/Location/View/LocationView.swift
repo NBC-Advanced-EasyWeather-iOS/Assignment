@@ -153,6 +153,8 @@ final class LocationView: UIView {
     override init(frame: CGRect) {
         super.init(frame: .zero)
         
+        hideKeyboard()
+        
         checkPermission()
         setDelegate()
         setUI()
@@ -417,6 +419,9 @@ extension LocationView: UITableViewDelegate, UITableViewDataSource {
             let selectedCity = CityList.shared.searchedCity[indexPath.row]
             
             CityList.shared.add(city: selectedCity)
+            
+            //dismiss 추가 예정
+            
         }
     }
 }
