@@ -373,19 +373,18 @@ extension LocationView: UITableViewDelegate, UITableViewDataSource {
         
         if tableView == addedCityListTableView {
             
-            let cell = tableView.dequeueReusableCell(withIdentifier: "CityList", for: indexPath) as! addedCityListTableViewCell
-            
-            cell.setCell()
-            
-            return cell
-            
+            if let cell = tableView.dequeueReusableCell(withIdentifier: "CityList", for: indexPath) as? addedCityListTableViewCell {
+                cell.setCell()
+                
+                return cell
+            }
         } else if tableView == searchResultTableView {
             
-            let cell = tableView.dequeueReusableCell(withIdentifier: "ResultList", for: indexPath) as! searchResultTableViewCell
-            
-            cell.setCell()
-            
-            return cell
+            if let cell = tableView.dequeueReusableCell(withIdentifier: "ResultList", for: indexPath) as? searchResultTableViewCell {
+                cell.setCell()
+                
+                return cell
+            }
         }
         return UITableViewCell()
     }

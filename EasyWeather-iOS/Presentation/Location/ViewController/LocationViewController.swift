@@ -16,25 +16,9 @@ final class LocationViewController: UIViewController {
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-    
-        setUI()
-        setLayout()
-    }
-}
-
-// MARK: - Extensions
-
-extension LocationViewController {
-    
-    private func setUI() {
-        view.backgroundColor = .primaryBackground
-        
-        view.addSubview(locationView)
     }
     
-    private func setLayout() {
-        locationView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
+    override func loadView() {
+        view = locationView
     }
 }

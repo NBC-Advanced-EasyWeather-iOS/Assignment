@@ -11,7 +11,7 @@ final class searchResultTableViewCell: UITableViewCell {
     
     // MARK: - UI Properties
     
-    lazy var resultLabel: UILabel = {
+    private lazy var resultLabel: UILabel = {
         let label = UILabel()
         label.font = FontLiteral.body(style: .regular)
         label.textColor = .black
@@ -31,16 +31,12 @@ final class searchResultTableViewCell: UITableViewCell {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    //레이아웃 inset 메서드
+    override func layoutSubviews() {
+        super.layoutSubviews()
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 0, left: 0, bottom: 25, right: 0))
     }
 }
 
@@ -67,12 +63,5 @@ extension searchResultTableViewCell {
             make.leading.equalToSuperview().offset(18)
             make.top.equalToSuperview()
         }
-    }
-    
-    //레이아웃 inset 메서드
-    override func layoutSubviews() {
-        super.layoutSubviews()
-
-        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 0, left: 0, bottom: 25, right: 0))
     }
 }

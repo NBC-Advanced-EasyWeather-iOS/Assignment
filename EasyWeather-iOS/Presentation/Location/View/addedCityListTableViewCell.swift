@@ -11,7 +11,7 @@ final class addedCityListTableViewCell: UITableViewCell {
     
     // MARK: - UI Properties
     
-    lazy var nameLabel: UILabel = {
+    private lazy var nameLabel: UILabel = {
         let label = UILabel()
         label.font = FontLiteral.body(style: .regular)
         label.textColor = UIColor.primaryLabel
@@ -19,7 +19,7 @@ final class addedCityListTableViewCell: UITableViewCell {
         return label
     }()
     
-    lazy var temperatureLabel: UILabel = {
+    private lazy var temperatureLabel: UILabel = {
         let label = UILabel()
         label.font = FontLiteral.body(style: .regular)
         label.textColor = UIColor.primaryLabel
@@ -38,18 +38,13 @@ final class addedCityListTableViewCell: UITableViewCell {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    //레이아웃 inset 메서드
+    override func layoutSubviews() {
+        super.layoutSubviews()
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
+        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 7.5, left: 0, bottom: 7.5, right: 0))
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-
 }
 
 // MARK: - Extensions : cell setup 메서드
@@ -85,12 +80,5 @@ extension addedCityListTableViewCell {
             make.top.equalToSuperview().offset(27.5)
             make.bottom.equalToSuperview().offset(-27.5)
         }
-    }
-    
-    //레이아웃 inset 메서드
-    override func layoutSubviews() {
-        super.layoutSubviews()
-
-        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 7.5, left: 0, bottom: 7.5, right: 0))
     }
 }
