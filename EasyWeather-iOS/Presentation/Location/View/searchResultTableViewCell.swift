@@ -44,6 +44,15 @@ final class searchResultTableViewCell: UITableViewCell {
     }
 }
 
+// MARK: - Extensions : cell setup 메서드
+
+extension searchResultTableViewCell {
+    
+    func setCell() {
+        self.resultLabel.text = "대한민국 부산광역시"
+    }
+}
+
 // MARK: - Extensions : UI & Layout
 
 extension searchResultTableViewCell {

@@ -15,8 +15,7 @@ final class LocationView: UIView {
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.text = "새로운 위치 추가하기"
-        label.textColor = UIColor(named: "Label/Primary")
-        label.font = UIFont.systemFont(ofSize: 24, weight: .bold)
+        label.font = FontLiteral.title2(style: .bold)
        
         return label
     }()
@@ -24,7 +23,7 @@ final class LocationView: UIView {
     //검색창
     private lazy var locationSearchView: UIView = {
         let view = UIView()
-        view.backgroundColor = .white
+        view.backgroundColor = UIColor.primaryBackground
         view.layer.cornerRadius = 20
         
         return view
@@ -38,7 +37,7 @@ final class LocationView: UIView {
     private lazy var locationSearchIcon: UIImageView = {
         let imageView = UIImageView(image: UIImage(systemName: "magnifyingglass"))
         imageView.contentMode = .scaleAspectFit
-        imageView.tintColor = .systemGray
+        imageView.tintColor = UIColor.gray
         
         return imageView
     }()
@@ -46,7 +45,7 @@ final class LocationView: UIView {
     //현재 위치
     private lazy var userLocationButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = UIColor(hex: "4E628B")
+        button.backgroundColor = UIColor.darkTheme
         button.layer.cornerRadius = 20
         
         return button
@@ -54,14 +53,14 @@ final class LocationView: UIView {
     private lazy var userLocationPinIcon: UIImageView = {
         let imageView = UIImageView(image: UIImage(systemName: "pin.circle"))
         imageView.contentMode = .scaleAspectFit
-        imageView.tintColor = .white
+        imageView.tintColor = UIColor.primaryBackground
         
         return imageView
     }()
     private lazy var userLocationBodyLabel: UILabel = {
         let label = UILabel()
         label.text = "현재 위치"
-        label.textColor = .white
+        label.textColor = UIColor.primaryBackground
         label.font = FontLiteral.body(style: .regular)
         
         return label
@@ -69,7 +68,7 @@ final class LocationView: UIView {
     private lazy var userLocationCaptionLabel: UILabel = {
         let label = UILabel()
         label.text = "서울시"
-        label.textColor = .white
+        label.textColor = UIColor.systemGray5
         label.font = UIFont.systemFont(ofSize: 11, weight: .regular)
         
         return label
@@ -86,7 +85,7 @@ final class LocationView: UIView {
     //알 수 없는 위치
     private lazy var unknownLocationButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = UIColor(hex: "4E628B")
+        button.backgroundColor = UIColor.darkTheme
         button.layer.cornerRadius = 20
         
         return button
@@ -94,14 +93,14 @@ final class LocationView: UIView {
     private lazy var unknownLocationIcon: UIImageView = {
         let imageView = UIImageView(image: UIImage(systemName: "location.fill"))
         imageView.contentMode = .scaleAspectFit
-        imageView.tintColor = .white
+        imageView.tintColor = UIColor.primaryBackground
         
         return imageView
     }()
     private lazy var unknownLocationBodyLabel: UILabel = {
         let label = UILabel()
         label.text = "지금 어딘지 모르겠어요 🤔"
-        label.textColor = .white
+        label.textColor = UIColor.primaryBackground
         label.font = FontLiteral.body(style: .regular)
         
         return label
@@ -117,7 +116,7 @@ final class LocationView: UIView {
     private lazy var unknownLocationRightIcon: UIImageView = {
         let imageView = UIImageView(image: UIImage(systemName: "chevron.right"))
         imageView.contentMode = .scaleAspectFit
-        imageView.tintColor = .white
+        imageView.tintColor = UIColor.primaryBackground
         
         return imageView
     }()
@@ -143,7 +142,7 @@ final class LocationView: UIView {
     private lazy var searchResultTableView: UITableView = {
         let tableView = UITableView()
         tableView.isHidden = true
-        tableView.backgroundColor = UIColor(hex: "F2F2F7")
+        tableView.backgroundColor = UIColor.secondaryBackground
         tableView.separatorStyle = .none
         
         return tableView
@@ -154,14 +153,34 @@ final class LocationView: UIView {
     override init(frame: CGRect) {
         super.init(frame: .zero)
         
+        print (UIScreen.screenHeight)
+
+        checkPermission()
+        setDelegate()
+        setUI()
+        setLayout()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    
+}
+
+// MARK: - Extensions : 분기 처리, delegate 메서드
+
+extension LocationView {
+    
+    private func checkPermission() {
         //위치 권한 분기
         if true {
             unknownLocationButton.isHidden = true
 //            userLocationButton.isHidden = true
         }
-        
-        self.backgroundColor = UIColor(hex: "F2F2F7")
-        
+    }
+    
+    private func setDelegate () {
         //delegate
         locationTextField.delegate = self
         addedCityListTableView.delegate = self
@@ -172,13 +191,6 @@ final class LocationView: UIView {
         //cell register
         addedCityListTableView.register(addedCityListTableViewCell.self, forCellReuseIdentifier: "CityList")
         searchResultTableView.register(searchResultTableViewCell.self, forCellReuseIdentifier: "ResultList")
-        
-        setUI()
-        setLayout()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 }
 
@@ -187,6 +199,8 @@ final class LocationView: UIView {
 extension LocationView {
     
     private func setUI() {
+        self.backgroundColor = UIColor.secondaryBackground
+        
         //타이틀
         self.addSubview(titleLabel)
         
@@ -197,17 +211,21 @@ extension LocationView {
         
         //현재 위치
         self.addSubview(userLocationButton)
-        userLocationButton.addSubview(userLocationPinIcon)
-        userLocationButton.addSubview(userLocationBodyLabel)
-        userLocationButton.addSubview(userLocationCaptionLabel)
-        userLocationButton.addSubview(userLocationTemperatureLabel)
+        [
+            userLocationPinIcon,
+            userLocationBodyLabel,
+            userLocationCaptionLabel,
+            userLocationTemperatureLabel
+        ].forEach { userLocationButton.addSubview($0) }
         
         //알 수 없는 위치
         self.addSubview(unknownLocationButton)
-        unknownLocationButton.addSubview(unknownLocationIcon)
-        unknownLocationButton.addSubview(unknownLocationBodyLabel)
-        unknownLocationButton.addSubview(unknownLocationCaptionLabel)
-        unknownLocationButton.addSubview(unknownLocationRightIcon)
+        [
+            unknownLocationIcon,
+            unknownLocationBodyLabel,
+            unknownLocationCaptionLabel,
+            unknownLocationRightIcon
+        ].forEach { unknownLocationButton.addSubview($0) }
         
         //추가한 도시 목록
         self.addSubview(listTitleLabel)
@@ -357,8 +375,7 @@ extension LocationView: UITableViewDelegate, UITableViewDataSource {
             
             let cell = tableView.dequeueReusableCell(withIdentifier: "CityList", for: indexPath) as! addedCityListTableViewCell
             
-            cell.nameLabel.text = "서울"
-            cell.temperatureLabel.text = "0℃"
+            cell.setCell()
             
             return cell
             
@@ -366,7 +383,7 @@ extension LocationView: UITableViewDelegate, UITableViewDataSource {
             
             let cell = tableView.dequeueReusableCell(withIdentifier: "ResultList", for: indexPath) as! searchResultTableViewCell
             
-            cell.resultLabel.text = "대한민국 부산광역시"
+            cell.setCell()
             
             return cell
         }

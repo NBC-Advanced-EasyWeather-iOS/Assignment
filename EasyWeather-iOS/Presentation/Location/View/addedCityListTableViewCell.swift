@@ -14,7 +14,7 @@ final class addedCityListTableViewCell: UITableViewCell {
     lazy var nameLabel: UILabel = {
         let label = UILabel()
         label.font = FontLiteral.body(style: .regular)
-        label.textColor = .black
+        label.textColor = UIColor.primaryLabel
         
         return label
     }()
@@ -22,7 +22,7 @@ final class addedCityListTableViewCell: UITableViewCell {
     lazy var temperatureLabel: UILabel = {
         let label = UILabel()
         label.font = FontLiteral.body(style: .regular)
-        label.textColor = .black
+        label.textColor = UIColor.primaryLabel
         
         return label
     }()
@@ -52,6 +52,16 @@ final class addedCityListTableViewCell: UITableViewCell {
 
 }
 
+// MARK: - Extensions : cell setup 메서드
+
+extension addedCityListTableViewCell {
+    
+    func setCell() {
+        self.nameLabel.text = "서울"
+        self.temperatureLabel.text = "0℃"
+    }
+}
+
 // MARK: - Extensions : UI & Layout
 
 extension addedCityListTableViewCell {
@@ -67,13 +77,13 @@ extension addedCityListTableViewCell {
         
         nameLabel.snp.makeConstraints { make in
             make.leading.equalToSuperview().offset(28)
-            make.top.equalToSuperview().offset(22.5)
-            make.bottom.equalToSuperview().offset(-22.5)
+            make.top.equalToSuperview().offset(27.5)
+            make.bottom.equalToSuperview().offset(-27.5)
         }
         temperatureLabel.snp.makeConstraints{ make in
             make.trailing.equalToSuperview().offset(-28)
-            make.top.equalToSuperview().offset(22.5)
-            make.bottom.equalToSuperview().offset(-22.5)
+            make.top.equalToSuperview().offset(27.5)
+            make.bottom.equalToSuperview().offset(-27.5)
         }
     }
     
