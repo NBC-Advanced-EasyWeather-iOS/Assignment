@@ -5,13 +5,6 @@
 //  Created by Joon Baek on 2024/02/07.
 //
 
-//
-//  ColorLiterals.swift
-//  EasyWeather-iOS
-//
-//  Created by Joon Baek on 2024/02/07.
-//
-
 import UIKit
 
 extension UIColor {
