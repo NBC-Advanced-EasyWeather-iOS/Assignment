@@ -17,6 +17,7 @@
 		37072C292B73135B00F4B744 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37072C282B73135B00F4B744 /* Network.swift */; };
 		37072C2B2B73136600F4B744 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37072C2A2B73136600F4B744 /* Utilities.swift */; };
 		37072C2D2B73136B00F4B744 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37072C2C2B73136B00F4B744 /* Protocols.swift */; };
+		37072C392B73775D00F4B744 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 37072C382B73775D00F4B744 /* SnapKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +40,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				37072C392B73775D00F4B744 /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -287,6 +289,9 @@
 			dependencies = (
 			);
 			name = "EasyWeather-iOS";
+			packageProductDependencies = (
+				37072C382B73775D00F4B744 /* SnapKit */,
+			);
 			productName = "EasyWeather-iOS";
 			productReference = 37072BD42B72929600F4B744 /* EasyWeather-iOS.app */;
 			productType = "com.apple.product-type.application";
@@ -315,6 +320,9 @@
 				Base,
 			);
 			mainGroup = 37072BCB2B72929600F4B744;
+			packageReferences = (
+				37072C372B73775D00F4B744 /* XCRemoteSwiftPackageReference "SnapKit" */,
+			);
 			productRefGroup = 37072BD52B72929600F4B744 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -553,6 +561,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		37072C372B73775D00F4B744 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		37072C382B73775D00F4B744 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 37072C372B73775D00F4B744 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 37072BCC2B72929600F4B744 /* Project object */;
 }
