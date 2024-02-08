@@ -34,10 +34,38 @@ class NavigationBarView: UIView {
         return label
     }()
     
-    private lazy var locationStackView: UIStackView = {
+    private lazy var navigationLeftLocationInfoStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [countryButton, cityLabel])
         stackView.axis = .vertical
         stackView.spacing = 5
+        
+        return stackView
+    }()
+    
+    private lazy var settingMenuButton: UIButton = {
+        let button = UIButton(type: .system)
+        let image = UIImage(named: "SettingMenu")
+        
+        button.setImage(image, for: .normal)
+        button.tintColor = .primaryLabel
+        
+        return button
+    }()
+    
+    private lazy var locationPlusButton: UIButton = {
+        let button = UIButton(type: .system)
+        let image = UIImage(named: "LocationPlus")
+        
+        button.setImage(image, for: .normal)
+        button.tintColor = .primaryLabel
+        
+        return button
+    }()
+    
+    private lazy var navigationRightButtonsStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [settingMenuButton, locationPlusButton])
+        stackView.axis = .horizontal
+        stackView.spacing = 16
         
         return stackView
     }()
@@ -62,15 +90,20 @@ extension NavigationBarView {
     private func setUI() {
         self.backgroundColor = .clear
         
-        [locationStackView].forEach {
+        [navigationLeftLocationInfoStackView, navigationRightButtonsStackView].forEach {
             self.addSubview($0)
         }
     }
 
     private func setLayout() {
-        locationStackView.snp.makeConstraints { make in
+        navigationLeftLocationInfoStackView.snp.makeConstraints { make in
             make.leading.equalToSuperview().offset(16)
             make.centerY.equalToSuperview()
+        }
+        
+        navigationRightButtonsStackView.snp.makeConstraints { make in
+            make.trailing.equalToSuperview().offset(-12)
+            make.top.equalTo(10)
         }
     }
 }
