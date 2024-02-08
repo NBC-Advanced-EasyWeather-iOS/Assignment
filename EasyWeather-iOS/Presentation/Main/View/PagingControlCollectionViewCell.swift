@@ -12,7 +12,19 @@ class PagingControlCollectionViewCell: UICollectionViewCell {
     // MARK: - Properties
     
     static let identifier = "PagingControlCollectionViewCellIdentifier"
-    private let screenHeight = UIScreen.main.bounds.height // 런타임 시에 변경될 가능성이 거의 없으므로 선언 시점에 즉시 값을 할당
+    
+    private let screenWidth = UIScreen.main.bounds.width // 런타임 시에 변경될 가능성이 거의 없으므로 선언 시점에 즉시 값을 할당
+    private let screenHeight = UIScreen.main.bounds.height
+    
+    private let iconTopOffsetRatio: CGFloat = 0.0
+    private let iconWidthRatio: CGFloat = 0.4
+    private let iconHeightRatio: CGFloat = 0.25
+    private let stackViewTopOffsetRatio: CGFloat = 0.03
+    private let buttonTopOffsetRatio: CGFloat = 0.04
+    private let collectionViewLeadingOffsetRatio: CGFloat = 0.05
+    private let collectionViewTrailingOffsetRatio: CGFloat = 0.05
+    private let collectionViewBottomOffsetRatio: CGFloat = 0.015
+    private let collectionViewHeightRatio: CGFloat = 0.35
     
     // MARK: - UI Properties
     
@@ -90,26 +102,26 @@ extension PagingControlCollectionViewCell {
     private func setLayout() {
         weatherIcon.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalToSuperview()
-            make.width.equalToSuperview().multipliedBy(0.4)
-            make.height.equalToSuperview().multipliedBy(0.25)
+            make.top.equalToSuperview().offset(screenHeight * iconTopOffsetRatio)
+            make.width.equalToSuperview().multipliedBy(iconWidthRatio)
+            make.height.equalToSuperview().multipliedBy(iconHeightRatio)
         }
         
         weatherStackView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(weatherIcon.snp.bottom).offset(screenHeight * 0.03)
+            make.top.equalTo(weatherIcon.snp.bottom).offset(screenHeight * stackViewTopOffsetRatio)
         }
         
         weekendWeatherButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(weatherStackView.snp.bottom).offset(screenHeight * 0.04)
+            make.top.equalTo(weatherStackView.snp.bottom).offset(screenHeight * buttonTopOffsetRatio)
         }
         
         meteorologicalCollectionView.snp.makeConstraints { make in
-            make.leading.equalToSuperview().offset(16)
-            make.trailing.equalToSuperview().offset(-16)
-            make.bottom.equalToSuperview().offset(-10)
-            make.height.equalToSuperview().multipliedBy(0.35)
+            make.leading.equalToSuperview().offset(screenWidth * collectionViewLeadingOffsetRatio)
+            make.trailing.equalToSuperview().offset(-screenWidth * collectionViewTrailingOffsetRatio)
+            make.bottom.equalToSuperview().offset(-screenHeight * collectionViewBottomOffsetRatio)
+            make.height.equalToSuperview().multipliedBy(collectionViewHeightRatio)
         }
     }
 
