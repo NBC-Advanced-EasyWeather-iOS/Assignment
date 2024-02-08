@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1B5BA0972B734CED002A821F /* NavigationBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B5BA0962B734CED002A821F /* NavigationBarView.swift */; };
+		1B5BA0992B734D69002A821F /* PagingControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B5BA0982B734D69002A821F /* PagingControlView.swift */; };
 		37072BD82B72929600F4B744 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37072BD72B72929600F4B744 /* AppDelegate.swift */; };
 		37072BDA2B72929600F4B744 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37072BD92B72929600F4B744 /* SceneDelegate.swift */; };
 		37072BDC2B72929600F4B744 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37072BDB2B72929600F4B744 /* ViewController.swift */; };
@@ -18,9 +20,14 @@
 		37072C2B2B73136600F4B744 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37072C2A2B73136600F4B744 /* Utilities.swift */; };
 		37072C2D2B73136B00F4B744 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37072C2C2B73136B00F4B744 /* Protocols.swift */; };
 		37072C392B73775D00F4B744 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 37072C382B73775D00F4B744 /* SnapKit */; };
+		566F426A2B771F3F002C1542 /* SettingOptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566F42692B771F3F002C1542 /* SettingOptionView.swift */; };
+		566F426C2B77205E002C1542 /* SettingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566F426B2B77205E002C1542 /* SettingModel.swift */; };
+		566F426E2B7721B1002C1542 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566F426D2B7721B1002C1542 /* SettingsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1B5BA0962B734CED002A821F /* NavigationBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarView.swift; sourceTree = "<group>"; };
+		1B5BA0982B734D69002A821F /* PagingControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagingControlView.swift; sourceTree = "<group>"; };
 		37072BD42B72929600F4B744 /* EasyWeather-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "EasyWeather-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		37072BD72B72929600F4B744 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		37072BD92B72929600F4B744 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -33,6 +40,9 @@
 		37072C282B73135B00F4B744 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		37072C2A2B73136600F4B744 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		37072C2C2B73136B00F4B744 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
+		566F42692B771F3F002C1542 /* SettingOptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingOptionView.swift; sourceTree = "<group>"; };
+		566F426B2B77205E002C1542 /* SettingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingModel.swift; sourceTree = "<group>"; };
+		566F426D2B7721B1002C1542 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -198,6 +208,8 @@
 		37072BFB2B73070F00F4B744 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				1B5BA0962B734CED002A821F /* NavigationBarView.swift */,
+				1B5BA0982B734D69002A821F /* PagingControlView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -255,6 +267,7 @@
 		37072C342B73164F00F4B744 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				566F426D2B7721B1002C1542 /* SettingsViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -262,6 +275,7 @@
 		37072C352B73164F00F4B744 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				566F42692B771F3F002C1542 /* SettingOptionView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -269,6 +283,7 @@
 		37072C362B73164F00F4B744 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				566F426B2B77205E002C1542 /* SettingModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -352,11 +367,16 @@
 				37072C2B2B73136600F4B744 /* Utilities.swift in Sources */,
 				37072C2D2B73136B00F4B744 /* Protocols.swift in Sources */,
 				37072C082B73078400F4B744 /* FontLiterals.swift in Sources */,
+				1B5BA0972B734CED002A821F /* NavigationBarView.swift in Sources */,
 				37072BDC2B72929600F4B744 /* ViewController.swift in Sources */,
 				37072BD82B72929600F4B744 /* AppDelegate.swift in Sources */,
+				566F426C2B77205E002C1542 /* SettingModel.swift in Sources */,
 				37072C0A2B7308E100F4B744 /* ColorLiterals.swift in Sources */,
+				566F426E2B7721B1002C1542 /* SettingsViewController.swift in Sources */,
+				566F426A2B771F3F002C1542 /* SettingOptionView.swift in Sources */,
 				37072C0C2B73097400F4B744 /* String+Extension.swift in Sources */,
 				37072BDA2B72929600F4B744 /* SceneDelegate.swift in Sources */,
+				1B5BA0992B734D69002A821F /* PagingControlView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
