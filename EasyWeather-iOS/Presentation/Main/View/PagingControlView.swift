@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-class PagingControlView: UIView {
+final class PagingControlView: UIView {
     
     // MARK: - UI Properties
     

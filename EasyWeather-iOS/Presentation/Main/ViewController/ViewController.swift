@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-class ViewController: UIViewController {
+final class ViewController: UIViewController {
     
     // MARK: - UI Properties
     
