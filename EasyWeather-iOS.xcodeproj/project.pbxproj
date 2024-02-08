@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1B5BA0972B734CED002A821F /* NavigationBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B5BA0962B734CED002A821F /* NavigationBarView.swift */; };
 		1B5BA0992B734D69002A821F /* PagingControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B5BA0982B734D69002A821F /* PagingControlView.swift */; };
+		1BD4C0332B7499EB003CF702 /* PagingControlCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD4C0322B7499EB003CF702 /* PagingControlCollectionViewCell.swift */; };
 		37072BD82B72929600F4B744 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37072BD72B72929600F4B744 /* AppDelegate.swift */; };
 		37072BDA2B72929600F4B744 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37072BD92B72929600F4B744 /* SceneDelegate.swift */; };
 		37072BDC2B72929600F4B744 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37072BDB2B72929600F4B744 /* ViewController.swift */; };
@@ -25,6 +26,7 @@
 /* Begin PBXFileReference section */
 		1B5BA0962B734CED002A821F /* NavigationBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarView.swift; sourceTree = "<group>"; };
 		1B5BA0982B734D69002A821F /* PagingControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagingControlView.swift; sourceTree = "<group>"; };
+		1BD4C0322B7499EB003CF702 /* PagingControlCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagingControlCollectionViewCell.swift; sourceTree = "<group>"; };
 		37072BD42B72929600F4B744 /* EasyWeather-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "EasyWeather-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		37072BD72B72929600F4B744 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		37072BD92B72929600F4B744 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -204,6 +206,7 @@
 			children = (
 				1B5BA0962B734CED002A821F /* NavigationBarView.swift */,
 				1B5BA0982B734D69002A821F /* PagingControlView.swift */,
+				1BD4C0322B7499EB003CF702 /* PagingControlCollectionViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -356,6 +359,7 @@
 			files = (
 				37072C292B73135B00F4B744 /* Network.swift in Sources */,
 				37072C2B2B73136600F4B744 /* Utilities.swift in Sources */,
+				1BD4C0332B7499EB003CF702 /* PagingControlCollectionViewCell.swift in Sources */,
 				37072C2D2B73136B00F4B744 /* Protocols.swift in Sources */,
 				37072C082B73078400F4B744 /* FontLiterals.swift in Sources */,
 				1B5BA0972B734CED002A821F /* NavigationBarView.swift in Sources */,

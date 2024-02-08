@@ -32,7 +32,7 @@ final class PagingControlView: UIView {
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.backgroundColor = .clear
         
-        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
+        collectionView.register(PagingControlCollectionViewCell.self, forCellWithReuseIdentifier: PagingControlCollectionViewCell.identifier)
         
         return collectionView
     }()
@@ -43,7 +43,7 @@ final class PagingControlView: UIView {
         control.currentPage = 0
         control.tintColor = .white
         control.pageIndicatorTintColor = .systemGray4
-        control.currentPageIndicatorTintColor = .systemBlue
+        control.currentPageIndicatorTintColor = .mainTheme
         
         return control
     }()
@@ -102,17 +102,9 @@ extension PagingControlView: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PagingControlCollectionViewCell.identifier, for: indexPath) as! PagingControlCollectionViewCell
         
-        
-        let label = UILabel(frame: CGRect(x: 20, y: 100, width: cell.contentView.frame.width - 40, height: 100))
-        label.text = "Test page \(indexPath.row + 1)"
-        label.textColor = UIColor(named: "Label/Primary")
-        label.font = UIFont.systemFont(ofSize: 24, weight: .bold)
-        label.textAlignment = .center
-        
-        cell.contentView.addSubview(label)
-        cell.backgroundColor = .darkTheme
+        cell.configure(withText: "Test page \(indexPath.row + 1)")
         
         return cell
     }
