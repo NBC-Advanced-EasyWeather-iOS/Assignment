@@ -11,7 +11,7 @@ class NavigationBarView: UIView {
     
     // MARK: - UI Properties
     
-    private let countryButton: UIButton = {
+    private lazy var countryButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("대한민국", for: .normal)
         button.titleLabel?.font = FontLiteral.body(style: .regular)
@@ -26,7 +26,7 @@ class NavigationBarView: UIView {
         return button
     }()
 
-    private let cityLabel: UILabel = {
+    private lazy var cityLabel: UILabel = {
         let label = UILabel()
         label.text = "수원시"
         label.font = FontLiteral.title3(style: .bold)
