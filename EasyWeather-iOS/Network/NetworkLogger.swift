@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class NetworkLogger {
+struct NetworkLogger {
     static let unauthorizedNotification = Notification.Name("unauthorized")
 
     static func log(request: URLRequest) {

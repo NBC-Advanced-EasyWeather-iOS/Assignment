@@ -8,19 +8,28 @@
 import Foundation
 
 enum WeatherEndpoint: EndpointType {
+    case currentWeather(city: String)
+    
     var baseURL: URL {
-        return
+        guard let url = URL(string: "https://api.openweathermap.org") else {
+            fatalError("🚨Base URL을 찾을 수 없습니다🚨")
+        }
+        
+        return url
     }
     
     var path: String {
-        return
+        switch self {
+        case .currentWeather(let city):
+            return "/data/2.5/weather?q=\(city)"
+        }
     }
     
     var task: Task {
-        return
+        return .requestPlain
     }
     
     var headers: [String : String]? {
-        return
+        return ["Content-Type": "application/json"]
     }
 }
