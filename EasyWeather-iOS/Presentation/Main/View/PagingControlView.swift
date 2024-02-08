@@ -104,7 +104,7 @@ extension PagingControlView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PagingControlCollectionViewCell.identifier, for: indexPath) as! PagingControlCollectionViewCell
         
-        cell.configure(withText: "Test page \(indexPath.row + 1)")
+        cell.configure(withText: "\(indexPath.row + 1)")
         
         return cell
     }
