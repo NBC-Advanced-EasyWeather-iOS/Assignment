@@ -32,7 +32,8 @@ final class ViewController: UIViewController {
 
 extension ViewController {
     private func setUI() {
-        view.backgroundColor = .primaryBackground
+        setBackgroundColor()
+        
         self.navigationController?.isNavigationBarHidden = true
         
         [pagingControlView].forEach {
@@ -44,5 +45,26 @@ extension ViewController {
         pagingControlView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+    }
+    
+    private func setBackgroundColor() {
+        // 낮
+        let topColor = UIColor.dayBackgroundTop.cgColor
+        let bottomColor = UIColor.primaryBackground.cgColor
+        
+        // 오후 ~ 저녁
+//        let topColor = UIColor.eveningBackgroundTop.cgColor
+//        let bottomColor = UIColor.primaryBackground.cgColor
+        
+        // 밤
+//        let topColor = UIColor.nightBackgroundTop.cgColor
+//        let bottomColor = UIColor.dayBackgroundTop.cgColor
+        
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.colors = [topColor, bottomColor]
+        gradientLayer.locations = [0.0, 1.0]
+        gradientLayer.frame = view.bounds
+        
+        view.layer.insertSublayer(gradientLayer, at: 0)
     }
 }
