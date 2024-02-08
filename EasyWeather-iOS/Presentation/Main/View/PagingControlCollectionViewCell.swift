@@ -7,8 +7,6 @@
 
 import UIKit
 
-import SnapKit
-
 class PagingControlCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Properties

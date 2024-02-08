@@ -37,7 +37,7 @@ class MeteorologicalCollectionViewCell: UICollectionViewCell {
     }
 }
 
-// MARK: - Extensions
+// MARK: - Extensions : UI & Layout
 
 extension MeteorologicalCollectionViewCell {
     private func setUI() {

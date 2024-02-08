@@ -7,8 +7,6 @@
 
 import UIKit
 
-import SnapKit
-
 class MeteorologicalCollectionView: UICollectionView {
     
     // MARK: - Properties
@@ -33,7 +31,7 @@ class MeteorologicalCollectionView: UICollectionView {
     }
 }
 
-// MARK: - Extensions
+// MARK: - Extensions : UI
 
 extension MeteorologicalCollectionView {
     private func setUI() {
