@@ -11,6 +11,10 @@ import SnapKit
 
 final class PagingControlView: UIView {
     
+    // MARK: - Properties
+    
+    private let numberOfPages: Int
+    
     // MARK: - UI Properties
     
     private lazy var navigationBarView = NavigationBarView()
@@ -43,10 +47,6 @@ final class PagingControlView: UIView {
         
         return control
     }()
-    
-    // MARK: - Properties
-    
-    private let numberOfPages: Int
     
     // MARK: - Life Cycle
     
