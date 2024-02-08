@@ -14,8 +14,35 @@ class PagingControlView: UIView {
     // MARK: - UI Properties
     
     private lazy var navigationBarView = NavigationBarView()
-    private var collectionView: UICollectionView!
-    private var pageControl: UIPageControl!
+    
+    private lazy var mainWeatherCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.minimumLineSpacing = 0
+        layout.minimumInteritemSpacing = 0
+        
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.isPagingEnabled = true
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.backgroundColor = .clear
+        
+        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
+        
+        return collectionView
+    }()
+    
+    private lazy var pageControl: UIPageControl = {
+        let control = UIPageControl()
+        control.numberOfPages = numberOfPages
+        control.currentPage = 0
+        control.tintColor = .white
+        control.pageIndicatorTintColor = .systemGray4
+        control.currentPageIndicatorTintColor = .systemBlue
+        
+        return control
+    }()
     
     // MARK: - Properties
     
@@ -41,10 +68,7 @@ class PagingControlView: UIView {
 
 extension PagingControlView {
     private func setUI() {
-        setCollectionView()
-        setPageControl()
-        
-        [navigationBarView, collectionView, pageControl].forEach {
+        [navigationBarView, mainWeatherCollectionView, pageControl].forEach {
             addSubview($0)
         }
     }
@@ -57,7 +81,7 @@ extension PagingControlView {
             make.height.greaterThanOrEqualTo(30)
         }
         
-        collectionView.snp.makeConstraints { make in
+        mainWeatherCollectionView.snp.makeConstraints { make in
             make.top.equalTo(navigationBarView.snp.bottom)
             make.leading.trailing.equalToSuperview()
             make.bottom.equalTo(pageControl.snp.top)
@@ -67,33 +91,6 @@ extension PagingControlView {
             make.centerX.equalToSuperview()
             make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom)
         }
-    }
-    
-    private func setCollectionView() {
-        let layout = UICollectionViewFlowLayout()
-        
-        layout.scrollDirection = .horizontal
-        layout.minimumLineSpacing = 0
-        layout.minimumInteritemSpacing = 0
-        
-        collectionView = UICollectionView(frame: bounds, collectionViewLayout: layout)
-        collectionView.dataSource = self
-        collectionView.delegate = self
-        collectionView.isPagingEnabled = true
-        collectionView.showsHorizontalScrollIndicator = false
-        collectionView.backgroundColor = .clear
-        
-        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
-    }
-
-    private func setPageControl() {
-        pageControl = UIPageControl()
-        
-        pageControl.numberOfPages = numberOfPages
-        pageControl.currentPage = 0
-        pageControl.tintColor = .white
-        pageControl.pageIndicatorTintColor = .systemGray4
-        pageControl.currentPageIndicatorTintColor = .systemBlue
     }
 }
 
