@@ -62,6 +62,8 @@ class PagingControlCollectionViewCell: UICollectionViewCell {
         return button
     }()
     
+    private lazy var meteorologicalCollectionView = MeteorologicalCollectionView()
+    
     // MARK: - Life Cycle
     
     override init(frame: CGRect) {
@@ -82,7 +84,7 @@ extension PagingControlCollectionViewCell {
     private func setUI() {
         self.backgroundColor = .clear
         
-        [weatherIcon, weatherStackView, weekendWeatherButton].forEach {
+        [weatherIcon, weatherStackView, weekendWeatherButton, meteorologicalCollectionView].forEach {
             addSubview($0)
         }
     }
@@ -103,6 +105,13 @@ extension PagingControlCollectionViewCell {
         weekendWeatherButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(weatherStackView.snp.bottom).offset(screenHeight * 0.04)
+        }
+        
+        meteorologicalCollectionView.snp.makeConstraints { make in
+            make.leading.equalToSuperview().offset(16)
+            make.trailing.equalToSuperview().offset(-16)
+            make.bottom.equalToSuperview().offset(-10)
+            make.height.equalToSuperview().multipliedBy(0.35)
         }
     }
 
