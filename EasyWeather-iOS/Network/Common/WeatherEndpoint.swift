@@ -10,7 +10,9 @@ import Foundation
 enum WeatherEndpoint: EndpointType {
     case currentWeather(city: String)
     case weeklyWeather(city: String)
-    
+}
+
+extension WeatherEndpoint {
     var baseURL: URL {
         guard let url = URL(string: "https://api.openweathermap.org") else {
             fatalError("🚨Base URL을 찾을 수 없습니다🚨")

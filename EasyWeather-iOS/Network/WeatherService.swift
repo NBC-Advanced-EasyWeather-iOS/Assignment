@@ -11,16 +11,20 @@ final class WeatherService {
     private let provider = NetworkProvider<WeatherEndpoint>()
     
     func fetchCurrnetWeather(city: String) async throws -> DailyResponseDTO {
-        let data = try await provider.request(.currentWeather(city: city))
-        
-        let weatherResponse = try JSONDecoder.snakeCaseDecoder.decode(DailyResponseDTO.self, from: data)
-        return weatherResponse
+        let response: DailyResponseDTO = try await fetchData(.currentWeather(city: city))
+        return response
     }
     
     func fetchWeeklyWeather(city: String) async throws -> WeeklyResponseDTO {
-        let data = try await provider.request(.weeklyWeather(city: city))
-        
-        let weatherResponse = try JSONDecoder.snakeCaseDecoder.decode(WeeklyResponseDTO.self, from: data)
-        return weatherResponse
+        let response: WeeklyResponseDTO = try await fetchData(.weeklyWeather(city: city))
+        return response
+    }
+}
+
+extension WeatherService {
+    private func fetchData<T: Decodable>(_ endPoint: WeatherEndpoint) async throws -> T {
+        let data = try await provider.request(endPoint)
+        let response = try JSONDecoder.snakeCaseDecoder.decode(T.self, from: data)
+        return response
     }
 }
