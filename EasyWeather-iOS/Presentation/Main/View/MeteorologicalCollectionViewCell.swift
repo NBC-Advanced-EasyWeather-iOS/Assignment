@@ -13,15 +13,35 @@ class MeteorologicalCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "MeteorologicalCollectionViewCellIdentifier"
     
+    private var iconImageWidthHeightRatio: CGFloat = 0
+    
     // MARK: - UI Properties
+    
+    private lazy var iconImage: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFit
+        
+        return imageView
+    }()
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.textAlignment = .center
-        label.textColor = .white
+        label.textColor = .tertiaryLabel
+        label.font = FontLiteral.subheadline(style: .regular)
         
         return label
     }()
+    
+    private lazy var contentLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .primaryLabel
+        label.font = FontLiteral.title3(style: .bold)
+        
+        return label
+    }()
+    
+    private lazy var labelStackView: UIStackView = { createLabelStackView() }()
+    private lazy var cellStackView: UIStackView = { createCellStackView() }()
     
     // MARK: - Life Cycle
     
@@ -41,24 +61,60 @@ class MeteorologicalCollectionViewCell: UICollectionViewCell {
 
 extension MeteorologicalCollectionViewCell {
     private func setUI() {
-        backgroundColor = .blue
+        backgroundColor = .clear
+        iconImageWidthHeightRatio = contentView.frame.size.height * 0.7
         
-        [titleLabel].forEach {
-            addSubview($0)
-        }
+        self.addSubview(cellStackView)
     }
     
     private func setLayout() {
-        titleLabel.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+        cellStackView.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.leading.trailing.equalToSuperview()
         }
+        
+        iconImage.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.width.equalTo(iconImageWidthHeightRatio)
+            make.height.equalTo(iconImageWidthHeightRatio)
+        }
+    }
+    
+    private func createLabelStackView() -> UIStackView {
+        let stackView = UIStackView(arrangedSubviews: [titleLabel, contentLabel])
+        stackView.axis = .vertical
+        stackView.spacing = 5
+        stackView.alignment = .leading
+        
+        return stackView
+    }
+    
+    private func createCellStackView() -> UIStackView {
+        let stackView = UIStackView(arrangedSubviews: [iconImage, labelStackView])
+        stackView.axis = .horizontal
+        stackView.spacing = 15
+        stackView.alignment = .leading
+        
+        return stackView
     }
 }
 
 // MARK: - Configure Cell
 
 extension MeteorologicalCollectionViewCell {
-    func configure(withText text: String) {
+    func configure(withText text: String, type: String) {
         self.titleLabel.text = text
+        self.contentLabel.text = "1030 hPa"
+        
+        if type == "일출" {
+            self.iconImage.image = UIImage(named: "Weather/Sunrise")
+            self.iconImage.isHidden = false
+        } else if type == "일몰" {
+            self.iconImage.image = UIImage(named: "Weather/Sunset")
+            self.iconImage.isHidden = false
+        } else {
+            self.iconImage.image = nil
+            self.iconImage.isHidden = true
+        }
     }
 }

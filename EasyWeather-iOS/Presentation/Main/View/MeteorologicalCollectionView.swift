@@ -11,7 +11,7 @@ class MeteorologicalCollectionView: UICollectionView {
     
     // MARK: - Properties
     
-    let tempdata: [String] = ["data 1","data 2","data 3"]
+    let tempdata: [String] = ["data 1","data 2","data 3","data 4","data 5","data 6"]
     
     // MARK: - Life Cycle
     
@@ -42,7 +42,7 @@ extension MeteorologicalCollectionView {
         isPagingEnabled = true // 스크롤 뷰가 페이지 단위로 스크롤 되도록 설정
         showsHorizontalScrollIndicator = false // 수평 스크롤 인디케이터가 숨김
         
-        backgroundColor = .clear
+        backgroundColor = .clear // .darkTheme
     }
 }
 
@@ -57,7 +57,13 @@ extension MeteorologicalCollectionView: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MeteorologicalCollectionViewCell.identifier, for: indexPath)
         
         if let meteorologicalCell = cell as? MeteorologicalCollectionViewCell {
-            meteorologicalCell.configure(withText: "\(tempdata[indexPath.row])")
+            if indexPath.row == 0 {
+                meteorologicalCell.configure(withText: "\(tempdata[indexPath.row])", type: "일출")
+            } else if indexPath.row == 1 {
+                meteorologicalCell.configure(withText: "\(tempdata[indexPath.row])", type: "일몰")
+            } else {
+                meteorologicalCell.configure(withText: "\(tempdata[indexPath.row])", type: "")
+            }
         }
         
         return cell
@@ -76,5 +82,4 @@ extension MeteorologicalCollectionView: UICollectionViewDelegateFlowLayout {
         
         return CGSize(width: width, height: height)
     }
-
 }

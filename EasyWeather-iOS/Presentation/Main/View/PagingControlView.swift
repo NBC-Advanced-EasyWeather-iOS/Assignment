@@ -17,7 +17,7 @@ final class PagingControlView: UIView {
     
     private lazy var navigationBarView = NavigationBarView()
     
-    private lazy var mainWeatherCollectionView: UICollectionView = {
+    private lazy var mainPagingCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.minimumLineSpacing = 0
@@ -66,7 +66,7 @@ final class PagingControlView: UIView {
 
 extension PagingControlView {
     private func setUI() {
-        [navigationBarView, mainWeatherCollectionView, pageControl].forEach {
+        [navigationBarView, mainPagingCollectionView, pageControl].forEach {
             addSubview($0)
         }
     }
@@ -79,7 +79,7 @@ extension PagingControlView {
             make.height.greaterThanOrEqualTo(30)
         }
         
-        mainWeatherCollectionView.snp.makeConstraints { make in
+        mainPagingCollectionView.snp.makeConstraints { make in
             make.top.equalTo(navigationBarView.snp.bottom)
             make.leading.trailing.equalToSuperview()
             make.bottom.equalTo(pageControl.snp.top)

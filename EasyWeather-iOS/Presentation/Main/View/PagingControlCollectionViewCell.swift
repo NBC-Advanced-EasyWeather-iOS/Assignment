@@ -13,7 +13,8 @@ class PagingControlCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "PagingControlCollectionViewCellIdentifier"
     
-    private let screenWidth = UIScreen.main.bounds.width // 런타임 시에 변경될 가능성이 거의 없으므로 선언 시점에 즉시 값을 할당
+    // 런타임 시에 변경될 가능성이 거의 없으므로 선언 시점에 즉시 값을 할당
+    private let screenWidth = UIScreen.main.bounds.width
     private let screenHeight = UIScreen.main.bounds.height
     
     private let iconTopOffsetRatio: CGFloat = 0.0
@@ -32,8 +33,6 @@ class PagingControlCollectionViewCell: UICollectionViewCell {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         
-        imageView.image = UIImage(named: "DayPartlyCloudy")
-        
         return imageView
     }()
     
@@ -49,14 +48,7 @@ class PagingControlCollectionViewCell: UICollectionViewCell {
         return createWeatherLabel(font: FontLiteral.body(style: .bold))
     }()
     
-    private lazy var weatherStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [temperatureLabel, windChillGuideLabel, windChillLabel])
-        stackView.axis = .vertical
-        stackView.spacing = 10
-        stackView.alignment = .center
-        
-        return stackView
-    }()
+    private lazy var weatherStackView: UIStackView = { createWeatherStackView() }()
     
     private lazy var weekendWeatherButton: UIButton = {
         let button = UIButton(type: .system)
@@ -94,7 +86,10 @@ extension PagingControlCollectionViewCell {
     private func setUI() {
         self.backgroundColor = .clear
         
-        [weatherIcon, weatherStackView, weekendWeatherButton, meteorologicalCollectionView].forEach {
+        [ weatherIcon,
+         weatherStackView,
+         weekendWeatherButton,
+         meteorologicalCollectionView ].forEach {
             addSubview($0)
         }
     }
@@ -132,6 +127,15 @@ extension PagingControlCollectionViewCell {
         
         return label
     }
+    
+    private func createWeatherStackView() -> UIStackView {
+        let stackView = UIStackView(arrangedSubviews: [temperatureLabel, windChillGuideLabel, windChillLabel])
+        stackView.axis = .vertical
+        stackView.spacing = 10
+        stackView.alignment = .center
+        
+        return stackView
+    }
 }
 
 // MARK: - Configure Cell
@@ -139,6 +143,7 @@ extension PagingControlCollectionViewCell {
 extension PagingControlCollectionViewCell {
     
     func configure(withText text: String) {
+        weatherIcon.image = UIImage(named: "Weather/DayPartlyCloudy")
         temperatureLabel.text = "\(text)°C"
         windChillGuideLabel.text = "어제보다 \(text)도 높아요 😊"
         windChillLabel.text = "체감온도 \(text)℃"
