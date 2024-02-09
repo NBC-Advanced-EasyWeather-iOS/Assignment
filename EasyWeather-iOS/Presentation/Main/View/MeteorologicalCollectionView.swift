@@ -40,7 +40,7 @@ extension MeteorologicalCollectionView {
         register(MeteorologicalCollectionViewCell.self, forCellWithReuseIdentifier: MeteorologicalCollectionViewCell.identifier)
         
         isPagingEnabled = true // 스크롤 뷰가 페이지 단위로 스크롤 되도록 설정
-        showsHorizontalScrollIndicator = false // 수평 스크롤 인디케이터가 숨김
+        showsHorizontalScrollIndicator = false // 수평 스크롤 인디케이터 숨김
         
         backgroundColor = .clear // .darkTheme
     }

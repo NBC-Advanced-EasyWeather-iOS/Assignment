@@ -13,7 +13,6 @@ class PagingControlCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "PagingControlCollectionViewCellIdentifier"
     
-    // 런타임 시에 변경될 가능성이 거의 없으므로 선언 시점에 즉시 값을 할당
     private let screenWidth = UIScreen.main.bounds.width
     private let screenHeight = UIScreen.main.bounds.height
     
