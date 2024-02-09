@@ -9,6 +9,7 @@ import Foundation
 
 enum WeatherEndpoint: EndpointType {
     case currentWeather(city: String)
+    case weeklyWeather(city: String)
     
     var baseURL: URL {
         guard let url = URL(string: "https://api.openweathermap.org") else {
@@ -20,13 +21,20 @@ enum WeatherEndpoint: EndpointType {
     
     var path: String {
         switch self {
-        case .currentWeather(let city):
-            return "/data/2.5/weather?q=\(city)"
+        case .currentWeather:
+            return "/data/2.5/weather"
+        case .weeklyWeather:
+            return "/data/2.5/forecast/daily"
         }
     }
     
-    var task: Task {
-        return .requestPlain
+    var query: String? {
+        switch self {
+        case .currentWeather(let city):
+            return "q=\(city)&appid=\(APIKeys.openWeatherKey)"
+        case .weeklyWeather(let city):
+            return "q=\(city)&appid=\(APIKeys.openWeatherKey)"
+        }
     }
     
     var headers: [String : String]? {

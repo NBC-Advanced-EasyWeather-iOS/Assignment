@@ -10,11 +10,6 @@ import Foundation
 protocol EndpointType {
     var baseURL: URL { get }
     var path: String { get }
-    var task: Task { get }
+    var query: String? { get }
     var headers: [String: String]? { get }
-}
-
-enum Task {
-    case requestPlain
-    case requestData(Data)
 }

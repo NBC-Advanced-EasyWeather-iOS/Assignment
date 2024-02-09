@@ -8,5 +8,5 @@
 import Foundation
 
 struct APIKeys {
-    static let openWeatherKey = ProcessInfo.processInfo.environment["2ede2a30c0e11934a791df88d4af0f30"] ?? ""
+    static let openWeatherKey = ProcessInfo.processInfo.environment["APP_KEY"] ?? ""
 }
