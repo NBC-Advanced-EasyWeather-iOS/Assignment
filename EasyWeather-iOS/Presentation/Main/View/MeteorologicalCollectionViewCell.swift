@@ -105,13 +105,12 @@ extension MeteorologicalCollectionViewCell {
     func configure(withText text: String, type: String) {
         self.titleLabel.text = text
         self.contentLabel.text = "1030 hPa"
+        self.iconImage.isHidden = false
         
         if type == "일출" {
             self.iconImage.image = UIImage(named: "Weather/Sunrise")
-            self.iconImage.isHidden = false
         } else if type == "일몰" {
             self.iconImage.image = UIImage(named: "Weather/Sunset")
-            self.iconImage.isHidden = false
         } else {
             self.iconImage.image = nil
             self.iconImage.isHidden = true

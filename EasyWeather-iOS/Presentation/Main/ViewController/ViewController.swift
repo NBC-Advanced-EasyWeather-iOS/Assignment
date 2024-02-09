@@ -25,7 +25,6 @@ final class ViewController: UIViewController {
         setUI()
         setLayout()
     }
-
 }
 
 // MARK: - Extensions

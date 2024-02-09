@@ -47,8 +47,6 @@ class PagingControlCollectionViewCell: UICollectionViewCell {
         return createWeatherLabel(font: FontLiteral.body(style: .bold))
     }()
     
-    private lazy var weatherStackView: UIStackView = { createWeatherStackView() }()
-    
     private lazy var weekendWeatherButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("주간 날씨", for: .normal)
@@ -63,6 +61,7 @@ class PagingControlCollectionViewCell: UICollectionViewCell {
         return button
     }()
     
+    private lazy var weatherStackView: UIStackView = { createWeatherStackView() }()
     private lazy var meteorologicalCollectionView = MeteorologicalCollectionView()
     
     // MARK: - Life Cycle
@@ -142,9 +141,9 @@ extension PagingControlCollectionViewCell {
 extension PagingControlCollectionViewCell {
     
     func configure(withText text: String) {
-        weatherIcon.image = UIImage(named: "Weather/DayPartlyCloudy")
-        temperatureLabel.text = "\(text)°C"
-        windChillGuideLabel.text = "어제보다 \(text)도 높아요 😊"
-        windChillLabel.text = "체감온도 \(text)℃"
+        self.weatherIcon.image = UIImage(named: "Weather/DayPartlyCloudy")
+        self.temperatureLabel.text = "\(text)°C"
+        self.windChillGuideLabel.text = "어제보다 \(text)도 높아요 😊"
+        self.windChillLabel.text = "체감온도 \(text)℃"
     }
 }
