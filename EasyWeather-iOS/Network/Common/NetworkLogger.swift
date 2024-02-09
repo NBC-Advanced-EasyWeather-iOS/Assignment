@@ -18,7 +18,7 @@ struct NetworkLogger {
             print("Body: \(String(data: body, encoding: .utf8) ?? "nil")")
         }
         
-        print("----------------------------------------------------")
+        print("------------------(EndOfRequest)--------------------")
     }
     
     static func log(response: URLResponse?, data: Data?, error: Error?) {
@@ -38,6 +38,6 @@ struct NetworkLogger {
         if let error = error {
             print("Error: \(error)")
         }
-        print("----------------------------------------------------")
+        print("------------------(EndOfResponse)--------------------")
     }
 }
