@@ -5,23 +5,13 @@
 //  Created by Joon Baek on 2024/02/07.
 //
 
-/**
- request 메서드 호출 예시
- 
- let provider = NetworkProvider<WeatherEndpoint>()
- async {
-     do {
-         let data = try await provider.request(.currentWeather(city: "Seoul"))
-         // 데이터 처리 코드
-     } catch {
-         // 에러 처리 코드
-     }
- }
- */
-
 import Foundation
 
-final class NetworkProvider<T: EndpointType> {
+protocol NetworkProviding {
+    func request(_ endpoint: WeatherEndpoint) async throws -> Data
+}
+
+final class NetworkProvider: NetworkProviding {
     private let session: URLSession
     
     init(session: URLSession = .shared) {
@@ -30,7 +20,7 @@ final class NetworkProvider<T: EndpointType> {
 }
 
 extension NetworkProvider {
-    func request(_ endpoint: T) async throws -> Data {
+    func request(_ endpoint: WeatherEndpoint) async throws -> Data {
         let url = try makeURL(from: endpoint)
         var request = makeRequest(with: url, endpoint: endpoint)
         
@@ -47,7 +37,7 @@ extension NetworkProvider {
         return data
     }
     
-    private func makeURL(from endpoint: T) throws -> URL {
+    private func makeURL(from endpoint: WeatherEndpoint) throws -> URL {
         var components = URLComponents(url: endpoint.baseURL, resolvingAgainstBaseURL: true)
         components?.path = endpoint.path
         components?.query = endpoint.query
@@ -59,7 +49,7 @@ extension NetworkProvider {
         return url
     }
     
-    private func makeRequest(with url: URL, endpoint: T) -> URLRequest {
+    private func makeRequest(with url: URL, endpoint: WeatherEndpoint) -> URLRequest {
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
         request.allHTTPHeaderFields = endpoint.headers
