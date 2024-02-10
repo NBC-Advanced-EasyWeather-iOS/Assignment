@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum WeatherEndpoint: EndpointType {
+enum WeatherEndpoint {
     case currentWeather(city: String)
     case weeklyWeather(city: String)
 }

@@ -16,7 +16,6 @@
 		37072C082B73078400F4B744 /* FontLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37072C072B73078400F4B744 /* FontLiterals.swift */; };
 		37072C0A2B7308E100F4B744 /* ColorLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37072C092B7308E100F4B744 /* ColorLiterals.swift */; };
 		37072C0C2B73097400F4B744 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37072C0B2B73097400F4B744 /* String+Extension.swift */; };
-		37072C292B73135B00F4B744 /* EndpointType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37072C282B73135B00F4B744 /* EndpointType.swift */; };
 		37072C2B2B73136600F4B744 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37072C2A2B73136600F4B744 /* Utilities.swift */; };
 		37072C2D2B73136B00F4B744 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37072C2C2B73136B00F4B744 /* Protocols.swift */; };
 		37072C392B73775D00F4B744 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 37072C382B73775D00F4B744 /* SnapKit */; };
@@ -41,7 +40,6 @@
 		37072C072B73078400F4B744 /* FontLiterals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontLiterals.swift; sourceTree = "<group>"; };
 		37072C092B7308E100F4B744 /* ColorLiterals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorLiterals.swift; sourceTree = "<group>"; };
 		37072C0B2B73097400F4B744 /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
-		37072C282B73135B00F4B744 /* EndpointType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndpointType.swift; sourceTree = "<group>"; };
 		37072C2A2B73136600F4B744 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		37072C2C2B73136B00F4B744 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 		37072C3A2B737C7900F4B744 /* WeatherEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherEndpoint.swift; sourceTree = "<group>"; };
@@ -299,7 +297,6 @@
 		37C4B1482B75E2CC006B56B9 /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				37072C282B73135B00F4B744 /* EndpointType.swift */,
 				37072C3A2B737C7900F4B744 /* WeatherEndpoint.swift */,
 				37072C3E2B73B8A300F4B744 /* NetworkProvider.swift */,
 				37072C3C2B739A0500F4B744 /* NetworkLogger.swift */,
@@ -383,7 +380,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				37072C292B73135B00F4B744 /* EndpointType.swift in Sources */,
 				37072C2B2B73136600F4B744 /* Utilities.swift in Sources */,
 				37072C2D2B73136B00F4B744 /* Protocols.swift in Sources */,
 				37072C082B73078400F4B744 /* FontLiterals.swift in Sources */,

@@ -22,7 +22,7 @@ final class NetworkProvider: NetworkProviding {
 extension NetworkProvider {
     func request(_ endpoint: WeatherEndpoint) async throws -> Data {
         let url = try makeURL(from: endpoint)
-        var request = makeRequest(with: url, endpoint: endpoint)
+        let request = makeRequest(with: url, endpoint: endpoint)
         
         NetworkLogger.log(request: request)
         
