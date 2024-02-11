@@ -20,6 +20,10 @@
 		37072C2B2B73136600F4B744 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37072C2A2B73136600F4B744 /* Utilities.swift */; };
 		37072C2D2B73136B00F4B744 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37072C2C2B73136B00F4B744 /* Protocols.swift */; };
 		37072C392B73775D00F4B744 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 37072C382B73775D00F4B744 /* SnapKit */; };
+		FF63FBE32B78DE950011C9A5 /* WeeklyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF63FBE22B78DE950011C9A5 /* WeeklyViewController.swift */; };
+		FF63FBE52B78DEFD0011C9A5 /* WeatherModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF63FBE42B78DEFD0011C9A5 /* WeatherModel.swift */; };
+		FF63FBE72B78DF100011C9A5 /* WeeklyWeatherTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF63FBE62B78DF100011C9A5 /* WeeklyWeatherTableViewCell.swift */; };
+		FF63FBE92B78DF1B0011C9A5 /* WeeklyWeatherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF63FBE82B78DF1B0011C9A5 /* WeeklyWeatherView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +41,10 @@
 		37072C282B73135B00F4B744 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		37072C2A2B73136600F4B744 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		37072C2C2B73136B00F4B744 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
+		FF63FBE22B78DE950011C9A5 /* WeeklyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyViewController.swift; sourceTree = "<group>"; };
+		FF63FBE42B78DEFD0011C9A5 /* WeatherModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherModel.swift; sourceTree = "<group>"; };
+		FF63FBE62B78DF100011C9A5 /* WeeklyWeatherTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyWeatherTableViewCell.swift; sourceTree = "<group>"; };
+		FF63FBE82B78DF1B0011C9A5 /* WeeklyWeatherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyWeatherView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -219,6 +227,7 @@
 		37072C2E2B73164B00F4B744 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				FF63FBE22B78DE950011C9A5 /* WeeklyViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -226,6 +235,8 @@
 		37072C2F2B73164B00F4B744 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				FF63FBE62B78DF100011C9A5 /* WeeklyWeatherTableViewCell.swift */,
+				FF63FBE82B78DF1B0011C9A5 /* WeeklyWeatherView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -233,6 +244,7 @@
 		37072C302B73164B00F4B744 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				FF63FBE42B78DEFD0011C9A5 /* WeatherModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -356,13 +368,17 @@
 			files = (
 				37072C292B73135B00F4B744 /* Network.swift in Sources */,
 				37072C2B2B73136600F4B744 /* Utilities.swift in Sources */,
+				FF63FBE92B78DF1B0011C9A5 /* WeeklyWeatherView.swift in Sources */,
 				37072C2D2B73136B00F4B744 /* Protocols.swift in Sources */,
 				37072C082B73078400F4B744 /* FontLiterals.swift in Sources */,
 				1B5BA0972B734CED002A821F /* NavigationBarView.swift in Sources */,
+				FF63FBE52B78DEFD0011C9A5 /* WeatherModel.swift in Sources */,
 				37072BDC2B72929600F4B744 /* ViewController.swift in Sources */,
 				37072BD82B72929600F4B744 /* AppDelegate.swift in Sources */,
+				FF63FBE72B78DF100011C9A5 /* WeeklyWeatherTableViewCell.swift in Sources */,
 				37072C0A2B7308E100F4B744 /* ColorLiterals.swift in Sources */,
 				37072C0C2B73097400F4B744 /* String+Extension.swift in Sources */,
+				FF63FBE32B78DE950011C9A5 /* WeeklyViewController.swift in Sources */,
 				37072BDA2B72929600F4B744 /* SceneDelegate.swift in Sources */,
 				1B5BA0992B734D69002A821F /* PagingControlView.swift in Sources */,
 			);
