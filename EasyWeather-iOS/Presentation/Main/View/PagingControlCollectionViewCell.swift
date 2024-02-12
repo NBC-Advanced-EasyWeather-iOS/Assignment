@@ -13,8 +13,8 @@ class PagingControlCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "PagingControlCollectionViewCellIdentifier"
     
-    private let screenWidth = UIScreen.main.bounds.width
-    private let screenHeight = UIScreen.main.bounds.height
+    private var width: CGFloat = UIScreen.screenWidth
+    private var height: CGFloat = UIScreen.screenHeight
     
     private let iconTopOffsetRatio: CGFloat = 0.0
     private let iconWidthRatio: CGFloat = 0.4
@@ -82,6 +82,7 @@ class PagingControlCollectionViewCell: UICollectionViewCell {
 
 extension PagingControlCollectionViewCell {
     private func setUI() {
+        
         self.backgroundColor = .clear
         
         [ weatherIcon,
@@ -95,25 +96,25 @@ extension PagingControlCollectionViewCell {
     private func setLayout() {
         weatherIcon.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalToSuperview().offset(screenHeight * iconTopOffsetRatio)
+            make.top.equalToSuperview().offset(height * iconTopOffsetRatio)
             make.width.equalToSuperview().multipliedBy(iconWidthRatio)
             make.height.equalToSuperview().multipliedBy(iconHeightRatio)
         }
         
         weatherStackView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(weatherIcon.snp.bottom).offset(screenHeight * stackViewTopOffsetRatio)
+            make.top.equalTo(weatherIcon.snp.bottom).offset(height * stackViewTopOffsetRatio)
         }
         
         weekendWeatherButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(weatherStackView.snp.bottom).offset(screenHeight * buttonTopOffsetRatio)
+            make.top.equalTo(weatherStackView.snp.bottom).offset(height * buttonTopOffsetRatio)
         }
         
         meteorologicalCollectionView.snp.makeConstraints { make in
-            make.leading.equalToSuperview().offset(screenWidth * collectionViewLeadingOffsetRatio)
-            make.trailing.equalToSuperview().offset(-screenWidth * collectionViewTrailingOffsetRatio)
-            make.bottom.equalToSuperview().offset(-screenHeight * collectionViewBottomOffsetRatio)
+            make.leading.equalToSuperview().offset(width * collectionViewLeadingOffsetRatio)
+            make.trailing.equalToSuperview().offset(-width * collectionViewTrailingOffsetRatio)
+            make.bottom.equalToSuperview().offset(-height * collectionViewBottomOffsetRatio)
             make.height.equalToSuperview().multipliedBy(collectionViewHeightRatio)
         }
     }
