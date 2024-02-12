@@ -122,21 +122,43 @@ final class LocationView: UIView {
         return imageView
     }()
     
+    private lazy var listTitleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "목록"
+        label.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
+        
+        return label
+    }()
+    
     //도시 리스트
-    private lazy var addedCityListTableView = UITableView()
+    private lazy var addedCityListTableView: UITableView = {
+        let tableView = UITableView()
+        tableView.backgroundColor = .clear
+        tableView.separatorStyle = .none
+        
+        return tableView
+    }()
     
     // MARK: - Life Cycle
+    
     override init(frame: CGRect) {
         super.init(frame: .zero)
         
         //위치 권한 분기
         if true {
-//            unknownLocationButton.isHidden = true
-            userLocationButton.isHidden = true
+            unknownLocationButton.isHidden = true
+//            userLocationButton.isHidden = true
         }
         
         self.backgroundColor = UIColor(hex: "F2F2F7")
+        
+        //delegate
         locationTextField.delegate = self
+        addedCityListTableView.delegate = self
+        addedCityListTableView.dataSource = self
+        
+        //cell register
+        addedCityListTableView.register(addedCityListTableViewCell.self, forCellReuseIdentifier: "CityList")
         
         setUI()
         setLayout()
@@ -173,6 +195,10 @@ extension LocationView {
         unknownLocationButton.addSubview(unknownLocationBodyLabel)
         unknownLocationButton.addSubview(unknownLocationCaptionLabel)
         unknownLocationButton.addSubview(unknownLocationRightIcon)
+        
+        self.addSubview(listTitleLabel)
+        
+        self.addSubview(addedCityListTableView)
     }
     
     private func setLayout() {
@@ -250,6 +276,18 @@ extension LocationView {
             make.trailing.equalToSuperview().offset(-16)
         }
         
+        listTitleLabel.snp.makeConstraints { make in
+            make.top.equalTo(userLocationButton.snp.bottom).offset(40)
+            make.leading.equalToSuperview().offset(16)
+        }
+        
+        //도시 리스트
+        addedCityListTableView.snp.makeConstraints { make in
+            make.top.equalTo(listTitleLabel.snp.bottom).offset(15)
+            make.trailing.equalToSuperview().offset(-16)
+            make.leading.equalToSuperview().offset(16)
+            make.bottom.equalToSuperview()
+        }
     }
 }
 
@@ -266,5 +304,28 @@ extension LocationView: UITextFieldDelegate {
     
     func updateSearchResults(for searchText: String) {
         print("검색 결과: \(searchText)")
+    }
+}
+
+// MARK: - Extensions : UITableViewDelegate
+
+extension LocationView: UITableViewDelegate, UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        60
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        3
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "CityList", for: indexPath) as! addedCityListTableViewCell
+        
+        cell.nameLabel.text = "서울"
+        cell.temperatureLabel.text = "0℃"
+        
+        return cell
     }
 }

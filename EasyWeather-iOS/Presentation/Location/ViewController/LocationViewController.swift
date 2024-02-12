@@ -20,7 +20,6 @@ final class LocationViewController: UIViewController {
         setUI()
         setLayout()
     }
-
 }
 
 // MARK: - Extensions
