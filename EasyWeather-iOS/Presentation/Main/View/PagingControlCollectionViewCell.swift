@@ -7,7 +7,7 @@
 
 import UIKit
 
-class PagingControlCollectionViewCell: UICollectionViewCell {
+final class PagingControlCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Properties
     

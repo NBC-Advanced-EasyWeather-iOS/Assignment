@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MeteorologicalCollectionView: UICollectionView {
+final class MeteorologicalCollectionView: UICollectionView {
     
     // MARK: - Properties
     
