@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		1B5BA0972B734CED002A821F /* NavigationBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B5BA0962B734CED002A821F /* NavigationBarView.swift */; };
 		1B5BA0992B734D69002A821F /* PagingControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B5BA0982B734D69002A821F /* PagingControlView.swift */; };
+		1BD4C0332B7499EB003CF702 /* PagingControlCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD4C0322B7499EB003CF702 /* PagingControlCollectionViewCell.swift */; };
+		1BD4C0392B751D0E003CF702 /* MeteorologicalCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD4C0382B751D0E003CF702 /* MeteorologicalCollectionView.swift */; };
+		1BD4C03B2B752C37003CF702 /* MeteorologicalCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD4C03A2B752C37003CF702 /* MeteorologicalCollectionViewCell.swift */; };
+		1BD4C03D2B79D49C003CF702 /* UIScreen+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD4C03C2B79D49C003CF702 /* UIScreen+Extension.swift */; };
 		37072BD82B72929600F4B744 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37072BD72B72929600F4B744 /* AppDelegate.swift */; };
 		37072BDA2B72929600F4B744 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37072BD92B72929600F4B744 /* SceneDelegate.swift */; };
 		37072BDC2B72929600F4B744 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37072BDB2B72929600F4B744 /* ViewController.swift */; };
@@ -25,6 +29,10 @@
 /* Begin PBXFileReference section */
 		1B5BA0962B734CED002A821F /* NavigationBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarView.swift; sourceTree = "<group>"; };
 		1B5BA0982B734D69002A821F /* PagingControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagingControlView.swift; sourceTree = "<group>"; };
+		1BD4C0322B7499EB003CF702 /* PagingControlCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagingControlCollectionViewCell.swift; sourceTree = "<group>"; };
+		1BD4C0382B751D0E003CF702 /* MeteorologicalCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeteorologicalCollectionView.swift; sourceTree = "<group>"; };
+		1BD4C03A2B752C37003CF702 /* MeteorologicalCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeteorologicalCollectionViewCell.swift; sourceTree = "<group>"; };
+		1BD4C03C2B79D49C003CF702 /* UIScreen+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScreen+Extension.swift"; sourceTree = "<group>"; };
 		37072BD42B72929600F4B744 /* EasyWeather-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "EasyWeather-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		37072BD72B72929600F4B744 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		37072BD92B72929600F4B744 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -123,6 +131,7 @@
 			isa = PBXGroup;
 			children = (
 				37072C0B2B73097400F4B744 /* String+Extension.swift */,
+				1BD4C03C2B79D49C003CF702 /* UIScreen+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -204,6 +213,9 @@
 			children = (
 				1B5BA0962B734CED002A821F /* NavigationBarView.swift */,
 				1B5BA0982B734D69002A821F /* PagingControlView.swift */,
+				1BD4C0322B7499EB003CF702 /* PagingControlCollectionViewCell.swift */,
+				1BD4C0382B751D0E003CF702 /* MeteorologicalCollectionView.swift */,
+				1BD4C03A2B752C37003CF702 /* MeteorologicalCollectionViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -356,14 +368,18 @@
 			files = (
 				37072C292B73135B00F4B744 /* Network.swift in Sources */,
 				37072C2B2B73136600F4B744 /* Utilities.swift in Sources */,
+				1BD4C0332B7499EB003CF702 /* PagingControlCollectionViewCell.swift in Sources */,
 				37072C2D2B73136B00F4B744 /* Protocols.swift in Sources */,
 				37072C082B73078400F4B744 /* FontLiterals.swift in Sources */,
 				1B5BA0972B734CED002A821F /* NavigationBarView.swift in Sources */,
 				37072BDC2B72929600F4B744 /* ViewController.swift in Sources */,
 				37072BD82B72929600F4B744 /* AppDelegate.swift in Sources */,
 				37072C0A2B7308E100F4B744 /* ColorLiterals.swift in Sources */,
+				1BD4C0392B751D0E003CF702 /* MeteorologicalCollectionView.swift in Sources */,
 				37072C0C2B73097400F4B744 /* String+Extension.swift in Sources */,
 				37072BDA2B72929600F4B744 /* SceneDelegate.swift in Sources */,
+				1BD4C03B2B752C37003CF702 /* MeteorologicalCollectionViewCell.swift in Sources */,
+				1BD4C03D2B79D49C003CF702 /* UIScreen+Extension.swift in Sources */,
 				1B5BA0992B734D69002A821F /* PagingControlView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
