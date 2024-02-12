@@ -7,23 +7,35 @@
 
 import UIKit
 
-class LocationViewController: UIViewController {
-
+final class LocationViewController: UIViewController {
+    
+    // MARK: - UI Properties
+    
+    private var locationView = LocationView()
+    
+    // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+    
+        setUI()
+        setLayout()
+    }
 
-        // Do any additional setup after loading the view.
+}
+
+// MARK: - Extensions
+
+extension LocationViewController {
+    
+    private func setUI() {
+        view.backgroundColor = .primaryBackground
+        
+        view.addSubview(locationView)
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    private func setLayout() {
+        locationView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
     }
-    */
-
 }

@@ -20,6 +20,8 @@
 		37072C2B2B73136600F4B744 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37072C2A2B73136600F4B744 /* Utilities.swift */; };
 		37072C2D2B73136B00F4B744 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37072C2C2B73136B00F4B744 /* Protocols.swift */; };
 		37072C392B73775D00F4B744 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 37072C382B73775D00F4B744 /* SnapKit */; };
+		E0D1A0172B74A2E8007E878D /* LocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0D1A0162B74A2E8007E878D /* LocationViewController.swift */; };
+		E0D1A0192B74A30C007E878D /* LocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0D1A0182B74A30C007E878D /* LocationView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +39,8 @@
 		37072C282B73135B00F4B744 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		37072C2A2B73136600F4B744 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		37072C2C2B73136B00F4B744 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
+		E0D1A0162B74A2E8007E878D /* LocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationViewController.swift; sourceTree = "<group>"; };
+		E0D1A0182B74A30C007E878D /* LocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -240,6 +244,7 @@
 		37072C312B73164D00F4B744 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				E0D1A0162B74A2E8007E878D /* LocationViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -254,6 +259,7 @@
 		37072C332B73164D00F4B744 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				E0D1A0182B74A30C007E878D /* LocationView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -354,9 +360,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E0D1A0192B74A30C007E878D /* LocationView.swift in Sources */,
 				37072C292B73135B00F4B744 /* Network.swift in Sources */,
 				37072C2B2B73136600F4B744 /* Utilities.swift in Sources */,
 				37072C2D2B73136B00F4B744 /* Protocols.swift in Sources */,
+				E0D1A0172B74A2E8007E878D /* LocationViewController.swift in Sources */,
 				37072C082B73078400F4B744 /* FontLiterals.swift in Sources */,
 				1B5BA0972B734CED002A821F /* NavigationBarView.swift in Sources */,
 				37072BDC2B72929600F4B744 /* ViewController.swift in Sources */,
