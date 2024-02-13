@@ -20,6 +20,7 @@
 		37072C2B2B73136600F4B744 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37072C2A2B73136600F4B744 /* Utilities.swift */; };
 		37072C2D2B73136B00F4B744 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37072C2C2B73136B00F4B744 /* Protocols.swift */; };
 		37072C392B73775D00F4B744 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 37072C382B73775D00F4B744 /* SnapKit */; };
+		564ECC042B7B0B08006A66FD /* SettingHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 564ECC032B7B0B08006A66FD /* SettingHeader.swift */; };
 		566F426A2B771F3F002C1542 /* SettingOptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566F42692B771F3F002C1542 /* SettingOptionView.swift */; };
 		566F426C2B77205E002C1542 /* SettingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566F426B2B77205E002C1542 /* SettingModel.swift */; };
 		566F426E2B7721B1002C1542 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566F426D2B7721B1002C1542 /* SettingsViewController.swift */; };
@@ -40,6 +41,7 @@
 		37072C282B73135B00F4B744 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		37072C2A2B73136600F4B744 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		37072C2C2B73136B00F4B744 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
+		564ECC032B7B0B08006A66FD /* SettingHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingHeader.swift; sourceTree = "<group>"; };
 		566F42692B771F3F002C1542 /* SettingOptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingOptionView.swift; sourceTree = "<group>"; };
 		566F426B2B77205E002C1542 /* SettingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingModel.swift; sourceTree = "<group>"; };
 		566F426D2B7721B1002C1542 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
@@ -276,6 +278,7 @@
 			isa = PBXGroup;
 			children = (
 				566F42692B771F3F002C1542 /* SettingOptionView.swift */,
+				564ECC032B7B0B08006A66FD /* SettingHeader.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -368,6 +371,7 @@
 				37072C2D2B73136B00F4B744 /* Protocols.swift in Sources */,
 				37072C082B73078400F4B744 /* FontLiterals.swift in Sources */,
 				1B5BA0972B734CED002A821F /* NavigationBarView.swift in Sources */,
+				564ECC042B7B0B08006A66FD /* SettingHeader.swift in Sources */,
 				37072BDC2B72929600F4B744 /* ViewController.swift in Sources */,
 				37072BD82B72929600F4B744 /* AppDelegate.swift in Sources */,
 				566F426C2B77205E002C1542 /* SettingModel.swift in Sources */,

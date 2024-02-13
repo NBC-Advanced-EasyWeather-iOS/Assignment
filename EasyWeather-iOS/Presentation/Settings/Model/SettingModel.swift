@@ -1,12 +1,20 @@
-//
+
 //  SettingModel.swift
 //  EasyWeather-iOS
-//
-//  Created by 김가빈 on 2/10/24.
-//
+
 
 import Foundation
 
 // MARK: - SettingOption Model
+
+class SettingOption {
+    let title: String
+    var isOn: Bool
+    
+    init(title: String, isOn: Bool) {
+        self.title = title
+        self.isOn = isOn
+    }
+}
 
 
