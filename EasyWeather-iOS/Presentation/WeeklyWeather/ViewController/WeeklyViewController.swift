@@ -8,7 +8,7 @@
 
 import UIKit
 
-class WeeklyTableViewController: UIViewController {
+final class WeeklyTableViewController: UIViewController {
     
     // MARK: - Properties
     let myView = WeeklyWeatherView()
@@ -26,12 +26,7 @@ class WeeklyTableViewController: UIViewController {
         myView.tableView.dataSource = self
         myView.tableView.delegate = self
     }
-    
-    
-    
 }
-
-
 
 extension WeeklyTableViewController: UITableViewDataSource {
     
@@ -45,7 +40,9 @@ extension WeeklyTableViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! WeeklyTableViewCell
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? WeeklyTableViewCell else {
+            fatalError("The dequeued cell is not an instance of WeeklyTableViewCell.")
+        }
         let weather = weatherData[indexPath.row]
         
         
@@ -83,9 +80,6 @@ extension WeeklyTableViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 80 // 또는 원하는 높이 값
     }
-    
-    
-    
 }
 
 

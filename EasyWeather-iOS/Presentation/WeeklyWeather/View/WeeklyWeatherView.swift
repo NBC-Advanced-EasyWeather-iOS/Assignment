@@ -6,15 +6,12 @@
 //
 
 import UIKit
+
 import SnapKit
 
 class WeeklyWeatherView: UIView {
     let imageView = UIImageView()
-    let tableView: UITableView = {
-        let tableView = UITableView(frame: .zero, style: .insetGrouped)
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        return tableView
-    }()
+    let tableView: UITableView = UITableView(frame: .zero, style: .insetGrouped)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -46,7 +43,6 @@ class WeeklyWeatherView: UIView {
         tableView.snp.makeConstraints { make in
             make.top.equalTo(imageView.snp.bottom)
             make.leading.trailing.bottom.equalToSuperview()
-            //make.edges.equalToSuperview().inset(UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0))
         }
     }
 }

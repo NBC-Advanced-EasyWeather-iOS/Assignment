@@ -9,10 +9,12 @@ import UIKit
 
 class WeeklyTableViewCell: UITableViewCell {
 
+    // MARK: - Properties
     let dateLabel = UILabel()
     let weatherLabel = UILabel()
     let temperatureLabel = UILabel()
 
+    // MARK: - Life Cycle
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupViews()
@@ -23,6 +25,7 @@ class WeeklyTableViewCell: UITableViewCell {
         setupViews()
     }
 
+    // MARK: - Layout
     private func setupViews() {
         // 라벨 설정
         contentView.addSubview(dateLabel)
@@ -35,8 +38,7 @@ class WeeklyTableViewCell: UITableViewCell {
         }
         
         weatherLabel.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.centerY.equalToSuperview()
+            make.center.equalToSuperview()
         }
         
         temperatureLabel.snp.makeConstraints { make in
