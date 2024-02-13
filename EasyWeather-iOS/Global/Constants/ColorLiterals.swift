@@ -50,6 +50,21 @@ extension UIColor {
     static var secondaryBackground: UIColor {
         return UIColor(hex: "#F2F2F7")
     }
+    
+    // MARK: - Daily Background Colors
+    
+    static var dayBackgroundTop: UIColor {
+        return UIColor(hex: "#AEE7FF")
+    }
+    
+    static var eveningBackgroundTop: UIColor {
+        return UIColor(hex: "#96C1E8")
+    }
+    
+    static var nightBackgroundTop: UIColor {
+        return UIColor(hex: "#376794")
+    }
+    
 }
 
 extension UIColor {
