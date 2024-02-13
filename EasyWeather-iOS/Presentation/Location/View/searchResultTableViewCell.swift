@@ -1,13 +1,13 @@
 //
-//  addedCityListTableViewCell.swift
+//  searchResultTableViewCell.swift
 //  EasyWeather-iOS
 //
-//  Created by 홍희곤 on 2/12/24.
+//  Created by 홍희곤 on 2/13/24.
 //
 
 import UIKit
 
-class addedCityListTableViewCell: UITableViewCell {
+class searchResultTableViewCell: UITableViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -17,7 +17,7 @@ class addedCityListTableViewCell: UITableViewCell {
     
     // MARK: - UI Properties
     
-    lazy var nameLabel: UILabel = {
+    lazy var resultLabel: UILabel = {
         let label = UILabel()
         label.font = FontLiteral.body(style: .regular)
         label.textColor = .black
@@ -25,13 +25,6 @@ class addedCityListTableViewCell: UITableViewCell {
         return label
     }()
     
-    lazy var temperatureLabel: UILabel = {
-        let label = UILabel()
-        label.font = FontLiteral.body(style: .regular)
-        label.textColor = .black
-        
-        return label
-    }()
     
     // MARK: - Life Cycle
     
@@ -55,29 +48,21 @@ class addedCityListTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-
 }
 
 // MARK: - Extensions : UI & Layout
 
-extension addedCityListTableViewCell {
+extension searchResultTableViewCell {
     
     private func setUI() {
         self.selectionStyle = .none
-        self.backgroundColor = UIColor(hex: "CEDCF6")
-//        contentView.backgroundColor = .red
-        self.layer.cornerRadius = 20
+        self.backgroundColor = .clear
         
-        self.addSubview(nameLabel)
-        self.addSubview(temperatureLabel)
+        self.addSubview(resultLabel)
         
-        nameLabel.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
-            make.leading.equalToSuperview().offset(28)
-        }
-        temperatureLabel.snp.makeConstraints{ make in
-            make.centerY.equalTo(self.contentView)
-            make.trailing.equalTo(self.contentView).offset(-28)
+        resultLabel.snp.makeConstraints { make in
+            make.top.equalToSuperview()
+            make.leading.equalToSuperview()
         }
     }
 }

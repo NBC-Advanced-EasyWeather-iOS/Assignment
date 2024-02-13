@@ -135,6 +135,16 @@ final class LocationView: UIView {
         let tableView = UITableView()
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
+//        tableView.separatorInset = .init(top: 30, left: 0, bottom: 30, right: 50)
+        
+        return tableView
+    }()
+    
+    //검색 결과
+    private lazy var searchResultTableView: UITableView = {
+        let tableView = UITableView()
+        tableView.backgroundColor = .clear
+        tableView.separatorStyle = .none
         
         return tableView
     }()
@@ -143,6 +153,13 @@ final class LocationView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: .zero)
+        
+        if true {
+//            addedCityListTableView.isHidden = true
+//            userLocationButton.isHidden = true
+//            listTitleLabel.isHidden = true
+            searchResultTableView.isHidden = true
+        }
         
         //위치 권한 분기
         if true {
@@ -156,9 +173,12 @@ final class LocationView: UIView {
         locationTextField.delegate = self
         addedCityListTableView.delegate = self
         addedCityListTableView.dataSource = self
+        searchResultTableView.delegate = self
+        searchResultTableView.dataSource = self
         
         //cell register
         addedCityListTableView.register(addedCityListTableViewCell.self, forCellReuseIdentifier: "CityList")
+        searchResultTableView.register(searchResultTableViewCell.self, forCellReuseIdentifier: "ResultList")
         
         setUI()
         setLayout()
@@ -199,6 +219,8 @@ extension LocationView {
         self.addSubview(listTitleLabel)
         
         self.addSubview(addedCityListTableView)
+        
+        self.addSubview(searchResultTableView)
     }
     
     private func setLayout() {
@@ -284,8 +306,15 @@ extension LocationView {
         //도시 리스트
         addedCityListTableView.snp.makeConstraints { make in
             make.top.equalTo(listTitleLabel.snp.bottom).offset(15)
-            make.trailing.equalToSuperview().offset(-16)
             make.leading.equalToSuperview().offset(16)
+            make.trailing.equalToSuperview().offset(-16)
+            make.bottom.equalToSuperview()
+        }
+        
+        searchResultTableView.snp.makeConstraints { make in
+            make.top.equalTo(locationSearchView.snp.bottom).offset(30)
+            make.leading.equalToSuperview().offset(34)
+            make.trailing.equalToSuperview().offset(-16)
             make.bottom.equalToSuperview()
         }
     }
@@ -299,10 +328,12 @@ extension LocationView: UITextFieldDelegate {
         // 입력된 문자열을 검색 쿼리로 사용하여 검색을 수행하고, 검색 결과를 업데이트합니다.
         let searchString = (textField.text! as NSString).replacingCharacters(in: range, with: string)
         updateSearchResults(for: searchString)
+        
         return true
     }
     
     func updateSearchResults(for searchText: String) {
+        
         print("검색 결과: \(searchText)")
     }
 }
@@ -312,20 +343,42 @@ extension LocationView: UITextFieldDelegate {
 extension LocationView: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        60
+        if tableView == addedCityListTableView {
+            return 60
+        } else if tableView == searchResultTableView {
+            return 25
+        }
+        return 0
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        3
+        if tableView == addedCityListTableView {
+            return 3
+        } else if tableView == searchResultTableView {
+            return 2
+        }
+        return 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CityList", for: indexPath) as! addedCityListTableViewCell
-        
-        cell.nameLabel.text = "서울"
-        cell.temperatureLabel.text = "0℃"
-        
-        return cell
+        if tableView == addedCityListTableView {
+            
+            let cell = tableView.dequeueReusableCell(withIdentifier: "CityList", for: indexPath) as! addedCityListTableViewCell
+            
+            cell.nameLabel.text = "서울"
+            cell.temperatureLabel.text = "0℃"
+            
+            return cell
+            
+        } else if tableView == searchResultTableView {
+            
+            let cell = tableView.dequeueReusableCell(withIdentifier: "ResultList", for: indexPath) as! searchResultTableViewCell
+            
+            cell.resultLabel.text = "대한민국 부산광역시"
+            
+            return cell
+        }
+        return UITableViewCell()
     }
 }
