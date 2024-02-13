@@ -60,7 +60,7 @@ class SettingsViewController: UIViewController {
             collectionView.reloadSections(IndexSet(integer: indexPath.section))
         } else {
             
-            var option = settingSections[indexPath.section][indexPath.item]
+            let option = settingSections[indexPath.section][indexPath.item]
             option.isOn.toggle()
             
             guard let cell = collectionView.cellForItem(at: indexPath) as? SettingOptionCell else { return }

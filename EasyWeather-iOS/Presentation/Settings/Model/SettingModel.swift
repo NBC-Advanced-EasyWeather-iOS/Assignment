@@ -1,7 +1,7 @@
 
 // MARK: - SettingOption Model
 
-struct SettingOptionModel {
+class SettingOptionModel {
     let title: String
     var isOn: Bool
     
