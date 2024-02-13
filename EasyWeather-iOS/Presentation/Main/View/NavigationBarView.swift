@@ -42,7 +42,7 @@ final class NavigationBarView: UIView {
         return stackView
     }()
     
-    private lazy var settingMenuButton: UIButton = {
+    lazy var settingMenuButton: UIButton = {
         let button = UIButton(type: .system)
         let image = UIImage(named: "SettingMenu")
         
@@ -52,7 +52,7 @@ final class NavigationBarView: UIView {
         return button
     }()
     
-    private lazy var locationPlusButton: UIButton = {
+    lazy var locationPlusButton: UIButton = {
         let button = UIButton(type: .system)
         let image = UIImage(named: "LocationPlus")
         

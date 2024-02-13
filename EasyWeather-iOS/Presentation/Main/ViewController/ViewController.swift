@@ -6,53 +6,38 @@
 //
 
 import UIKit
-import CoreLocation
+
 import SnapKit
 
 final class ViewController: UIViewController {
     
-    // MARK: - Properties
-    
-    private var locationManager: CLLocationManager!
-    
     // MARK: - UI Properties
     
     private var pagingControlView: PagingControlView!
+    private var settingsViewController = SettingsViewController()
+    private var weeklyTableViewController = WeeklyTableViewController()
     
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        locationManager = CLLocationManager()
-        locationManager.delegate = self
-        
         pagingControlView = PagingControlView(numberOfPages: 3)
         
         setUI()
         setLayout()
     }
-}
-
-// MARK: - CLLocationManagerDelegate
-
-extension ViewController: CLLocationManagerDelegate {
-    // 위치 권한 상태 변경시 호출
-    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        switch manager.authorizationStatus {
-        case .notDetermined:
-            // MARK: 위치 권한을 요청하지 않은 경우 - 권한 요청
-            manager.requestWhenInUseAuthorization()
-        case .authorizedWhenInUse, .authorizedAlways:
-            // MARK: 위치 권한을 얻은 경우
-            print("Location access granted")
-        case .denied, .restricted:
-            // MARK: 위치 권한을 얻지 못한 경우 - 위치 검색 페이지로 이동
-            print("Location access denied")
-//            self.navigationController?.present(<#T##viewControllerToPresent: UIViewController##UIViewController#>, animated: true)
-        @unknown default:
-            fatalError("Unknown location authorization status")
-        }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.navigationController?.isNavigationBarHidden = true
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        self.navigationController?.isNavigationBarHidden = false
     }
 }
 
@@ -60,8 +45,9 @@ extension ViewController: CLLocationManagerDelegate {
 
 extension ViewController {
     private func setUI() {
+        pagingControlView.addTargetSettingMenuButton(self, action: #selector(goToSettingsViewController))
+
         setBackgroundColor()
-        
         self.navigationController?.isNavigationBarHidden = true
         
         [pagingControlView].forEach {
@@ -94,5 +80,17 @@ extension ViewController {
         gradientLayer.frame = view.bounds
         
         view.layer.insertSublayer(gradientLayer, at: 0)
+    }
+}
+
+extension ViewController {
+    @objc
+    func goToSettingsViewController() {
+        self.navigationController?.pushViewController(settingsViewController, animated: true)
+    }
+    
+    @objc
+    func goToWeeklyTableViewController() {
+        self.navigationController?.pushViewController(weeklyTableViewController, animated: true)
     }
 }

@@ -12,7 +12,7 @@ final class PagingControlView: UIView {
     // MARK: - Properties
     
     private let numberOfPages: Int
-    
+
     // MARK: - UI Properties
     
     private lazy var navigationBarView = NavigationBarView()
@@ -103,6 +103,7 @@ extension PagingControlView: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PagingControlCollectionViewCell.identifier, for: indexPath) as! PagingControlCollectionViewCell
         
         cell.configure(withText: "\(indexPath.row + 1)")
+        cell.addTargetForWeekendWeatherButton(target, action: #selector(ViewController.goToWeeklyTableViewController))
         
         return cell
     }
@@ -126,5 +127,13 @@ extension PagingControlView: UIScrollViewDelegate {
         
         let pageIndex = round(scrollView.contentOffset.x / scrollView.frame.width)
         pageControl.currentPage = Int(pageIndex)
+    }
+}
+
+// MARK: - Configure
+
+extension PagingControlView {
+    func addTargetSettingMenuButton(_ target: Any?, action: Selector) {
+        navigationBarView.settingMenuButton.addTarget(target, action: action, for: .touchUpInside)
     }
 }
