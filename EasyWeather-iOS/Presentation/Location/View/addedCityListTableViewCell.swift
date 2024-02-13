@@ -7,13 +7,7 @@
 
 import UIKit
 
-class addedCityListTableViewCell: UITableViewCell {
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-
-        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 30, left: 16, bottom: 30, right: 16))
-    }
+final class addedCityListTableViewCell: UITableViewCell {
     
     // MARK: - UI Properties
     
@@ -64,20 +58,29 @@ extension addedCityListTableViewCell {
     
     private func setUI() {
         self.selectionStyle = .none
-        self.backgroundColor = UIColor(hex: "CEDCF6")
-//        contentView.backgroundColor = .red
-        self.layer.cornerRadius = 20
+        self.backgroundColor = .clear
+        contentView.backgroundColor = UIColor(hex: "CEDCF6")
+        contentView.layer.cornerRadius = 20
         
         self.addSubview(nameLabel)
         self.addSubview(temperatureLabel)
         
         nameLabel.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
             make.leading.equalToSuperview().offset(28)
+            make.top.equalToSuperview().offset(22.5)
+            make.bottom.equalToSuperview().offset(-22.5)
         }
         temperatureLabel.snp.makeConstraints{ make in
-            make.centerY.equalTo(self.contentView)
-            make.trailing.equalTo(self.contentView).offset(-28)
+            make.trailing.equalToSuperview().offset(-28)
+            make.top.equalToSuperview().offset(22.5)
+            make.bottom.equalToSuperview().offset(-22.5)
         }
+    }
+    
+    //레이아웃 inset 메서드
+    override func layoutSubviews() {
+        super.layoutSubviews()
+
+        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 7.5, left: 0, bottom: 7.5, right: 0))
     }
 }

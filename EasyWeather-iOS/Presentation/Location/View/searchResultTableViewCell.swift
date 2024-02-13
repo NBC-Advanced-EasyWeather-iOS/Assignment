@@ -7,13 +7,7 @@
 
 import UIKit
 
-class searchResultTableViewCell: UITableViewCell {
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-
-        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 30, left: 16, bottom: 30, right: 16))
-    }
+final class searchResultTableViewCell: UITableViewCell {
     
     // MARK: - UI Properties
     
@@ -61,8 +55,15 @@ extension searchResultTableViewCell {
         self.addSubview(resultLabel)
         
         resultLabel.snp.makeConstraints { make in
+            make.leading.equalToSuperview().offset(18)
             make.top.equalToSuperview()
-            make.leading.equalToSuperview()
         }
+    }
+    
+    //레이아웃 inset 메서드
+    override func layoutSubviews() {
+        super.layoutSubviews()
+
+        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 0, left: 0, bottom: 25, right: 0))
     }
 }

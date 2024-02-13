@@ -135,7 +135,6 @@ final class LocationView: UIView {
         let tableView = UITableView()
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
-//        tableView.separatorInset = .init(top: 30, left: 0, bottom: 30, right: 50)
         
         return tableView
     }()
@@ -143,7 +142,8 @@ final class LocationView: UIView {
     //검색 결과
     private lazy var searchResultTableView: UITableView = {
         let tableView = UITableView()
-        tableView.backgroundColor = .clear
+        tableView.isHidden = true
+        tableView.backgroundColor = UIColor(hex: "F2F2F7")
         tableView.separatorStyle = .none
         
         return tableView
@@ -153,13 +153,6 @@ final class LocationView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: .zero)
-        
-        if true {
-//            addedCityListTableView.isHidden = true
-//            userLocationButton.isHidden = true
-//            listTitleLabel.isHidden = true
-            searchResultTableView.isHidden = true
-        }
         
         //위치 권한 분기
         if true {
@@ -216,10 +209,11 @@ extension LocationView {
         unknownLocationButton.addSubview(unknownLocationCaptionLabel)
         unknownLocationButton.addSubview(unknownLocationRightIcon)
         
+        //추가한 도시 목록
         self.addSubview(listTitleLabel)
-        
         self.addSubview(addedCityListTableView)
         
+        //검색 결과 테이블뷰
         self.addSubview(searchResultTableView)
     }
     
@@ -305,7 +299,7 @@ extension LocationView {
         
         //도시 리스트
         addedCityListTableView.snp.makeConstraints { make in
-            make.top.equalTo(listTitleLabel.snp.bottom).offset(15)
+            make.top.equalTo(listTitleLabel.snp.bottom).offset(7.5)
             make.leading.equalToSuperview().offset(16)
             make.trailing.equalToSuperview().offset(-16)
             make.bottom.equalToSuperview()
@@ -313,7 +307,7 @@ extension LocationView {
         
         searchResultTableView.snp.makeConstraints { make in
             make.top.equalTo(locationSearchView.snp.bottom).offset(30)
-            make.leading.equalToSuperview().offset(34)
+            make.leading.equalToSuperview().offset(16)
             make.trailing.equalToSuperview().offset(-16)
             make.bottom.equalToSuperview()
         }
@@ -324,6 +318,13 @@ extension LocationView {
 
 extension LocationView: UITextFieldDelegate {
     
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        searchResultTableView.isHidden = false
+    }
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        searchResultTableView.isHidden = true
+    }
+    
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         // 입력된 문자열을 검색 쿼리로 사용하여 검색을 수행하고, 검색 결과를 업데이트합니다.
         let searchString = (textField.text! as NSString).replacingCharacters(in: range, with: string)
@@ -331,9 +332,8 @@ extension LocationView: UITextFieldDelegate {
         
         return true
     }
-    
+
     func updateSearchResults(for searchText: String) {
-        
         print("검색 결과: \(searchText)")
     }
 }
@@ -341,15 +341,6 @@ extension LocationView: UITextFieldDelegate {
 // MARK: - Extensions : UITableViewDelegate
 
 extension LocationView: UITableViewDelegate, UITableViewDataSource {
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if tableView == addedCityListTableView {
-            return 60
-        } else if tableView == searchResultTableView {
-            return 25
-        }
-        return 0
-    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tableView == addedCityListTableView {
@@ -380,5 +371,24 @@ extension LocationView: UITableViewDelegate, UITableViewDataSource {
             return cell
         }
         return UITableViewCell()
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        
+        if tableView == addedCityListTableView {
+            
+            let deleteAction = UIContextualAction(style: .normal, title: "삭제", handler: {(action, view, completionHandler) in
+                
+                //삭제 로직 구현부
+                tableView.reloadData()
+            })
+            deleteAction.backgroundColor = .red
+            
+            let swipeActionsConfiguration = UISwipeActionsConfiguration(actions: [deleteAction])
+            swipeActionsConfiguration.performsFirstActionWithFullSwipe = false
+            
+            return swipeActionsConfiguration
+        }
+        return nil
     }
 }
