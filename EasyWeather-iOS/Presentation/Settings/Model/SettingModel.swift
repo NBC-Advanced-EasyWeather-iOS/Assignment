@@ -1,13 +1,7 @@
 
-//  SettingModel.swift
-//  EasyWeather-iOS
-
-
-import Foundation
-
 // MARK: - SettingOption Model
 
-class SettingOption {
+struct SettingOptionModel {
     let title: String
     var isOn: Bool
     
@@ -16,5 +10,3 @@ class SettingOption {
         self.isOn = isOn
     }
 }
-
-

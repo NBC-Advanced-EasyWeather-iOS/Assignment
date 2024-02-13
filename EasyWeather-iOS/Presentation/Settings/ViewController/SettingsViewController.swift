@@ -2,46 +2,51 @@
 import UIKit
 
 // MARK: - ViewController
+
 class SettingsViewController: UIViewController {
-    var collectionView: UICollectionView!
+    var collectionView: UICollectionView?
     
     // MARK: - Properties for layout calculation
+    
     private let itemsPerRow: CGFloat = 2
     private let sectionInsets = UIEdgeInsets(top: 10.0, left: 20.0, bottom: 10.0, right: 20.0)
     
-    var settingSections: [[SettingOption]] = [
-        [SettingOption(title: "일출/일몰 시간", isOn: true), SettingOption(title: "최저/최고 기온", isOn: false),
-         SettingOption(title: "기압", isOn: true), SettingOption(title: "습도", isOn: false)],
-        [SettingOption(title: "섭씨온도", isOn: true), SettingOption(title: "화씨온도", isOn: false)]
+    var settingSections: [[SettingOptionModel]] = [
+        [SettingOptionModel(title: "일출/일몰 시간", isOn: true), SettingOptionModel(title: "최저/최고 기온", isOn: false),
+         SettingOptionModel(title: "기압", isOn: true), SettingOptionModel(title: "습도", isOn: false)],
+        [SettingOptionModel(title: "섭씨온도 °C", isOn: true), SettingOptionModel(title: "화씨온도 °F", isOn: false)]
     ]
+    
+    // MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureCollectionView()
+        initializeCollectionView()
         view.backgroundColor = .lightTheme
     }
     
-    private func configureCollectionView() {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
-        collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: layout)
-        collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        collectionView.backgroundColor = .secondaryBackground
-        collectionView.dataSource = self
-        collectionView.delegate = self
-        collectionView.register(SettingOptionCell.self, forCellWithReuseIdentifier: SettingOptionCell.identifier)
-        collectionView.register(SettingHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SettingHeader.identifier)
-        
-        view.addSubview(collectionView)
-        
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            collectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            collectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
-        ])
-    }
+    private func initializeCollectionView() {
+            let layout = UICollectionViewFlowLayout()
+            layout.scrollDirection = .vertical
+            collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+            collectionView?.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+            collectionView?.backgroundColor = .lightTheme
+            collectionView?.dataSource = self
+            collectionView?.delegate = self
+            collectionView?.register(SettingOptionCell.self, forCellWithReuseIdentifier: SettingOptionCell.identifier)
+            collectionView?.register(SettingHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SettingHeader.identifier)
+            
+            if let collectionView = collectionView {
+                view.addSubview(collectionView)
+                collectionView.translatesAutoresizingMaskIntoConstraints = false
+                NSLayoutConstraint.activate([
+                    collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+                    collectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+                    collectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+                    collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+                ])
+            }
+        }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
@@ -55,7 +60,7 @@ class SettingsViewController: UIViewController {
             collectionView.reloadSections(IndexSet(integer: indexPath.section))
         } else {
             
-            let option = settingSections[indexPath.section][indexPath.item]
+            var option = settingSections[indexPath.section][indexPath.item]
             option.isOn.toggle()
             
             guard let cell = collectionView.cellForItem(at: indexPath) as? SettingOptionCell else { return }
@@ -67,6 +72,7 @@ class SettingsViewController: UIViewController {
 }
 
 // MARK: - UICollectionViewDataSource
+
 extension SettingsViewController: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return settingSections.count
@@ -95,8 +101,8 @@ extension SettingsViewController: UICollectionViewDataSource {
     }
 }
 
-
 // MARK: - UICollectionViewDelegateFlowLayout
+
 extension SettingsViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let paddingSpace = sectionInsets.left * (itemsPerRow + 1)

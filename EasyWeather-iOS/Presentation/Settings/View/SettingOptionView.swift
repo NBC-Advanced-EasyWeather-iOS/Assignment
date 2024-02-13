@@ -13,8 +13,8 @@ class SettingOptionCell: UICollectionViewCell {
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 16)
-        label.textColor = .black
+        label.font = FontLiteral.body(style: .regular)
+        label.textColor = .primaryLabel
         return label
     }()
     
@@ -35,24 +35,27 @@ class SettingOptionCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Layout
+    
     private func setupLayout() {
-        addSubview(titleLabel)
         addSubview(checkImageView)
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(titleLabel)
         checkImageView.translatesAutoresizingMaskIntoConstraints = false
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        
         NSLayoutConstraint.activate([
-            titleLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
-            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
-            titleLabel.trailingAnchor.constraint(equalTo: checkImageView.leadingAnchor, constant: -10),
-            
+            checkImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             checkImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
-            checkImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
-            checkImageView.widthAnchor.constraint(equalToConstant: 24),
-            checkImageView.heightAnchor.constraint(equalToConstant: 24)
+            checkImageView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.15),
+            checkImageView.heightAnchor.constraint(equalTo: widthAnchor, multiplier: 0.15),
+            
+            titleLabel.leadingAnchor.constraint(equalTo: checkImageView.trailingAnchor, constant: 8),
+            titleLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
+            titleLabel.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: -16)
         ])
     }
     
-    func configure(with option: SettingOption) {
+    func configure(with option: SettingOptionModel) {
         titleLabel.text = option.title
         updateAppearance(isOn: option.isOn)
     }

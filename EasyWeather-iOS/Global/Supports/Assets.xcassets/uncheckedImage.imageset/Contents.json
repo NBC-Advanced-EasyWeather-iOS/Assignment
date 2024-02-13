@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "uncheckedImage.png",
+      "filename" : "Frame 24.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "uncheckedImage 1.png",
+      "filename" : "Frame 25.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "uncheckedImage 2.png",
+      "filename" : "Frame 26.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

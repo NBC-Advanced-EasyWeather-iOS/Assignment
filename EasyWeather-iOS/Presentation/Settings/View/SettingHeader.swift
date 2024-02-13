@@ -2,7 +2,6 @@
 //  SettingHeader.swift
 //  EasyWeather-iOS
 
-
 import UIKit
 
 // MARK: - Custom UICollectionReusableView for headers
@@ -12,7 +11,7 @@ class SettingHeader: UICollectionReusableView {
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 18)
+        label.font = FontLiteral.title3(style: .bold)
         label.textColor = .primaryLabel
         return label
     }()
