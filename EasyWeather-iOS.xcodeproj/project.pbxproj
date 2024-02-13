@@ -34,6 +34,10 @@
 		37C4B1422B75DAEC006B56B9 /* APIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C4B1412B75DAEC006B56B9 /* APIKeys.swift */; };
 		37C4B1472B75E2AA006B56B9 /* WeatherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C4B1462B75E2AA006B56B9 /* WeatherService.swift */; };
 		37C4B14A2B75E497006B56B9 /* JSONDecoder+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C4B1492B75E497006B56B9 /* JSONDecoder+Extension.swift */; };
+		564ECC042B7B0B08006A66FD /* SettingHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 564ECC032B7B0B08006A66FD /* SettingHeader.swift */; };
+		566F426A2B771F3F002C1542 /* SettingOptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566F42692B771F3F002C1542 /* SettingOptionView.swift */; };
+		566F426C2B77205E002C1542 /* SettingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566F426B2B77205E002C1542 /* SettingModel.swift */; };
+		566F426E2B7721B1002C1542 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566F426D2B7721B1002C1542 /* SettingsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -65,6 +69,10 @@
 		37C4B1412B75DAEC006B56B9 /* APIKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKeys.swift; sourceTree = "<group>"; };
 		37C4B1462B75E2AA006B56B9 /* WeatherService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherService.swift; sourceTree = "<group>"; };
 		37C4B1492B75E497006B56B9 /* JSONDecoder+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "JSONDecoder+Extension.swift"; sourceTree = "<group>"; };
+		564ECC032B7B0B08006A66FD /* SettingHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingHeader.swift; sourceTree = "<group>"; };
+		566F42692B771F3F002C1542 /* SettingOptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingOptionView.swift; sourceTree = "<group>"; };
+		566F426B2B77205E002C1542 /* SettingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingModel.swift; sourceTree = "<group>"; };
+		566F426D2B7721B1002C1542 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -300,6 +308,7 @@
 		37072C342B73164F00F4B744 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				566F426D2B7721B1002C1542 /* SettingsViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -307,6 +316,8 @@
 		37072C352B73164F00F4B744 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				566F42692B771F3F002C1542 /* SettingOptionView.swift */,
+				564ECC032B7B0B08006A66FD /* SettingHeader.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -314,6 +325,7 @@
 		37072C362B73164F00F4B744 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				566F426B2B77205E002C1542 /* SettingModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -411,6 +423,7 @@
 				37072C082B73078400F4B744 /* FontLiterals.swift in Sources */,
 				1B5BA0972B734CED002A821F /* NavigationBarView.swift in Sources */,
 				FF63FBE52B78DEFD0011C9A5 /* WeatherModel.swift in Sources */,
+				564ECC042B7B0B08006A66FD /* SettingHeader.swift in Sources */,
 				37072BDC2B72929600F4B744 /* ViewController.swift in Sources */,
 				37072C3F2B73B8A300F4B744 /* NetworkProvider.swift in Sources */,
 				37C4B1402B7508EE006B56B9 /* DataModels.swift in Sources */,
@@ -418,8 +431,11 @@
 				37072BD82B72929600F4B744 /* AppDelegate.swift in Sources */,
 				FF63FBE72B78DF100011C9A5 /* WeeklyWeatherTableViewCell.swift in Sources */,
 				37C4B1472B75E2AA006B56B9 /* WeatherService.swift in Sources */,
+				566F426C2B77205E002C1542 /* SettingModel.swift in Sources */,
 				37072C0A2B7308E100F4B744 /* ColorLiterals.swift in Sources */,
 				1BD4C0392B751D0E003CF702 /* MeteorologicalCollectionView.swift in Sources */,
+				566F426E2B7721B1002C1542 /* SettingsViewController.swift in Sources */,
+				566F426A2B771F3F002C1542 /* SettingOptionView.swift in Sources */,
 				37072C0C2B73097400F4B744 /* String+Extension.swift in Sources */,
 				FF63FBE32B78DE950011C9A5 /* WeeklyViewController.swift in Sources */,
 				37072BDA2B72929600F4B744 /* SceneDelegate.swift in Sources */,
