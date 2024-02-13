@@ -9,9 +9,13 @@
 import UIKit
 
 class WeeklyTableViewController: UIViewController {
+    
+    // MARK: - Properties
     let myView = WeeklyWeatherView()
     let weatherData = WeatherData.shared.getWeatherData()
     
+    
+    // MARK: - Life Cycle
     override func loadView() {
         view = myView
     }
@@ -28,7 +32,11 @@ class WeeklyTableViewController: UIViewController {
 }
 
 
+
 extension WeeklyTableViewController: UITableViewDataSource {
+    
+    // MARK: - Layout
+
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return "이번 주 날씨"
     }
@@ -50,6 +58,7 @@ extension WeeklyTableViewController: UITableViewDataSource {
     
 }
 
+// MARK: - UITableView Delegate
 extension WeeklyTableViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
