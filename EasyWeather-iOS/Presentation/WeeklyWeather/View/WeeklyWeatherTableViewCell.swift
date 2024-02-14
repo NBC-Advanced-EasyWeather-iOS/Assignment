@@ -25,7 +25,7 @@ class WeeklyTableViewCell: UITableViewCell {
         setupViews()
     }
 
-    func configure(with viewModel: WeatherViewModel) {
+    func configure(with viewModel: WeatherDTO) {
         dateLabel.text = viewModel.dateString
         weatherLabel.text = viewModel.condition
         temperatureLabel.text = viewModel.temperature

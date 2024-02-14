@@ -6,12 +6,12 @@
 //
 import UIKit
 
-final class WeeklyWeatherViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+final class WeeklyWeatherViewController: UIViewController {
     
     // MARK: - Properties
     let myView = WeeklyWeatherView()
     var weatherService = WeatherService()
-    var weatherViewModels: [WeatherViewModel] = []
+    var weatherViewModels: [WeatherDTO] = []
     
     
     // MARK: - Life Cycle
@@ -27,15 +27,15 @@ final class WeeklyWeatherViewController: UIViewController, UITableViewDataSource
 }
 
 // MARK: - UITableViewDataSource
-extension WeeklyWeatherViewController {
+extension WeeklyWeatherViewController: UITableViewDataSource {
     
     func loadWeeklyWeatherData() {
         Task {
             if let weeklyWeatherDTO = try? await weatherService.fetchWeeklyWeather(city: "Seoul") {
-                let viewModels = weeklyWeatherDTO.list.map { dayWeather -> WeatherViewModel in
+                let viewModels = weeklyWeatherDTO.list.map { dayWeather -> WeatherDTO in
                     let celsiusTemp = dayWeather.temp.day - 273.15
                     let dayOfWeek = convertUnixTimeToDayOfWeek(unixTime: dayWeather.dt)
-                    return WeatherViewModel(
+                    return WeatherDTO(
                         cityName: weeklyWeatherDTO.city.name,
                         temperature: String(format: "%.1fºC", celsiusTemp),
                         condition: dayWeather.weather.first?.main ?? "Not Available",
@@ -60,7 +60,7 @@ extension WeeklyWeatherViewController {
 
 // MARK: - UITableViewDelegate
 
-extension WeeklyWeatherViewController {
+extension WeeklyWeatherViewController: UITableViewDelegate {
     
     private func convertUnixTimeToDayOfWeek(unixTime: Int) -> String {
         let date = Date(timeIntervalSince1970: TimeInterval(unixTime))
@@ -87,7 +87,7 @@ extension WeeklyWeatherViewController {
         let headerView = UIView()
         headerView.backgroundColor = tableView.backgroundColor
         
-        let headerLabel = UILabel(frame: CGRect(x: 20, y: 8, width: tableView.bounds.size.width, height: 25))
+        let headerLabel = UILabel(frame: CGRect(x: 20, y: 8, width: UIScreen.screenWidth - 40, height: 25))
         headerLabel.font = UIFont.boldSystemFont(ofSize: 30)
         headerLabel.textColor = UIColor.black
         headerLabel.text = "이번주 날씨"

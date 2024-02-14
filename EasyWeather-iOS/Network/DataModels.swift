@@ -7,13 +7,12 @@
 
 // MARK: - Models
 
-struct WeatherViewModel {
+struct WeatherDTO {
     let cityName: String
     let temperature: String
     let condition: String
     let dateString: String // 요일 정보를 포함시키는 속성 추가
 }
-
 
 struct DailyResponseDTO: Codable {
     let weather: [Weather]
@@ -75,8 +74,6 @@ struct Coordinates: Codable {
     let lon: Float
     let lat: Float
 }
-
-
 
 struct DayWeather: Codable {
     let dt: Int
