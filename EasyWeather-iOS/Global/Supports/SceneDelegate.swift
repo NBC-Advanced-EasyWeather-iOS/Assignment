@@ -19,7 +19,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             let window = UIWindow(windowScene: windowScene)
             window.overrideUserInterfaceStyle = UIUserInterfaceStyle.light
             
-            let rootVC = ViewController()
+            let rootVC = WeeklyWeatherViewController()
             let navigationController = UINavigationController(rootViewController: rootVC)
             
             window.rootViewController = navigationController

@@ -25,9 +25,14 @@ class WeeklyTableViewCell: UITableViewCell {
         setupViews()
     }
 
+    func configure(with viewModel: WeatherViewModel) {
+        dateLabel.text = viewModel.dateString
+        weatherLabel.text = viewModel.condition
+        temperatureLabel.text = viewModel.temperature
+    }
+
     // MARK: - Layout
     private func setupViews() {
-        // 라벨 설정
         contentView.addSubview(dateLabel)
         contentView.addSubview(weatherLabel)
         contentView.addSubview(temperatureLabel)

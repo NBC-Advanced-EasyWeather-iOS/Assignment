@@ -4,15 +4,14 @@
 //
 //  Created by t2023-m0051 on 2/11/24.
 //
-
-
 import UIKit
 
-final class WeeklyTableViewController: UIViewController {
+final class WeeklyWeatherViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     // MARK: - Properties
     let myView = WeeklyWeatherView()
-    let weatherData = WeatherData.shared.getWeatherData()
+    var weatherService = WeatherService()
+    var weatherViewModels: [WeatherViewModel] = []
     
     
     // MARK: - Life Cycle
@@ -22,41 +21,67 @@ final class WeeklyTableViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        myView.tableView.dataSource = self
-        myView.tableView.delegate = self
+        loadWeeklyWeatherData()
+        setupTableView()
     }
 }
 
-extension WeeklyTableViewController: UITableViewDataSource {
+// MARK: - UITableViewDataSource
+extension WeeklyWeatherViewController {
     
-    // MARK: - Layout
-
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "이번 주 날씨"
+    func loadWeeklyWeatherData() {
+        Task {
+            if let weeklyWeatherDTO = try? await weatherService.fetchWeeklyWeather(city: "Seoul") {
+                let viewModels = weeklyWeatherDTO.list.map { dayWeather -> WeatherViewModel in
+                    let celsiusTemp = dayWeather.temp.day - 273.15
+                    let dayOfWeek = convertUnixTimeToDayOfWeek(unixTime: dayWeather.dt)
+                    return WeatherViewModel(
+                        cityName: weeklyWeatherDTO.city.name,
+                        temperature: String(format: "%.1fºC", celsiusTemp),
+                        condition: dayWeather.weather.first?.main ?? "Not Available",
+                        dateString: dayOfWeek
+                    )
+                }
+                DispatchQueue.main.async { [weak self] in
+                    self?.weatherViewModels = viewModels
+                    self?.myView.tableView.reloadData()
+                }
+            }
+        }
     }
+    
+    private func setupTableView() {
+        myView.tableView.dataSource = self
+        myView.tableView.delegate = self
+        myView.tableView.register(WeeklyTableViewCell.self, forCellReuseIdentifier: "cell")
+    }
+    
+}
+
+// MARK: - UITableViewDelegate
+
+extension WeeklyWeatherViewController {
+    
+    private func convertUnixTimeToDayOfWeek(unixTime: Int) -> String {
+        let date = Date(timeIntervalSince1970: TimeInterval(unixTime))
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "ko_KR")
+        dateFormatter.dateFormat = "EEEE"
+        return dateFormatter.string(from: date)
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 7
+        return weatherViewModels.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? WeeklyTableViewCell else {
             fatalError("The dequeued cell is not an instance of WeeklyTableViewCell.")
         }
-        let weather = weatherData[indexPath.row]
-        
-        
-        cell.dateLabel.text = weather.dayOfWeek
-        cell.weatherLabel.text = weather.weatherCondition
-        cell.temperatureLabel.text = weather.temperature
-        
+        let viewModel = weatherViewModels[indexPath.row]
+        cell.configure(with: viewModel)
         return cell
     }
-    
-}
-
-// MARK: - UITableView Delegate
-extension WeeklyTableViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UIView()
@@ -65,12 +90,12 @@ extension WeeklyTableViewController: UITableViewDelegate {
         let headerLabel = UILabel(frame: CGRect(x: 20, y: 8, width: tableView.bounds.size.width, height: 25))
         headerLabel.font = UIFont.boldSystemFont(ofSize: 30)
         headerLabel.textColor = UIColor.black
-        headerLabel.text = self.tableView(tableView, titleForHeaderInSection: section)
+        headerLabel.text = "이번주 날씨"
         
         headerView.addSubview(headerLabel)
         
         headerLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(20) // Adjust this value for desired top padding
+            make.top.equalToSuperview().offset(20)
             make.left.equalToSuperview().offset(20)
             make.right.equalToSuperview().offset(-20)
         }
@@ -82,7 +107,6 @@ extension WeeklyTableViewController: UITableViewDelegate {
     }
 }
 
-
 #if DEBUG
 
 import SwiftUI
@@ -92,7 +116,7 @@ struct ViewControllerPresentable : UIViewControllerRepresentable {
     }
     
     func makeUIViewController(context: Context) -> some UIViewController {
-        WeeklyTableViewController()
+        WeeklyWeatherViewController()
     }
 }
 
