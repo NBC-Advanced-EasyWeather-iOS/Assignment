@@ -8,8 +8,6 @@
 import UIKit
 import CoreLocation
 
-import SnapKit
-
 final class MainGPSViewController: UIViewController {
     
     // MARK: - Properties
@@ -18,7 +16,6 @@ final class MainGPSViewController: UIViewController {
     
     // MARK: - UI Properties
     
-    private var pagingControlView: PagingControlView!
     private var viewController = ViewController()
     private var settingsViewController = SettingsViewController()
     
@@ -29,8 +26,6 @@ final class MainGPSViewController: UIViewController {
         
         locationManager = CLLocationManager()
         locationManager?.delegate = self
-        
-        pagingControlView = PagingControlView(numberOfPages: 3)
         
         setUI()
     }
