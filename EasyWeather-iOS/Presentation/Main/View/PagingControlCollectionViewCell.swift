@@ -47,7 +47,7 @@ final class PagingControlCollectionViewCell: UICollectionViewCell {
         return createWeatherLabel(font: FontLiteral.body(style: .bold))
     }()
     
-    private lazy var weekendWeatherButton: UIButton = {
+    lazy var weekendWeatherButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("주간 날씨", for: .normal)
         button.titleLabel?.font = FontLiteral.body(style: .bold)
@@ -140,11 +140,14 @@ extension PagingControlCollectionViewCell {
 // MARK: - Configure Cell
 
 extension PagingControlCollectionViewCell {
-    
     func configure(withText text: String) {
         self.weatherIcon.image = UIImage(named: "Weather/DayPartlyCloudy")
         self.temperatureLabel.text = "\(text)°C"
         self.windChillGuideLabel.text = "어제보다 \(text)도 높아요 😊"
         self.windChillLabel.text = "체감온도 \(text)℃"
+    }
+    
+    func addTargetForWeekendWeatherButton(_ target: Any?, action: Selector) {
+        weekendWeatherButton.addTarget(target, action: action, for: .touchUpInside)
     }
 }
