@@ -15,7 +15,7 @@ final class ViewController: UIViewController {
     
     private var pagingControlView: PagingControlView!
     private var settingsViewController = SettingsViewController()
-    private var weeklyTableViewController = WeeklyTableViewController()
+    private var locationViewController = LocationViewController()
     
     // MARK: - Life Cycle
     
@@ -46,6 +46,7 @@ final class ViewController: UIViewController {
 extension ViewController {
     private func setUI() {
         pagingControlView.addTargetSettingMenuButton(self, action: #selector(goToSettingsViewController))
+        pagingControlView.addTargetLocationMenuButton(self, action: #selector(goToLocationViewController))
 
         setBackgroundColor()
         self.navigationController?.isNavigationBarHidden = true
@@ -90,7 +91,7 @@ extension ViewController {
     }
     
     @objc
-    func goToWeeklyTableViewController() {
-        self.navigationController?.pushViewController(weeklyTableViewController, animated: true)
+    func goToLocationViewController() {
+        self.navigationController?.pushViewController(locationViewController, animated: true)
     }
 }
