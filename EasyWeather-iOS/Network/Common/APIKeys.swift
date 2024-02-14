@@ -8,7 +8,5 @@
 import Foundation
 
 struct APIKeys {
-    static var openWeatherKey: String {
-        return Bundle.main.object(forInfoDictionaryKey: "OpenWeatherAPIKey") as? String ?? ""
-    }
+    static let openWeatherKey = ProcessInfo.processInfo.environment["APP_KEY"] ?? ""
 }
