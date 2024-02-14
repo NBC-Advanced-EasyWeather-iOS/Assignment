@@ -103,7 +103,7 @@ extension PagingControlView: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PagingControlCollectionViewCell.identifier, for: indexPath) as! PagingControlCollectionViewCell
         
         cell.configure(withText: "\(indexPath.row + 1)")
-        cell.addTargetForWeekendWeatherButton(target, action: #selector(ViewController.goToLocationViewController))
+        cell.addTargetForWeekendWeatherButton(target, action: #selector(ViewController.goToWeekendWeatherViewController))
         
         return cell
     }

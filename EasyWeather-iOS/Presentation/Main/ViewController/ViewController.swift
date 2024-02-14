@@ -16,6 +16,7 @@ final class ViewController: UIViewController {
     private var pagingControlView: PagingControlView!
     private var settingsViewController = SettingsViewController()
     private var locationViewController = LocationViewController()
+    private var weeklyTableViewController = WeeklyTableViewController()
     
     // MARK: - Life Cycle
     
@@ -92,6 +93,11 @@ extension ViewController {
     
     @objc
     func goToLocationViewController() {
-        self.navigationController?.pushViewController(locationViewController, animated: true)
+        self.navigationController?.present(locationViewController, animated: true)
+    }
+    
+    @objc
+    func goToWeekendWeatherViewController() {
+        self.navigationController?.pushViewController(weeklyTableViewController, animated: true)
     }
 }

@@ -237,7 +237,7 @@ extension LocationView {
         //타이틀
         titleLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(safeAreaLayoutGuide)
+            make.top.equalTo(safeAreaLayoutGuide).offset(40)
         }
         
         //검색창
