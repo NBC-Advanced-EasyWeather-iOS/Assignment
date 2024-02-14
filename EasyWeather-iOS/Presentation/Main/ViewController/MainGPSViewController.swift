@@ -14,7 +14,7 @@ final class MainGPSViewController: UIViewController {
     
     // MARK: - Properties
     
-    private var locationManager: CLLocationManager!
+    private var locationManager: CLLocationManager?
     
     // MARK: - UI Properties
     
@@ -28,7 +28,7 @@ final class MainGPSViewController: UIViewController {
         super.viewDidLoad()
         
         locationManager = CLLocationManager()
-        locationManager.delegate = self
+        locationManager?.delegate = self
         
         pagingControlView = PagingControlView(numberOfPages: 3)
         
