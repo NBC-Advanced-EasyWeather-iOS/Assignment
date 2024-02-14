@@ -22,31 +22,31 @@ class SettingsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         initializeCollectionView()
-        view.backgroundColor = .lightTheme
+        view.backgroundColor = UIColor.secondaryBackground
     }
     
     private func initializeCollectionView() {
-            let layout = UICollectionViewFlowLayout()
-            layout.scrollDirection = .vertical
-            collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-            collectionView?.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-            collectionView?.backgroundColor = .lightTheme
-            collectionView?.dataSource = self
-            collectionView?.delegate = self
-            collectionView?.register(SettingOptionCell.self, forCellWithReuseIdentifier: SettingOptionCell.identifier)
-            collectionView?.register(SettingHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SettingHeader.identifier)
-            
-            if let collectionView = collectionView {
-                view.addSubview(collectionView)
-                collectionView.translatesAutoresizingMaskIntoConstraints = false
-                NSLayoutConstraint.activate([
-                    collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-                    collectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-                    collectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-                    collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
-                ])
-            }
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView?.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        collectionView?.backgroundColor = .lightTheme
+        collectionView?.dataSource = self
+        collectionView?.delegate = self
+        collectionView?.register(SettingOptionCell.self, forCellWithReuseIdentifier: SettingOptionCell.identifier)
+        collectionView?.register(SettingHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SettingHeader.identifier)
+        
+        if let collectionView = collectionView {
+            view.addSubview(collectionView)
+            collectionView.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint.activate([
+                collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+                collectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+                collectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+                collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+            ])
         }
+    }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
