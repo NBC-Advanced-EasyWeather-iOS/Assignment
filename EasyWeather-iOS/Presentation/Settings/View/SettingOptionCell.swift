@@ -72,7 +72,7 @@ extension SettingOptionCell {
     func updateAppearance(isOn: Bool) {
         self.titleLabel.textColor = isOn ? .primaryLabel : .tertiaryLabel
         self.backgroundColor = isOn ? .primaryBackground : .tertiaryBackground
-        checkImageView.image = isOn ? UIImage(named: "checkedImage") : UIImage(named: "uncheckedImage")
+        checkImageView.image = isOn ? UIImage(named: "Check") : UIImage(named: "UnCheck")
         
         SettingOptionUserDefault.shared.saveOptionsToUserDefaults(title: titleLabel.text!, isOn: isOn)
     }
