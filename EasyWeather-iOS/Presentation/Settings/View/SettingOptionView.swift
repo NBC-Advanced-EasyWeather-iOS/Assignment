@@ -9,12 +9,15 @@ import UIKit
 
 class SettingOptionCell: UICollectionViewCell {
     
+    // MARK: - Properties
+
     static let identifier = "SettingOptionCell"
+    
+    // MARK: - UI Properties
     
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.font = FontLiteral.body(style: .regular)
-        label.textColor = .primaryLabel
         return label
     }()
     
@@ -24,9 +27,11 @@ class SettingOptionCell: UICollectionViewCell {
         return imageView
     }()
     
+    // MARK: - Life Cycle
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = .white
+        
         setupLayout()
         setupBorder()
     }
@@ -34,8 +39,11 @@ class SettingOptionCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    // MARK: - Layout
+}
+
+// MARK: - Extensions
+
+extension SettingOptionCell {
     
     private func setupLayout() {
         addSubview(checkImageView)
@@ -61,23 +69,25 @@ class SettingOptionCell: UICollectionViewCell {
     }
     
     func updateAppearance(isOn: Bool) {
-        self.backgroundColor = isOn ? .primaryBackground : .secondaryBackground // 화이트 색상과 F2F2F7 색상 적용
+        self.titleLabel.textColor = isOn ? .primaryLabel : .tertiaryLabel
+        self.backgroundColor = isOn ? .primaryBackground : .tertiaryBackground
         checkImageView.image = isOn ? UIImage(named: "checkedImage") : UIImage(named: "uncheckedImage")
+        
+        print(self.titleLabel.text!, isOn)
+        UserDefaults.standard.set(isOn, forKey: "\(self.titleLabel.text!)")
     }
     
     
     private func setupBorder() {
-        self.layer.borderWidth = 1.0
-        self.layer.borderColor = UIColor.white.cgColor
         self.layer.cornerRadius = 20
         self.layer.masksToBounds = false
         self.clipsToBounds = false
         
         // 그림자 설정
         self.layer.shadowColor = UIColor.darkTheme.cgColor
-        self.layer.shadowOpacity = 0.1
-        self.layer.shadowOffset = CGSize(width: 1, height: 2)
-        self.layer.shadowRadius = 5
-        self.layer.shadowPath = UIBezierPath(roundedRect: self.bounds, cornerRadius: self.layer.cornerRadius).cgPath
+        self.layer.shadowOpacity = 0.2
+        self.layer.shadowOffset = CGSize(width: 0, height: 2)
+        self.layer.shadowRadius = 1
+        self.layer.shadowPath = UIBezierPath(roundedRect: self.bounds, cornerRadius: 16).cgPath
     }
 }
