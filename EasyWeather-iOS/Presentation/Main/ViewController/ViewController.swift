@@ -31,10 +31,7 @@ final class ViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        // 날씨쪽 콜렉션뷰 리로드해야하는 부분
-        SettingOptionUserDefault.shared.loadOptionsFromUserDefaults().forEach {
-            print($0.isOn, $0.title) // 잘됨
-        }
+        pagingControlView.data = SettingOptionUserDefault.shared.loadOptionsFromUserDefaults()
         self.navigationController?.isNavigationBarHidden = true
     }
     
