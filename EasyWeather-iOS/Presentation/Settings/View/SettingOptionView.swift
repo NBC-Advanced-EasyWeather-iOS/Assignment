@@ -72,9 +72,6 @@ extension SettingOptionCell {
         self.titleLabel.textColor = isOn ? .primaryLabel : .tertiaryLabel
         self.backgroundColor = isOn ? .primaryBackground : .tertiaryBackground
         checkImageView.image = isOn ? UIImage(named: "checkedImage") : UIImage(named: "uncheckedImage")
-        
-        print(self.titleLabel.text!, isOn)
-        UserDefaults.standard.set(isOn, forKey: "\(self.titleLabel.text!)")
     }
     
     
