@@ -45,7 +45,11 @@ final class searchResultTableViewCell: UITableViewCell {
 extension searchResultTableViewCell {
     
     func setCell(indexPath: IndexPath) {
-        self.resultLabel.text = CityList.shared.searchedCity[indexPath.row]
+        
+        //바인딩
+        guard let citys = CityList.shared.searchedCity else { return }
+        
+        resultLabel.text = citys[indexPath.row]
     }
 }
 

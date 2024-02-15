@@ -12,8 +12,8 @@ final class CityList {
     static let shared = CityList()
     private init() {}
     
-    var searchedCity = [""]
-    var addedCity = [""]
+    var searchedCity:[String]?
+    var addedCity:[String]?
     
     private let cityList = ["서울특별시", "부산광역시", "대구광역시", "인천광역시", "광주광역시", "대전광역시", "울산광역시"]
     
@@ -22,11 +22,14 @@ final class CityList {
     }
     
     func add(city: String) {
+
+        //바인딩
+        guard var addedCity = addedCity else { return }
         
         //중복처리
-        guard !self.addedCity.contains(city) else { return }
+        guard !addedCity.contains(city) else { return }
         
         //배열에 추가
-        self.addedCity.append(city)
+        addedCity.append(city)
     }
 }

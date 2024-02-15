@@ -366,7 +366,7 @@ extension LocationView: UITextFieldDelegate {
         
         CityList.shared.search(term: searchText)
         
-        print("검색 결과: \(CityList.shared.searchedCity)")
+//        print("검색 결과: \(CityList.shared.searchedCity)")
         
         searchResultTableView.reloadData()
     }
@@ -378,11 +378,15 @@ extension LocationView: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tableView == addedCityListTableView {
+            
 //            데이터 연결
-//            return CityList.shared.addedCity.count
+//            guard let citys = CityList.shared.addedCity else { return 0 }
+//            return citys.count
             return 3
         } else if tableView == searchResultTableView {
-            return CityList.shared.searchedCity.count
+            
+            guard let citys = CityList.shared.searchedCity else { return 0 }
+            return citys.count
         }
         return 0
     }
@@ -429,7 +433,11 @@ extension LocationView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         if tableView == searchResultTableView {
-            let selectedCity = CityList.shared.searchedCity[indexPath.row]
+            
+            
+            guard let Citys = CityList.shared.searchedCity else { return }
+            
+            let selectedCity = Citys[indexPath.row]
             
             CityList.shared.add(city: selectedCity)
             
@@ -448,8 +456,10 @@ extension LocationView: CLLocationManagerDelegate {
         let status = locationManager.authorizationStatus
         switch status {
         case .authorizedAlways, .authorizedWhenInUse:
+            // 위치 권한 허용 case
             unknownLocationButton.isHidden = true
         case .denied, .restricted:
+            // 위치 권한 거부 case
             userLocationButton.isHidden = true
         case .notDetermined: break
         @unknown default:
@@ -462,11 +472,11 @@ extension LocationView: CLLocationManagerDelegate {
         let status = manager.authorizationStatus
         switch status {
         case .authorizedWhenInUse, .authorizedAlways:
-            // 위치 권한이 허용된 경우
+            // 위치 권한 허용 case
             userLocationButton.isHidden = false
             unknownLocationButton.isHidden = true
         case .denied, .restricted:
-            // 위치 권한이 거부된 경우 또는 제한된 경우
+            // 위치 권한 거부 case
             userLocationButton.isHidden = true
             unknownLocationButton.isHidden = false
         case .notDetermined: break
