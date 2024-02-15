@@ -110,7 +110,7 @@ extension PagingControlView: UICollectionViewDataSource {
         
         cell.configure(withText: "\(indexPath.row + 1)")
         cell.configureSettingOption(data: data)
-//        cell.addTargetForWeekendWeatherButton(target, action: #selector(ViewController.goToWeeklyTableViewController))
+        cell.addTargetForWeekendWeatherButton(target, action: #selector(ViewController.goToWeeklyTableViewController))
         
         return cell
     }
@@ -142,9 +142,5 @@ extension PagingControlView: UIScrollViewDelegate {
 extension PagingControlView {
     func addTargetSettingMenuButton(_ target: Any?, action: Selector) {
         navigationBarView.settingMenuButton.addTarget(target, action: action, for: .touchUpInside)
-    }
-    
-    func addTargetLocationMenuButton(_ target: Any?, action: Selector) {
-        navigationBarView.locationPlusButton.addTarget(target, action: action, for: .touchUpInside)
     }
 }

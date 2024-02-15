@@ -5,10 +5,12 @@
 
 import UIKit
 
+// MARK: - Custom UICollectionViewCell
+
 class SettingOptionCell: UICollectionViewCell {
     
     // MARK: - Properties
-    
+
     static let identifier = "SettingOptionCell"
     
     // MARK: - UI Properties
@@ -16,14 +18,12 @@ class SettingOptionCell: UICollectionViewCell {
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.font = FontLiteral.body(style: .regular)
-        
         return label
     }()
     
     private let checkImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
-        
         return imageView
     }()
     
@@ -32,8 +32,8 @@ class SettingOptionCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        setLayout()
-        setBorderStyle()
+        setupLayout()
+        setupBorder()
     }
     
     required init?(coder: NSCoder) {
@@ -44,7 +44,8 @@ class SettingOptionCell: UICollectionViewCell {
 // MARK: - Extensions
 
 extension SettingOptionCell {
-    private func setLayout() {
+    
+    private func setupLayout() {
         addSubview(checkImageView)
         addSubview(titleLabel)
         
@@ -52,7 +53,7 @@ extension SettingOptionCell {
             make.leading.equalToSuperview().offset(16)
             make.centerY.equalToSuperview()
             make.width.equalToSuperview().multipliedBy(0.15)
-            make.height.equalTo(checkImageView.snp.width)
+            make.height.equalTo(checkImageView.snp.width).multipliedBy(0.15)
         }
 
         titleLabel.snp.makeConstraints { make in
@@ -60,24 +61,9 @@ extension SettingOptionCell {
             make.centerY.equalToSuperview()
             make.trailing.lessThanOrEqualToSuperview().offset(-16)
         }
+
     }
     
-    private func setBorderStyle() {
-        self.layer.cornerRadius = 20
-        self.layer.masksToBounds = false
-        
-        // 그림자 설정
-        self.layer.shadowColor = UIColor.darkTheme.cgColor
-        self.layer.shadowOpacity = 0.2
-        self.layer.shadowOffset = CGSize(width: 0, height: 2)
-        self.layer.shadowRadius = 1
-        self.layer.shadowPath = UIBezierPath(roundedRect: self.bounds, cornerRadius: 16).cgPath
-    }
-}
- 
-// MARK: - Configure Cell
-
-extension SettingOptionCell {
     func configure(with option: SettingOptionModel) {
         titleLabel.text = option.title
         updateAppearance(isOn: option.isOn)
@@ -87,5 +73,20 @@ extension SettingOptionCell {
         self.titleLabel.textColor = isOn ? .primaryLabel : .tertiaryLabel
         self.backgroundColor = isOn ? .primaryBackground : .tertiaryBackground
         checkImageView.image = isOn ? UIImage(named: "checkedImage") : UIImage(named: "uncheckedImage")
+        
+        UserDefaults.standard.set(isOn, forKey: titleLabel.text!)
+    }
+    
+    private func setupBorder() {
+        self.layer.cornerRadius = 20
+        self.layer.masksToBounds = false
+        self.clipsToBounds = false
+        
+        // 그림자 설정
+        self.layer.shadowColor = UIColor.darkTheme.cgColor
+        self.layer.shadowOpacity = 0.2
+        self.layer.shadowOffset = CGSize(width: 0, height: 2)
+        self.layer.shadowRadius = 1
+        self.layer.shadowPath = UIBezierPath(roundedRect: self.bounds, cornerRadius: 16).cgPath
     }
 }

@@ -21,17 +21,7 @@ class SettingsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        setUI()
-        createCollectionView()
-        setUserDefaultsData()
-    }
-}
-
-// MARK: - Extensions
-
-extension SettingsViewController {
-    private func setUI() {
+        initializeCollectionView()
         view.backgroundColor = UIColor.secondaryBackground
         
         setUserDefaultsData() // 데이터 설정 추가
@@ -52,6 +42,7 @@ extension SettingsViewController {
         layout.scrollDirection = .vertical
 
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView?.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         collectionView?.backgroundColor = .lightTheme
         collectionView?.dataSource = self
         collectionView?.delegate = self
@@ -66,7 +57,7 @@ extension SettingsViewController {
             }
         }
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.section == 1 {
             for i in 0 ..< unitChangeOptions.count {
@@ -81,9 +72,7 @@ extension SettingsViewController {
             option.isOn.toggle()
             
             guard let cell = collectionView.cellForItem(at: indexPath) as? SettingOptionCell else { return }
-            cell.updateAppearance(isOn: additionalDisplayOptions[indexPath.item].isOn)
-            
-            UserDefaults.standard.set(additionalDisplayOptions[indexPath.row].isOn, forKey: additionalDisplayOptions[indexPath.row].title)
+            cell.updateAppearance(isOn: option.isOn)
         }
         
         collectionView.deselectItem(at: indexPath, animated: true)
@@ -104,12 +93,9 @@ extension SettingsViewController: UICollectionViewDataSource {
             return unitChangeOptions.count
         }
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: SettingOptionCell.identifier,
-            for: indexPath
-        ) as? SettingOptionCell else {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SettingOptionCell.identifier, for: indexPath) as? SettingOptionCell else {
             fatalError("Unable to dequeue SettingOptionCell")
         }
         
@@ -132,17 +118,14 @@ extension SettingsViewController: UICollectionViewDataSource {
     }
 }
 
-
 // MARK: - UICollectionViewDelegateFlowLayout
 
 extension SettingsViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let paddingSpace = sectionInsets.left * (itemsPerRow + 1)
-        let availableWidth = collectionView.bounds.width - paddingSpace
+        let availableWidth = view.frame.width - paddingSpace
         let widthPerItem = availableWidth / itemsPerRow
-        
-        // 가로 크기: 세로 크기 = 3:1 인 직사각형이 되도록
-        return CGSize(width: widthPerItem, height: widthPerItem / 3)
+        return CGSize(width: widthPerItem, height: widthPerItem / 3) // 가로 크기: 세로 크기 = 3:1 인 직사각형이 되도록
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {

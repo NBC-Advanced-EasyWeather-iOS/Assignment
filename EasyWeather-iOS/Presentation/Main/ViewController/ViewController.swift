@@ -47,7 +47,6 @@ final class ViewController: UIViewController {
 extension ViewController {
     private func setUI() {
         pagingControlView.addTargetSettingMenuButton(self, action: #selector(goToSettingsViewController))
-        pagingControlView.addTargetLocationMenuButton(self, action: #selector(goToLocationViewController))
 
         setBackgroundColor()
         self.navigationController?.isNavigationBarHidden = true
@@ -92,12 +91,7 @@ extension ViewController {
     }
     
     @objc
-    func goToLocationViewController() {
-//        self.navigationController?.present(locationViewController, animated: true)
-    }
-    
-    @objc
-    func goToWeekendWeatherViewController() {
+    func goToWeeklyTableViewController() {
         self.navigationController?.pushViewController(weeklyTableViewController, animated: true)
     }
 }
