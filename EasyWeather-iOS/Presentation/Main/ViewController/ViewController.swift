@@ -127,7 +127,7 @@ extension ViewController {
     
     @objc
     func goToLocationViewController() {
-        self.navigationController?.present(locationViewController, animated: true)
+        self.navigationController?.pushViewController(locationViewController, animated: true)
     }
 }
 
@@ -148,6 +148,7 @@ extension ViewController {
     
     private func handleWeatherResponse(_ response: WeatherResponseType) {
         pagingControlView.weatherResponseData = response
+        locationViewController.configure(city: response.cityName, temp: String(Int(response.main.temp)).kelvinToCelsius()!)
     }
     
     private func fetchLocationWeather() {

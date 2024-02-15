@@ -18,7 +18,7 @@ final class LocationViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        CityList.shared.loadCity()
+//        CityList.shared.loadCity()
     }
     
     override func loadView() {
