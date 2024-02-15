@@ -31,7 +31,7 @@ extension WeeklyWeatherViewController: UITableViewDataSource {
     
     func loadWeeklyWeatherData() {
         Task {
-            if let weeklyWeatherDTO = try? await weatherService.fetchWeeklyWeather(city: "Seoul") {
+            if let weeklyWeatherDTO = try? await weatherService.fetchWeeklyWeather(city: "서울특별시") {
                 let viewModels = weeklyWeatherDTO.list.map { dayWeather -> WeatherDTO in
                     let celsiusTemp = dayWeather.temp.day - 273.15
                     let dayOfWeek = convertUnixTimeToDayOfWeek(unixTime: dayWeather.dt)

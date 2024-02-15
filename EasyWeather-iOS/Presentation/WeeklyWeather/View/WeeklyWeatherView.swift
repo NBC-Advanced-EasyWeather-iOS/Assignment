@@ -60,7 +60,10 @@ class WeeklyWeatherView: UIView {
         }
         
         weeklyWeatherImageView.snp.makeConstraints { make in
-            make.width.height.equalTo(stackView.snp.height)
+            make.top.equalTo(safeAreaLayoutGuide.snp.top) 
+            make.leading.equalTo(leftSpacerView.snp.trailing)
+            make.trailing.equalToSuperview()
+            make.bottom.equalToSuperview()
         }
         
         tableView.snp.makeConstraints { make in
