@@ -36,7 +36,6 @@ final class ViewController: UIViewController {
         
         pagingControlView.settingOptions = SettingOptionUserDefault.shared.loadOptionsFromUserDefaults()
         
-//        print(UserDefaults.standard.string(forKey: "city")!)
         fetchCurrentWeather()
         
         self.navigationController?.isNavigationBarHidden = true
