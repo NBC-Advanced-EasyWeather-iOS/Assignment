@@ -148,7 +148,6 @@ extension PagingControlCollectionViewCell {
         let feel = String(Int(data.main.feelsLike)).kelvinToCelsius()!
         
         self.temperatureLabel.text = "\(temp)"
-//        self.windChillGuideLabel.text = "어제보다 \(temp) 높아요 😊"
         self.windChillLabel.text = "체감온도 \(feel)"
         
         meteorologicalCollectionView.weatherData = data

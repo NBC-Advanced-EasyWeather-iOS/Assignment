@@ -123,7 +123,6 @@ extension ViewController {
                 let response = try await weatherService.fetchCurrnetWeather(city: city)
                 let data: WeatherResponseType = WeatherResponseType(cityName: response.name, main: response.main, sys: response.sys)
                 handleWeatherResponse(data)
-//                print(response)
             } catch {
                 print("Error fetching current weather: \(error)")
             }
