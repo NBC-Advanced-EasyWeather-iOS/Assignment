@@ -5,12 +5,13 @@ class SettingsViewController: UIViewController {
     
     // MARK: - Properties
     
-    var settings: [SettingOptionModel] = []
-    var additionalDisplayOptions: [SettingOptionModel] = []
-    var unitChangeOptions: [SettingOptionModel] = []
-    
     private let itemsPerRow: CGFloat = 2
     private let sectionInsets = UIEdgeInsets(top: 10.0, left: 20.0, bottom: 10.0, right: 20.0)
+    
+    var data = SettingOptionUserDefault.shared.loadOptionsFromUserDefaults()
+
+    var additionalDisplayOptions: [SettingOptionModel] = []
+    var unitChangeOptions: [SettingOptionModel] = []
     
     // MARK: - UI Properties
     
@@ -20,64 +21,55 @@ class SettingsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        initializeCollectionView()
+        view.backgroundColor = UIColor.secondaryBackground
         
-        setUI()
-        createCollectionView()
-        setUserDefaultsData()
+        setUserDefaultsData() // 데이터 설정 추가
+//        print(data)
+    }
+    
+    private func setUserDefaultsData() {
+        additionalDisplayOptions = Array(data.prefix(4)) // 처음 4개의 데이터를 추가 표시 옵션으로 설정
+        unitChangeOptions = Array(data.suffix(2)) // 마지막 2개의 데이터를 단위 변경 옵션으로 설정
     }
 }
 
 // MARK: - Extensions
 
 extension SettingsViewController {
-    private func setUI() {
-        view.backgroundColor = UIColor.secondaryBackground
-    }
-    
-    private func setUserDefaultsData() {
-        settings = SettingOptionUserDefault.shared.loadOptionsFromUserDefaults()
-        
-        additionalDisplayOptions = Array(settings.prefix(4))
-        unitChangeOptions = Array(settings.suffix(2))
-    }
-}
-
-
-// MARK: - CollectionView
-
-extension SettingsViewController {
-    private func createCollectionView() {
+    private func initializeCollectionView() {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
+
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView?.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         collectionView?.backgroundColor = .lightTheme
         collectionView?.dataSource = self
         collectionView?.delegate = self
         collectionView?.register(SettingOptionCell.self, forCellWithReuseIdentifier: SettingOptionCell.identifier)
         collectionView?.register(SettingHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SettingHeader.identifier)
-        
-        guard let collectionView = collectionView else { return }
-        view.addSubview(collectionView)
-        collectionView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
-            make.leading.equalTo(view.safeAreaLayoutGuide.snp.leading)
-            make.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing)
-            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
+
+        if let collectionView = collectionView {
+            view.addSubview(collectionView)
+            
+            collectionView.snp.makeConstraints { make in
+                make.edges.equalToSuperview()
+            }
         }
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.section == 1 {
             for i in 0 ..< unitChangeOptions.count {
-                let boolType = (i == indexPath.row)
-                unitChangeOptions[i].isOn = boolType
-                UserDefaults.standard.set(boolType, forKey: unitChangeOptions[i].title)
+                unitChangeOptions[i].isOn = false
             }
+            unitChangeOptions[indexPath.row].isOn = true
             
-            let indexPaths = (0..<unitChangeOptions.count).map { IndexPath(item: $0, section: 1) }
-            collectionView.reloadItems(at: indexPaths)
+            collectionView.reloadSections(IndexSet(integer: indexPath.section))
+            
         } else {
-            additionalDisplayOptions[indexPath.item].isOn.toggle()
+            let option = additionalDisplayOptions[indexPath.row]
+            option.isOn.toggle()
             
             guard let cell = collectionView.cellForItem(at: indexPath) as? SettingOptionCell else { return }
             cell.updateAppearance(isOn: additionalDisplayOptions[indexPath.item].isOn)
@@ -112,15 +104,11 @@ extension SettingsViewController: UICollectionViewDataSource {
             fatalError("Unable to dequeue SettingOptionCell")
         }
         
-        let option: SettingOptionModel
-        
         if indexPath.section == 0 {
-            option = additionalDisplayOptions[indexPath.item]
+            cell.configure(with: additionalDisplayOptions[indexPath.row])
         } else {
-            option = unitChangeOptions[indexPath.item]
+            cell.configure(with: unitChangeOptions[indexPath.row])
         }
-        
-        cell.configure(with: option)
         
         return cell
     }

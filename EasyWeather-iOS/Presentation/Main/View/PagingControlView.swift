@@ -12,6 +12,12 @@ final class PagingControlView: UIView {
     // MARK: - Properties
     
     private let numberOfPages: Int
+    
+    var data: [SettingOptionModel] = [] {
+        didSet {
+            mainPagingCollectionView.reloadData()
+        }
+    }
 
     // MARK: - UI Properties
     
@@ -103,7 +109,8 @@ extension PagingControlView: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PagingControlCollectionViewCell.identifier, for: indexPath) as! PagingControlCollectionViewCell
         
         cell.configure(withText: "\(indexPath.row + 1)")
-        cell.addTargetForWeekendWeatherButton(target, action: #selector(ViewController.goToWeekendWeatherViewController))
+        cell.configureSettingOption(data: data)
+//        cell.addTargetForWeekendWeatherButton(target, action: #selector(ViewController.goToWeeklyTableViewController))
         
         return cell
     }

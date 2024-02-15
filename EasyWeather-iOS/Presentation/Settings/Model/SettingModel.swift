@@ -1,8 +1,6 @@
 
 import Foundation
 
-// MARK: - SettingOption Model
-
 class SettingOptionModel {
     let title: String
     var isOn: Bool
@@ -14,9 +12,9 @@ class SettingOptionModel {
 }
 
 class SettingOptionUserDefault {
-    static let shared = SettingOptionUserDefault() // 싱글톤 인스턴스
+    static let shared = SettingOptionUserDefault()
     
-    private init() {} // 외부에서 인스턴스 생성을 방지하기 위해 private init 사용
+    private init() {}
     
     let optionKeys: [String] = [
         "일출/일몰 시간",
@@ -31,6 +29,7 @@ class SettingOptionUserDefault {
     var settingOptionsData: [SettingOptionModel] = []
     
     func loadOptionsFromUserDefaults() -> [SettingOptionModel] {
+        settingOptionsData = []
         optionKeys.forEach { option in
             if let value = UserDefaults.standard.string(forKey: option) {
                 let boolValue = value == "1"

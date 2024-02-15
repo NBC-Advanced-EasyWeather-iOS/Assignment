@@ -7,6 +7,13 @@
 
 // MARK: - Models
 
+struct WeatherDTO {
+    let cityName: String
+    let temperature: String
+    let condition: String
+    let dateString: String // 요일 정보를 포함시키는 속성 추가
+}
+
 struct DailyResponseDTO: Codable {
     let weather: [Weather]
     let main: Main
@@ -17,6 +24,8 @@ struct DailyResponseDTO: Codable {
 
 struct WeeklyResponseDTO: Codable {
     let city: City
+    let list: [DayWeather] // `list`를 `City`와 같은 수준으로 이동
+
 }
 
 // MARK: - Common
@@ -54,14 +63,30 @@ struct Sys: Codable {
 
 struct City: Codable {
     let name: String
-    let list: [List]
+    let id: Int
+    let coord: Coordinates
+    let country: String
+    let population: Int
+    let timezone: Int
 }
 
-struct List: Codable {
+struct Coordinates: Codable {
+    let lon: Float
+    let lat: Float
+}
+
+struct DayWeather: Codable {
+    let dt: Int
     let temp: Temp
-    let weather: Weather
-}
-
-struct Temp: Codable {
-    let day: Float
+    let weather: [Weather]
+    
+    struct List: Codable {
+        let temp: Temp
+        let weather: Weather
+    }
+    
+    struct Temp: Codable {
+        let day: Float
+    }
+    
 }

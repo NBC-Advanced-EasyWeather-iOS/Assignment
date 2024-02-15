@@ -15,8 +15,7 @@ final class ViewController: UIViewController {
     
     private var pagingControlView: PagingControlView!
     private var settingsViewController = SettingsViewController()
-    private var locationViewController = LocationViewController()
-    private var weeklyTableViewController = WeeklyTableViewController()
+    private var weeklyTableViewController = WeeklyWeatherViewController()
     
     // MARK: - Life Cycle
     
@@ -32,10 +31,7 @@ final class ViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        SettingOptionUserDefault.shared.loadOptionsFromUserDefaults().forEach {
-            print($0.isOn, $0.title)
-        }
-        
+        pagingControlView.data = SettingOptionUserDefault.shared.loadOptionsFromUserDefaults()
         self.navigationController?.isNavigationBarHidden = true
     }
     
@@ -97,7 +93,7 @@ extension ViewController {
     
     @objc
     func goToLocationViewController() {
-        self.navigationController?.present(locationViewController, animated: true)
+//        self.navigationController?.present(locationViewController, animated: true)
     }
     
     @objc

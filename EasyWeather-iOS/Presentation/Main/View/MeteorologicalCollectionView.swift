@@ -11,10 +11,21 @@ final class MeteorologicalCollectionView: UICollectionView {
     
     // MARK: - Properties
     
+    var data: [SettingOptionModel] = [] {
+        didSet {
+            self.isSun = self.data[0].isOn
+            self.isTemperature = self.data[1].isOn
+            self.isATM = self.data[2].isOn
+            self.isHumidity = self.data[3].isOn
+            
+            reloadData()
+        }
+    }
     
-    let settings = SettingOptionUserDefault.shared.loadOptionsFromUserDefaults()
-    
-    let optionTitle = SettingOptionUserDefault.shared.settingOptions
+    private var isSun = true
+    private var isTemperature = true
+    private var isATM = true
+    private var isHumidity = true
     
     // MARK: - Life Cycle
     
@@ -52,25 +63,67 @@ extension MeteorologicalCollectionView {
 // MARK: - UICollectionViewDataSource
 
 extension MeteorologicalCollectionView: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return optionTitle.count
-    }
     
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        var itemCount = 0
+
+        if isSun { itemCount += 2 }
+        if isTemperature { itemCount += 2 }
+        if isATM {
+            itemCount += isHumidity ? 2 : 1
+        }
+        if isHumidity && !isATM {
+            itemCount += 1
+        }
+        
+        return itemCount
+    }
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MeteorologicalCollectionViewCell.identifier, for: indexPath)
         
         if let meteorologicalCell = cell as? MeteorologicalCollectionViewCell {
             
-            if indexPath.row == 0 && settings[0].isOn == true {
-                meteorologicalCell.configure(withText: "\(optionTitle[indexPath.row])", type: "일출")
-            } else if indexPath.row == 1 && settings[0].isOn == true {
-                meteorologicalCell.configure(withText: "\(optionTitle[indexPath.row])", type: "일몰")
-            } else if indexPath.row == 2 && settings[1].isOn == true {
-                meteorologicalCell.configure(withText: "\(optionTitle[indexPath.row])", type: "")
-            } else if indexPath.row == 3 && settings[1].isOn == true {
-                meteorologicalCell.configure(withText: "\(optionTitle[indexPath.row])", type: "")
-            } else {
-                meteorologicalCell.configure(withText: "\(optionTitle[indexPath.row])", type: "")
+            var dataIndex = 0
+            
+            if isSun { // 일출,일몰
+                if indexPath.row == 0 {
+                    meteorologicalCell.configure(title: "일출", type: "일출")
+                } else if indexPath.row == 1 {
+                    meteorologicalCell.configure(title: "일몰", type: "일몰")
+                }
+                dataIndex += 2
+            }
+            
+            if isTemperature { // 최저,최고 기온
+                if indexPath.row == dataIndex {
+                    meteorologicalCell.configure(title: "최저 기온", type: "")
+                } else if indexPath.row == dataIndex + 1 {
+                    meteorologicalCell.configure(title: "최고 기온", type: "")
+                }
+                dataIndex += 2
+            }
+            
+            if isATM { // 기압
+                if isHumidity { // 습도
+                    if indexPath.row == dataIndex {
+                        meteorologicalCell.configure(title: "기압", type: "")
+                    } else if indexPath.row == dataIndex + 1 {
+                        meteorologicalCell.configure(title: "습도", type: "")
+                    }
+                    dataIndex += 2
+                } else {
+                    if indexPath.row == dataIndex {
+                        meteorologicalCell.configure(title: "기압", type: "")
+                        dataIndex += 1
+                    }
+                }
+            }
+            
+            if isHumidity && !isATM {
+                if indexPath.row == dataIndex {
+                    meteorologicalCell.configure(title: "습도", type: "")
+                }
             }
         }
         
