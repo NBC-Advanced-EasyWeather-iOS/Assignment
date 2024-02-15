@@ -15,7 +15,7 @@ final class ViewController: UIViewController {
     
     private var pagingControlView: PagingControlView!
     private var settingsViewController = SettingsViewController()
-    private var weeklyTableViewController = WeeklyTableViewController()
+    private var weeklyTableViewController = WeeklyWeatherViewController()
     
     // MARK: - Life Cycle
     
