@@ -467,7 +467,8 @@ extension LocationView: UITableViewDelegate, UITableViewDataSource {
             //테이블 뷰 리로드
             addedCityListTableView.reloadData()
             
-            //dismiss 추가 예정
+            //텍스트 필드 편집 상태 종료
+            locationTextField.resignFirstResponder()
         }
     }
 }
