@@ -25,19 +25,3 @@ final class LocationViewController: UIViewController {
         view = locationView
     }
 }
-
-// MARK: - keyboard 숨김 메서드
-
-//extension LocationViewController {
-//    
-//    /// 화면밖 터치시 키보드를 내려 주는 메서드
-//        func hideKeyboard() {
-//            let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self,
-//                                                                     action: #selector(LocationViewController.dismissKeyboard))
-//            view.addGestureRecognizer(tap)
-//        }
-//        
-//        @objc func dismissKeyboard() {
-//            view.endEditing(true)
-//        }
-//}
