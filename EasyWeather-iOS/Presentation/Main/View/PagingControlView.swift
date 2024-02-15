@@ -11,11 +11,37 @@ final class PagingControlView: UIView {
     
     // MARK: - Properties
     
-    private let numberOfPages: Int
+    var numberOfPages: Int {
+        didSet {
+            pageControl.numberOfPages = self.numberOfPages
+        }
+    }
     
     var data: [SettingOptionModel] = [] {
         didSet {
             mainPagingCollectionView.reloadData()
+        }
+    }
+    
+    var weatherResponseData: WeatherResponseType = WeatherResponseType(
+        cityName: "",
+        main: Main(temp: 0, feelsLike: 0, tempMin: 0, tempMax: 0, pressure: 0, humidity: 0),
+        sys: Sys(country: "", sunrise: 0, sunset: 0)
+    ) {
+        didSet {
+            mainPagingCollectionView.reloadData()
+//            navigationBarView.cityLabel.text = weatherResponseData.cityName
+        }
+    }
+    
+    var locationResponseData: WeatherResponseType = WeatherResponseType(
+        cityName: "",
+        main: Main(temp: 0, feelsLike: 0, tempMin: 0, tempMax: 0, pressure: 0, humidity: 0),
+        sys: Sys(country: "", sunrise: 0, sunset: 0)
+    ) {
+        didSet {
+            mainPagingCollectionView.reloadData()
+//            navigationBarView.cityLabel.text = locationResponseData.cityName
         }
     }
 
@@ -108,9 +134,11 @@ extension PagingControlView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PagingControlCollectionViewCell.identifier, for: indexPath) as! PagingControlCollectionViewCell
         
-        cell.configure(withText: "\(indexPath.row + 1)")
-        cell.configureSettingOption(data: data)
-        cell.addTargetForWeekendWeatherButton(target, action: #selector(ViewController.goToWeeklyTableViewController))
+        if indexPath.row == 0 {
+            cell.configure(data: weatherResponseData)
+        }
+        
+        cell.configureSettingOption(data: settingOptions)
         
         return cell
     }

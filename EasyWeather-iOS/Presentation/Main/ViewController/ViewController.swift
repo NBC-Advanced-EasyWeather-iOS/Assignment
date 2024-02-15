@@ -11,6 +11,13 @@ import SnapKit
 
 final class ViewController: UIViewController {
     
+    var locationUserDefaultsData: [String] = [] {
+        didSet {
+            print(locationUserDefaultsData)
+            pagingControlView.numberOfPages = locationUserDefaultsData.count + 1
+        }
+    }
+    
     // MARK: - UI Properties
     
     private var pagingControlView: PagingControlView!
@@ -31,7 +38,11 @@ final class ViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        pagingControlView.data = SettingOptionUserDefault.shared.loadOptionsFromUserDefaults()
+        pagingControlView.settingOptions = SettingOptionUserDefault.shared.loadOptionsFromUserDefaults()
+        self.locationUserDefaultsData = CityList.shared.loadCity()!
+        
+        fetchCurrentWeather()
+        
         self.navigationController?.isNavigationBarHidden = true
     }
     
