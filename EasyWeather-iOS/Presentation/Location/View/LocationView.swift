@@ -6,8 +6,13 @@
 //
 
 import UIKit
+import CoreLocation
 
 final class LocationView: UIView {
+    
+    // MARK: - Properties
+    
+    private var locationManager = CLLocationManager()
     
     // MARK: - UI Properties
     
@@ -87,6 +92,7 @@ final class LocationView: UIView {
         let button = UIButton()
         button.backgroundColor = UIColor.darkTheme
         button.layer.cornerRadius = 20
+        button.addTarget(self, action: #selector(unknownLocationButtonTapped), for: .touchUpInside)
         
         return button
     }()
@@ -152,9 +158,9 @@ final class LocationView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: .zero)
-
-        checkPermission()
+        checkLocationPermission()
         setDelegate()
+        setRegister()
         setUI()
         setLayout()
     }
@@ -162,33 +168,43 @@ final class LocationView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    
 }
 
-// MARK: - Extensions : 분기 처리, delegate 메서드
+// MARK: - Extensions : delegate setting
 
 extension LocationView {
-    
-    private func checkPermission() {
-        //위치 권한 분기
-        if true {
-            unknownLocationButton.isHidden = true
-//            userLocationButton.isHidden = true
-        }
-    }
-    
-    private func setDelegate () {
+        
+    private func setDelegate() {
         //delegate
         locationTextField.delegate = self
+        
         addedCityListTableView.delegate = self
         addedCityListTableView.dataSource = self
+        
         searchResultTableView.delegate = self
         searchResultTableView.dataSource = self
         
+        locationManager.delegate = self
+    }
+    
+    private func setRegister() {
         //cell register
         addedCityListTableView.register(addedCityListTableViewCell.self, forCellReuseIdentifier: "CityList")
         searchResultTableView.register(searchResultTableViewCell.self, forCellReuseIdentifier: "ResultList")
+    }
+}
+
+// MARK: - Extensions : Action
+
+extension LocationView {
+    @objc func unknownLocationButtonTapped() {
+        
+        //설정 페이지 이동
+        Task {
+            if let url = URL(string: UIApplication.openSettingsURLString) {
+                await UIApplication.shared.open(url)
+            }
+        }
     }
 }
 
@@ -350,7 +366,12 @@ extension LocationView: UITextFieldDelegate {
     }
 
     func updateSearchResults(for searchText: String) {
-        print("검색 결과: \(searchText)")
+        
+        CityList.shared.search(term: searchText)
+        
+//        print("검색 결과: \(CityList.shared.searchedCity)")
+        
+        searchResultTableView.reloadData()
     }
 }
 
@@ -360,9 +381,15 @@ extension LocationView: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tableView == addedCityListTableView {
+            
+//            데이터 연결
+//            guard let citys = CityList.shared.addedCity else { return 0 }
+//            return citys.count
             return 3
         } else if tableView == searchResultTableView {
-            return 2
+            
+            guard let citys = CityList.shared.searchedCity else { return 0 }
+            return citys.count
         }
         return 0
     }
@@ -372,14 +399,14 @@ extension LocationView: UITableViewDelegate, UITableViewDataSource {
         if tableView == addedCityListTableView {
             
             if let cell = tableView.dequeueReusableCell(withIdentifier: "CityList", for: indexPath) as? addedCityListTableViewCell {
-                cell.setCell()
+                cell.setCell(indexPath: indexPath)
                 
                 return cell
             }
         } else if tableView == searchResultTableView {
             
             if let cell = tableView.dequeueReusableCell(withIdentifier: "ResultList", for: indexPath) as? searchResultTableViewCell {
-                cell.setCell()
+                cell.setCell(indexPath: indexPath)
                 
                 return cell
             }
@@ -404,5 +431,60 @@ extension LocationView: UITableViewDelegate, UITableViewDataSource {
             return swipeActionsConfiguration
         }
         return nil
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        if tableView == searchResultTableView {
+            
+            
+            guard let Citys = CityList.shared.searchedCity else { return }
+            
+            let selectedCity = Citys[indexPath.row]
+            
+            CityList.shared.add(city: selectedCity)
+            
+            //dismiss 추가 예정
+            
+        }
+    }
+}
+
+// MARK: - Extensions : CLLocationManagerDelegate
+
+extension LocationView: CLLocationManagerDelegate {
+    
+    //뷰 로드 시 호출
+    private func checkLocationPermission() {
+        let status = locationManager.authorizationStatus
+        switch status {
+        case .authorizedAlways, .authorizedWhenInUse:
+            // 위치 권한 허용 case
+            unknownLocationButton.isHidden = true
+        case .denied, .restricted:
+            // 위치 권한 거부 case
+            userLocationButton.isHidden = true
+        case .notDetermined: break
+        @unknown default:
+            break
+        }
+    }
+    
+    //위치 권한 변경 시 호출
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        let status = manager.authorizationStatus
+        switch status {
+        case .authorizedWhenInUse, .authorizedAlways:
+            // 위치 권한 허용 case
+            userLocationButton.isHidden = false
+            unknownLocationButton.isHidden = true
+        case .denied, .restricted:
+            // 위치 권한 거부 case
+            userLocationButton.isHidden = true
+            unknownLocationButton.isHidden = false
+        case .notDetermined: break
+        @unknown default:
+            break
+        }
     }
 }

@@ -44,8 +44,12 @@ final class searchResultTableViewCell: UITableViewCell {
 
 extension searchResultTableViewCell {
     
-    func setCell() {
-        self.resultLabel.text = "대한민국 부산광역시"
+    func setCell(indexPath: IndexPath) {
+        
+        //바인딩
+        guard let citys = CityList.shared.searchedCity else { return }
+        
+        resultLabel.text = citys[indexPath.row]
     }
 }
 
