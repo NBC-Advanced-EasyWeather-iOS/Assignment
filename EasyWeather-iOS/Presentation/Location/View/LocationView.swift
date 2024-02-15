@@ -455,7 +455,7 @@ extension LocationView: CLLocationManagerDelegate {
         }
     }
     
-    //권한이 변경될 때 호출
+    //위치 권한 변경 시 호출
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         let status = manager.authorizationStatus
         switch status {
