@@ -74,7 +74,7 @@ extension SettingOptionCell {
         self.backgroundColor = isOn ? .primaryBackground : .tertiaryBackground
         checkImageView.image = isOn ? UIImage(named: "checkedImage") : UIImage(named: "uncheckedImage")
         
-        UserDefaults.standard.set(isOn, forKey: titleLabel.text!)
+        SettingOptionUserDefault.shared.saveOptionsToUserDefaults(title: titleLabel.text!, isOn: isOn)
     }
     
     private func setupBorder() {

@@ -66,9 +66,9 @@ extension MainGPSViewController {
         SettingOptionUserDefault.shared.optionKeys.forEach { option in
             if UserDefaults.standard.object(forKey: option) == nil {
                 if option == "화씨온도 °F" {
-                    UserDefaults.standard.set(false, forKey: option)
+                    SettingOptionUserDefault.shared.saveOptionsToUserDefaults(title: option, isOn: false)
                 } else {
-                    UserDefaults.standard.set(true, forKey: option)
+                    SettingOptionUserDefault.shared.saveOptionsToUserDefaults(title: option, isOn: true)
                 }
             }
         }

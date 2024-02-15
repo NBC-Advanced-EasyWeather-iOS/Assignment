@@ -40,5 +40,9 @@ class SettingOptionUserDefault {
         }
         return settingOptionsData
     }
+    
+    func saveOptionsToUserDefaults(title: String, isOn: Bool) {
+        UserDefaults.standard.set(isOn, forKey: title)
+    }
 }
 
