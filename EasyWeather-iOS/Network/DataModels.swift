@@ -29,12 +29,16 @@ struct Weather: Codable {
 // MARK: - DailyResponseDTO
 
 struct Main: Codable {
-    let temp: Float
-    let feels_like: Float
-    let temp_min: Float
-    let temp_max: Float
-    let pressure: Int
-    let humidity: Int
+    let temp, feelsLike, tempMin, tempMax: Double
+    let pressure, humidity: Int
+
+    enum CodingKeys: String, CodingKey {
+        case temp
+        case feelsLike = "feels_like"
+        case tempMin = "temp_min"
+        case tempMax = "temp_max"
+        case pressure, humidity
+    }
 }
 
 struct Rain: Codable {
