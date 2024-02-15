@@ -51,8 +51,13 @@ final class addedCityListTableViewCell: UITableViewCell {
 
 extension addedCityListTableViewCell {
     
-    func setCell() {
+    func setCell(indexPath: IndexPath) {
+//        데이터 연결
+//        self.nameLabel.text = CityList.shared.addedCity[indexPath.row]
         self.nameLabel.text = "서울"
+        
+//        데이터 연결
+//        self.temperatureLabel.text =
         self.temperatureLabel.text = "0℃"
     }
 }

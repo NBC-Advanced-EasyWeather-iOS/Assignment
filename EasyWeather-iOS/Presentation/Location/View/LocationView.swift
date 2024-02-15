@@ -378,6 +378,8 @@ extension LocationView: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tableView == addedCityListTableView {
+//            데이터 연결
+//            return CityList.shared.addedCity.count
             return 3
         } else if tableView == searchResultTableView {
             return CityList.shared.searchedCity.count
@@ -390,7 +392,7 @@ extension LocationView: UITableViewDelegate, UITableViewDataSource {
         if tableView == addedCityListTableView {
             
             if let cell = tableView.dequeueReusableCell(withIdentifier: "CityList", for: indexPath) as? addedCityListTableViewCell {
-                cell.setCell()
+                cell.setCell(indexPath: indexPath)
                 
                 return cell
             }
