@@ -29,6 +29,7 @@ class SettingOptionUserDefault {
     var settingOptionsData: [SettingOptionModel] = []
     
     func loadOptionsFromUserDefaults() -> [SettingOptionModel] {
+        settingOptionsData = []
         optionKeys.forEach { option in
             if let value = UserDefaults.standard.string(forKey: option) {
                 let boolValue = value == "1"
