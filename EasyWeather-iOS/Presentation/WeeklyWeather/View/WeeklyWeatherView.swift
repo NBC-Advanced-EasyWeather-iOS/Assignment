@@ -56,14 +56,12 @@ class WeeklyWeatherView: UIView {
         
         // SnapKit을 사용하여 오토레이아웃 설정
         leftSpacerView.snp.makeConstraints { make in
-            make.width.equalToSuperview().dividedBy(3) // 왼쪽 공간은 스택뷰의 1/3 크기로 설정
+            make.width.equalToSuperview().dividedBy(2)
         }
         
         weeklyWeatherImageView.snp.makeConstraints { make in
-            make.top.equalTo(safeAreaLayoutGuide.snp.top) 
-            make.leading.equalTo(leftSpacerView.snp.trailing)
-            make.trailing.equalToSuperview()
-            make.bottom.equalToSuperview()
+            make.trailing.bottom.equalToSuperview() // 우측 하단에 붙임
+
         }
         
         tableView.snp.makeConstraints { make in

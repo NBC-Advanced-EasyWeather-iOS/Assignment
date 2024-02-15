@@ -11,7 +11,7 @@ final class WeeklyWeatherViewController: UIViewController {
     // MARK: - Properties
     let myView = WeeklyWeatherView()
     var weatherService = WeatherService()
-    var weatherViewModels: [WeatherDTO] = []
+    var weatherViewModels: [WeeklyResponseDTO] = []
     
     
     // MARK: - Life Cycle
@@ -31,21 +31,15 @@ extension WeeklyWeatherViewController: UITableViewDataSource {
     
     func loadWeeklyWeatherData() {
         Task {
-            if let weeklyWeatherDTO = try? await weatherService.fetchWeeklyWeather(city: "서울특별시") {
-                let viewModels = weeklyWeatherDTO.list.map { dayWeather -> WeatherDTO in
-                    let celsiusTemp = dayWeather.temp.day - 273.15
-                    let dayOfWeek = convertUnixTimeToDayOfWeek(unixTime: dayWeather.dt)
-                    return WeatherDTO(
-                        cityName: weeklyWeatherDTO.city.name,
-                        temperature: String(format: "%.1fºC", celsiusTemp),
-                        condition: dayWeather.weather.first?.main ?? "Not Available",
-                        dateString: dayOfWeek
-                    )
-                }
+            do {
+                let weeklyWeatherDTO = try await weatherService.fetchWeeklyWeather(city: "Seoul")
                 DispatchQueue.main.async { [weak self] in
-                    self?.weatherViewModels = viewModels
+                    // 메인 스레드에서 UI를 업데이트합니다.
+                    self?.weatherViewModels = [weeklyWeatherDTO] // DTO를 배열에 저장합니다.
                     self?.myView.tableView.reloadData()
                 }
+            } catch {
+                print("날씨 데이터 로딩 중 에러 발생: \(error)")
             }
         }
     }
@@ -106,26 +100,26 @@ extension WeeklyWeatherViewController: UITableViewDelegate {
         return 80 // 또는 원하는 높이 값
     }
 }
-
-#if DEBUG
-
-import SwiftUI
-
-struct ViewControllerPresentable : UIViewControllerRepresentable {
-    func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
-    }
-    
-    func makeUIViewController(context: Context) -> some UIViewController {
-        WeeklyWeatherViewController()
-    }
-}
-
-struct ViewControllerPresentable_PreviewProvider : PreviewProvider {
-    static var previews: some View{
-        ViewControllerPresentable()
-            .ignoresSafeArea()
-    }
-}
-
-
-#endif
+//
+//#if DEBUG
+//
+//import SwiftUI
+//
+//struct ViewControllerPresentable : UIViewControllerRepresentable {
+//    func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
+//    }
+//    
+//    func makeUIViewController(context: Context) -> some UIViewController {
+//        WeeklyWeatherViewController()
+//    }
+//}
+//
+//struct ViewControllerPresentable_PreviewProvider : PreviewProvider {
+//    static var previews: some View{
+//        ViewControllerPresentable()
+//            .ignoresSafeArea()
+//    }
+//}
+//
+//
+//#endif
