@@ -21,7 +21,17 @@ class SettingsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        initializeCollectionView()
+        
+        setUI()
+        createCollectionView()
+        setUserDefaultsData()
+    }
+}
+
+// MARK: - Extensions
+
+extension SettingsViewController {
+    private func setUI() {
         view.backgroundColor = UIColor.secondaryBackground
         
         setUserDefaultsData() // 데이터 설정 추가
@@ -42,7 +52,6 @@ extension SettingsViewController {
         layout.scrollDirection = .vertical
 
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView?.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         collectionView?.backgroundColor = .lightTheme
         collectionView?.dataSource = self
         collectionView?.delegate = self
@@ -57,7 +66,7 @@ extension SettingsViewController {
             }
         }
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.section == 1 {
             for i in 0 ..< unitChangeOptions.count {

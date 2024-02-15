@@ -1,6 +1,8 @@
 
 import Foundation
 
+// MARK: - SettingOption Model
+
 class SettingOptionModel {
     let title: String
     var isOn: Bool
