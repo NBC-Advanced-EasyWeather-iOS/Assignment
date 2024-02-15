@@ -18,7 +18,7 @@ final class SettingOptionUserDefault {
     
     private init() {}
     
-    private let optionKeys: [String] = [
+    let optionKeys: [String] = [
         "일출/일몰 시간",
         "최저/최고 기온",
         "기압",

@@ -17,6 +17,8 @@ final class ViewController: UIViewController {
     private var settingsViewController = SettingsViewController()
     private var weeklyTableViewController = WeeklyWeatherViewController()
     
+    private let weatherService = WeatherService()
+    
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
@@ -32,6 +34,10 @@ final class ViewController: UIViewController {
         super.viewWillAppear(animated)
         
         pagingControlView.data = SettingOptionUserDefault.shared.loadOptionsFromUserDefaults()
+        
+//        print(UserDefaults.standard.string(forKey: "city")!)
+        fetchCurrentWeather()
+        
         self.navigationController?.isNavigationBarHidden = true
     }
     
@@ -93,5 +99,24 @@ extension ViewController {
     @objc
     func goToWeeklyTableViewController() {
         self.navigationController?.pushViewController(weeklyTableViewController, animated: true)
+    }
+}
+
+extension ViewController {
+    private func fetchCurrentWeather() {
+        let city = UserDefaults.standard.string(forKey: "city")!
+        
+        Task(priority: .userInitiated) {
+            do {
+                let response = try await weatherService.fetchCurrnetWeather(city: city)
+                handleWeatherResponse(response)
+            } catch {
+                print("Error fetching current weather: \(error)")
+            }
+        }
+    }
+    
+    private func handleWeatherResponse(_ response: DailyResponseDTO) {
+        print(response.name)
     }
 }
