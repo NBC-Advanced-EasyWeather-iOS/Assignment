@@ -28,9 +28,5 @@ final class CityList {
         
         //배열에 추가
         self.addedCity.append(city)
-        
-        //UserDefaults 저장 구현 예정
-        
-        //dismiss 구현 예정
     }
 }

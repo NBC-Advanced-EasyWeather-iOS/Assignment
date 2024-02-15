@@ -6,8 +6,13 @@
 //
 
 import UIKit
+import CoreLocation
 
 final class LocationView: UIView {
+    
+    // MARK: - Properties
+    
+    var locationManager = CLLocationManager()
     
     // MARK: - UI Properties
     
@@ -87,6 +92,7 @@ final class LocationView: UIView {
         let button = UIButton()
         button.backgroundColor = UIColor.darkTheme
         button.layer.cornerRadius = 20
+        button.addTarget(self, action: #selector(unknownLocationButtonTapped), for: .touchUpInside)
         
         return button
     }()
@@ -152,10 +158,7 @@ final class LocationView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: .zero)
-        
-        hideKeyboard()
-        
-        checkPermission()
+        checkLocationPermission()
         setDelegate()
         setUI()
         setLayout()
@@ -164,33 +167,41 @@ final class LocationView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    
 }
 
-// MARK: - Extensions : 분기 처리, delegate 메서드
+// MARK: - Extensions : delegate setting
 
 extension LocationView {
-    
-    private func checkPermission() {
-        //위치 권한 분기
-        if true {
-            unknownLocationButton.isHidden = true
-//            userLocationButton.isHidden = true
-        }
-    }
-    
+        
     private func setDelegate () {
         //delegate
         locationTextField.delegate = self
+        
         addedCityListTableView.delegate = self
         addedCityListTableView.dataSource = self
+        
         searchResultTableView.delegate = self
         searchResultTableView.dataSource = self
+        
+        locationManager.delegate = self
         
         //cell register
         addedCityListTableView.register(addedCityListTableViewCell.self, forCellReuseIdentifier: "CityList")
         searchResultTableView.register(searchResultTableViewCell.self, forCellReuseIdentifier: "ResultList")
+    }
+}
+
+// MARK: - Extensions : Action
+
+extension LocationView {
+    @objc func unknownLocationButtonTapped() {
+        
+        //설정 페이지 이동
+        Task {
+            if let url = URL(string: UIApplication.openSettingsURLString) {
+                await UIApplication.shared.open(url)
+            }
+        }
     }
 }
 
@@ -422,6 +433,43 @@ extension LocationView: UITableViewDelegate, UITableViewDataSource {
             
             //dismiss 추가 예정
             
+        }
+    }
+}
+
+// MARK: - Extensions : CLLocationManagerDelegate
+
+extension LocationView: CLLocationManagerDelegate {
+    
+    //뷰 로드 시 호출
+    private func checkLocationPermission() {
+        let status = locationManager.authorizationStatus
+        switch status {
+        case .authorizedAlways, .authorizedWhenInUse:
+            unknownLocationButton.isHidden = true
+        case .denied, .restricted:
+            userLocationButton.isHidden = true
+        case .notDetermined: break
+        @unknown default:
+            break
+        }
+    }
+    
+    //권한이 변경될 때 호출
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        let status = manager.authorizationStatus
+        switch status {
+        case .authorizedWhenInUse, .authorizedAlways:
+            // 위치 권한이 허용된 경우
+            userLocationButton.isHidden = false
+            unknownLocationButton.isHidden = true
+        case .denied, .restricted:
+            // 위치 권한이 거부된 경우 또는 제한된 경우
+            userLocationButton.isHidden = true
+            unknownLocationButton.isHidden = false
+        case .notDetermined: break
+        @unknown default:
+            break
         }
     }
 }
