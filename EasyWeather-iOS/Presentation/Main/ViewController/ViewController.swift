@@ -32,6 +32,10 @@ final class ViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        SettingOptionUserDefault.shared.loadOptionsFromUserDefaults().forEach {
+            print($0.isOn, $0.title)
+        }
+        
         self.navigationController?.isNavigationBarHidden = true
     }
     

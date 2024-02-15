@@ -1,4 +1,6 @@
 
+import Foundation
+
 // MARK: - SettingOption Model
 
 class SettingOptionModel {
@@ -10,3 +12,32 @@ class SettingOptionModel {
         self.isOn = isOn
     }
 }
+
+class SettingOptionUserDefault {
+    static let shared = SettingOptionUserDefault() // 싱글톤 인스턴스
+    
+    private init() {} // 외부에서 인스턴스 생성을 방지하기 위해 private init 사용
+    
+    let optionKeys: [String] = [
+        "일출/일몰 시간",
+        "최저/최고 기온",
+        "기압",
+        "습도",
+        "섭씨온도 °C",
+        "화씨온도 °F"
+    ]
+    
+    let settingOptions: [String] = ["일출","일몰","최저 기온","최고 기온","기압","습도"]
+    var settingOptionsData: [SettingOptionModel] = []
+    
+    func loadOptionsFromUserDefaults() -> [SettingOptionModel] {
+        optionKeys.forEach { option in
+            if let value = UserDefaults.standard.string(forKey: option) {
+                let boolValue = value == "1"
+                settingOptionsData.append(SettingOptionModel(title: option, isOn: boolValue))
+            }
+        }
+        return settingOptionsData
+    }
+}
+

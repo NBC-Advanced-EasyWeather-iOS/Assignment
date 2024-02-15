@@ -28,6 +28,7 @@ final class MainGPSViewController: UIViewController {
         locationManager?.delegate = self
         
         setUI()
+        setSettingsUserDefaults()
     }
 }
 
@@ -59,5 +60,17 @@ extension MainGPSViewController {
         view.backgroundColor = .mainTheme
         
         self.navigationController?.isNavigationBarHidden = true
+    }
+    
+    private func setSettingsUserDefaults() {
+        SettingOptionUserDefault.shared.optionKeys.forEach { option in
+            if UserDefaults.standard.object(forKey: option) == nil {
+                if option == "화씨온도 °F" {
+                    UserDefaults.standard.set(false, forKey: option)
+                } else {
+                    UserDefaults.standard.set(true, forKey: option)
+                }
+            }
+        }
     }
 }

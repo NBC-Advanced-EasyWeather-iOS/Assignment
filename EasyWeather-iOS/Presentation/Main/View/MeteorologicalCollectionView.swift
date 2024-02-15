@@ -11,7 +11,10 @@ final class MeteorologicalCollectionView: UICollectionView {
     
     // MARK: - Properties
     
-    let tempdata: [String] = ["data 1","data 2","data 3","data 4","data 5","data 6"]
+    
+    let settings = SettingOptionUserDefault.shared.loadOptionsFromUserDefaults()
+    
+    let optionTitle = SettingOptionUserDefault.shared.settingOptions
     
     // MARK: - Life Cycle
     
@@ -50,19 +53,24 @@ extension MeteorologicalCollectionView {
 
 extension MeteorologicalCollectionView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return tempdata.count
+        return optionTitle.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MeteorologicalCollectionViewCell.identifier, for: indexPath)
         
         if let meteorologicalCell = cell as? MeteorologicalCollectionViewCell {
-            if indexPath.row == 0 {
-                meteorologicalCell.configure(withText: "\(tempdata[indexPath.row])", type: "일출")
-            } else if indexPath.row == 1 {
-                meteorologicalCell.configure(withText: "\(tempdata[indexPath.row])", type: "일몰")
+            
+            if indexPath.row == 0 && settings[0].isOn == true {
+                meteorologicalCell.configure(withText: "\(optionTitle[indexPath.row])", type: "일출")
+            } else if indexPath.row == 1 && settings[0].isOn == true {
+                meteorologicalCell.configure(withText: "\(optionTitle[indexPath.row])", type: "일몰")
+            } else if indexPath.row == 2 && settings[1].isOn == true {
+                meteorologicalCell.configure(withText: "\(optionTitle[indexPath.row])", type: "")
+            } else if indexPath.row == 3 && settings[1].isOn == true {
+                meteorologicalCell.configure(withText: "\(optionTitle[indexPath.row])", type: "")
             } else {
-                meteorologicalCell.configure(withText: "\(tempdata[indexPath.row])", type: "")
+                meteorologicalCell.configure(withText: "\(optionTitle[indexPath.row])", type: "")
             }
         }
         
