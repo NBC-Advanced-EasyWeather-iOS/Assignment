@@ -54,12 +54,11 @@ extension addedCityListTableViewCell {
     func setCell(indexPath: IndexPath) {
         
 //        데이터 연결
-//        guard let citys = CityList.shared.addedCity else { return }
-//        self.nameLabel.text = Citys[indexPath.row]
-        nameLabel.text = "서울"
+        guard let citys = CityList.shared.addedCity else { return }
+        nameLabel.text = citys[indexPath.row]
         
 //        데이터 연결
-//        self.temperatureLabel.text =
+//        temperatureLabel.text =
         temperatureLabel.text = "0℃"
     }
 }

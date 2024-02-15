@@ -10,6 +10,9 @@ import Foundation
 final class CityList {
     
     static let shared = CityList()
+    
+    private let key = "도시 목록"
+    
     private init() {}
     
     var searchedCity:[String]?
@@ -23,13 +26,33 @@ final class CityList {
     
     func add(city: String) {
 
-        //바인딩
-        guard var addedCity = addedCity else { return }
+        //중복처리, 바인딩
+        if let addedCity = addedCity {
+            guard !addedCity.contains(city) else { return }
+        } else {
+            addedCity = []
+        }
         
-        //중복처리
-        guard !addedCity.contains(city) else { return }
+        //추가
+        addedCity?.append(city)
+    }
+}
+
+// MARK: - UserDefaults 메서드
+
+extension CityList {
+    
+    func saveCity() {
+        UserDefaults.standard.set(addedCity, forKey: key)
         
-        //배열에 추가
-        addedCity.append(city)
+        print ("사용자 도시목록 저장")
+    }
+    
+    func loadCity() {
+        if let city = UserDefaults.standard.object(forKey: key) as? [String] {
+            addedCity = city
+            
+            print ("사용자 도시목록 로드")
+        }
     }
 }
