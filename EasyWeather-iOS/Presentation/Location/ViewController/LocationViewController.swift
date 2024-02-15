@@ -25,3 +25,11 @@ final class LocationViewController: UIViewController {
         view = locationView
     }
 }
+
+// MARK: - 데이터 configure 메서드
+extension LocationViewController {
+    func configure(city: String, temp: String) {
+        locationView.userLocationCaptionLabel.text = city
+        locationView.userLocationTemperatureLabel.text = temp
+    }
+}

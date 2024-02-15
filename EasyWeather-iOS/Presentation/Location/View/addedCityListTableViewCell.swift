@@ -60,7 +60,12 @@ extension addedCityListTableViewCell {
         //네트워크 요청
         Task{
             let dailyResponse = try? await WeatherService().fetchCurrnetWeather(city: citys[indexPath.row])
-            temperatureLabel.text = "\(dailyResponse?.main.temp)℃"
+            if let temp = dailyResponse?.main.temp {
+//                캘빈 to 섭씨로 수정해야함
+//                if let celsiusTemp = String(temp).fahrenheitToCelsius() {
+//                    temperatureLabel.text = celsiusTemp + "℃"
+//                }
+            }
         }
     }
 }
