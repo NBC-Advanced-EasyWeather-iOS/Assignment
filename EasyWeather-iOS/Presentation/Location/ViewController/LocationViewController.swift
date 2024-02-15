@@ -18,7 +18,7 @@ final class LocationViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        hideKeyboard()
+        CityList.shared.loadCity()
     }
     
     override func loadView() {
@@ -28,16 +28,16 @@ final class LocationViewController: UIViewController {
 
 // MARK: - keyboard 숨김 메서드
 
-extension LocationViewController {
-    
-    /// 화면밖 터치시 키보드를 내려 주는 메서드
-        func hideKeyboard() {
-            let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self,
-                                                                     action: #selector(LocationViewController.dismissKeyboard))
-            view.addGestureRecognizer(tap)
-        }
-        
-        @objc func dismissKeyboard() {
-            view.endEditing(true)
-        }
-}
+//extension LocationViewController {
+//    
+//    /// 화면밖 터치시 키보드를 내려 주는 메서드
+//        func hideKeyboard() {
+//            let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self,
+//                                                                     action: #selector(LocationViewController.dismissKeyboard))
+//            view.addGestureRecognizer(tap)
+//        }
+//        
+//        @objc func dismissKeyboard() {
+//            view.endEditing(true)
+//        }
+//}

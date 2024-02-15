@@ -30,8 +30,7 @@ struct DailyResponseDTO: Codable {
 
 struct WeeklyResponseDTO: Codable {
     let city: City
-    let list: [DayWeather] // `list`를 `City`와 같은 수준으로 이동
-
+    let list: [List]
 }
 
 // MARK: - Common
@@ -69,30 +68,15 @@ struct Sys: Codable {
 
 struct City: Codable {
     let name: String
-    let id: Int
-    let coord: Coordinates
-    let country: String
-    let population: Int
-    let timezone: Int
 }
 
-struct Coordinates: Codable {
-    let lon: Float
-    let lat: Float
-}
-
-struct DayWeather: Codable {
+struct List: Codable {
     let dt: Int
     let temp: Temp
-    let weather: [Weather]
-    
-    struct List: Codable {
-        let temp: Temp
-        let weather: Weather
-    }
-    
-    struct Temp: Codable {
-        let day: Float
-    }
-    
+    let weather: Weather
 }
+
+struct Temp: Codable {
+    let day: Float
+}
+
