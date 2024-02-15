@@ -25,10 +25,11 @@ class WeeklyTableViewCell: UITableViewCell {
         setupViews()
     }
 
-    func configure(with viewModel: WeatherDTO) {
-        dateLabel.text = viewModel.dateString
-        weatherLabel.text = viewModel.condition
-        temperatureLabel.text = viewModel.temperature
+    func configure(with viewModel: WeeklyResponseDTO) {
+        let weeklyList = viewModel.list
+        //dateLabel.text = weeklyList.description
+       // weatherLabel.text = weeklyList.weather
+      //  temperatureLabel.text = weeklyList.temp
     }
 
     // MARK: - Layout
