@@ -53,7 +53,7 @@ extension SettingOptionCell {
             make.leading.equalToSuperview().offset(16)
             make.centerY.equalToSuperview()
             make.width.equalTo(24) //
-            make.height.equalTo(24) // settingOptionCell 55,56 코드 변경
+            make.height.equalTo(24) // settingOptionCell 55,56 코드 변경 진행
         }
 
         titleLabel.snp.makeConstraints { make in
