@@ -132,12 +132,10 @@ extension PagingControlView: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PagingControlCollectionViewCell.identifier, for: indexPath) as! PagingControlCollectionViewCell
         
         if indexPath.row == 0 {
-            cell.configure(data: weatherResponseData)
+            cell.configure(weatherData: weatherResponseData, settingData: settingOptions)
         } else {
-            cell.configure(data: locationResponseData[indexPath.row - 1])
+            cell.configure(weatherData: locationResponseData[indexPath.row - 1], settingData: settingOptions)
         }
-        
-        cell.configureSettingOption(data: settingOptions)
         
         return cell
     }

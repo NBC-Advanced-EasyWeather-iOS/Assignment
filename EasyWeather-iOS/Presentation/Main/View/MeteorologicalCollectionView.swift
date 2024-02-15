@@ -21,12 +21,12 @@ final class MeteorologicalCollectionView: UICollectionView {
         }
     }
     
-    var data: [SettingOptionModel] = [] {
+    var settingData: [SettingOptionModel] = [] {
         didSet {
-            self.isSun = self.data[0].isOn
-            self.isTemperature = self.data[1].isOn
-            self.isATM = self.data[2].isOn
-            self.isHumidity = self.data[3].isOn
+            self.isSun = self.settingData[0].isOn
+            self.isTemperature = self.settingData[1].isOn
+            self.isATM = self.settingData[2].isOn
+            self.isHumidity = self.settingData[3].isOn
             
             reloadData()
         }
@@ -111,9 +111,9 @@ extension MeteorologicalCollectionView: UICollectionViewDataSource {
             
             if isTemperature {
                 if indexPath.row == dataIndex {
-                    meteorologicalCell.configure(title: "최저 기온", value: minTemperature, type: "")
+                    meteorologicalCell.configure(title: "최저 기온", value: "\(minTemperature) °C", type: "")
                 } else if indexPath.row == dataIndex + 1 {
-                    meteorologicalCell.configure(title: "최고 기온", value: maxTemperature, type: "")
+                    meteorologicalCell.configure(title: "최고 기온", value: "\(maxTemperature) °C", type: "")
                 }
                 dataIndex += 2
             }

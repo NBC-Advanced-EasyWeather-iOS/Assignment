@@ -150,7 +150,7 @@ extension ViewController {
     
     private func handleWeatherResponse(_ response: WeatherResponseType) {
         pagingControlView.weatherResponseData = response
-        locationViewController.configure(city: response.cityName, temp: String(Int(response.main.temp)).kelvinToCelsius()!)
+        locationViewController.configure(city: response.cityName, temp: "\(String(Int(response.main.temp)).kelvinToCelsius()!) °C")
     }
     
     private func fetchLocationWeather() {

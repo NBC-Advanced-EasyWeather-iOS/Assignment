@@ -141,21 +141,22 @@ extension PagingControlCollectionViewCell {
 // MARK: - Configure Cell
 
 extension PagingControlCollectionViewCell {
-    func configure(data: WeatherResponseType) {
+    func configure(weatherData: WeatherResponseType, settingData: [SettingOptionModel]) {
+        meteorologicalCollectionView.weatherData = weatherData
+        meteorologicalCollectionView.settingData = settingData
+        
         self.weatherIcon.image = UIImage(named: "Weather/DayPartlyCloudy")
         
-        let temp = String(Int(data.main.temp)).kelvinToCelsius()!
-        let feel = String(Int(data.main.feelsLike)).kelvinToCelsius()!
+        let temp = String(Int(weatherData.main.temp)).kelvinToCelsius() ?? "N/A"
+        let feel = String(Int(weatherData.main.feelsLike)).kelvinToCelsius() ?? "N/A"
         
-        self.temperatureLabel.text = "\(temp)"
-        self.windChillLabel.text = "체감온도 \(feel)"
+        if settingData[4].isOn == true {
+            self.temperatureLabel.text = "\(String(describing: temp))°C"
+        } else {
+            self.temperatureLabel.text = "\(String(describing: temp.celsiusToKelvin()!))°F"
+        }
         
-        meteorologicalCollectionView.weatherData = data
-    }
-    
-    
-    func configureSettingOption(data: [SettingOptionModel]) {
-        meteorologicalCollectionView.data = data
+        self.windChillLabel.text = "체감온도 \(feel)°C"
     }
     
     func addTargetForWeekendWeatherButton(_ target: Any?, action: Selector) {
