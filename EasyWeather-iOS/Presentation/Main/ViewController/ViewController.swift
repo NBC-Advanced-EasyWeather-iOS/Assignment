@@ -23,13 +23,16 @@ final class ViewController: UIViewController {
     private var pagingControlView: PagingControlView!
     private var settingsViewController = SettingsViewController()
     private var weeklyTableViewController = WeeklyWeatherViewController()
+    private var locationViewController = LocationViewController()
+    
+    private let weatherService = WeatherService()
     
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        pagingControlView = PagingControlView(numberOfPages: 3)
+        pagingControlView = PagingControlView(numberOfPages: 1)
         
         setUI()
         setLayout()
@@ -58,6 +61,7 @@ final class ViewController: UIViewController {
 extension ViewController {
     private func setUI() {
         pagingControlView.addTargetSettingMenuButton(self, action: #selector(goToSettingsViewController))
+        pagingControlView.addTargetLocationButton(self, action: #selector(goToLocationViewController))
 
         setBackgroundColor()
         self.navigationController?.isNavigationBarHidden = true
@@ -113,7 +117,27 @@ extension ViewController {
     }
     
     @objc
-    func goToWeeklyTableViewController() {
-        self.navigationController?.pushViewController(weeklyTableViewController, animated: true)
+    func goToLocationViewController() {
+        self.navigationController?.present(locationViewController, animated: true)
+    }
+}
+
+extension ViewController {
+    private func fetchCurrentWeather() {
+        let city = UserDefaults.standard.string(forKey: "city")!
+        
+        Task(priority: .userInitiated) {
+            do {
+                let response = try await weatherService.fetchCurrnetWeather(city: city)
+                let data: WeatherResponseType = WeatherResponseType(cityName: response.name, main: response.main, sys: response.sys)
+                handleWeatherResponse(data)
+            } catch {
+                print("Error fetching current weather: \(error)")
+            }
+        }
+    }
+    
+    private func handleWeatherResponse(_ response: WeatherResponseType) {
+        pagingControlView.weatherResponseData = response
     }
 }

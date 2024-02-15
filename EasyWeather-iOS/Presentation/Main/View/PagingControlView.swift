@@ -17,7 +17,7 @@ final class PagingControlView: UIView {
         }
     }
     
-    var data: [SettingOptionModel] = [] {
+    var settingOptions: [SettingOptionModel] = [] {
         didSet {
             mainPagingCollectionView.reloadData()
         }
@@ -170,5 +170,9 @@ extension PagingControlView: UIScrollViewDelegate {
 extension PagingControlView {
     func addTargetSettingMenuButton(_ target: Any?, action: Selector) {
         navigationBarView.settingMenuButton.addTarget(target, action: action, for: .touchUpInside)
+    }
+    
+    func addTargetLocationButton(_ target: Any?, action: Selector) {
+        navigationBarView.locationPlusButton.addTarget(target, action: action, for: .touchUpInside)
     }
 }
