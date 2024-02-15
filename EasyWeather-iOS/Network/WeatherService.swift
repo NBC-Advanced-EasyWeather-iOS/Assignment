@@ -27,8 +27,13 @@ extension WeatherService {
     }
     
     private func fetchData<T: Decodable>(_ endPoint: WeatherEndpoint) async throws -> T {
-        let data = try await provider.request(endPoint)
-        let response = try JSONDecoder.snakeCaseDecoder.decode(T.self, from: data)
-        return response
+        do {
+            let data = try await provider.request(endPoint)
+            let response = try JSONDecoder().decode(T.self, from: data)
+            return response
+        } catch {
+            print("An error occurred: \(error)")
+            throw error
+        }
     }
 }
