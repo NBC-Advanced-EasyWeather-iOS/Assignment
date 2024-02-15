@@ -15,7 +15,7 @@ final class ViewController: UIViewController {
     
     private var pagingControlView: PagingControlView!
     private var settingsViewController = SettingsViewController()
-    private var weeklyTableViewController = WeeklyWeatherViewController()
+
     
     // MARK: - Life Cycle
     
@@ -103,6 +103,7 @@ extension ViewController {
     
     @objc
     func goToWeeklyTableViewController() {
+        let weeklyTableViewController = WeeklyWeatherViewController(weatherService: WeatherService(), rootView: WeeklyWeatherView())
         self.navigationController?.pushViewController(weeklyTableViewController, animated: true)
     }
 }

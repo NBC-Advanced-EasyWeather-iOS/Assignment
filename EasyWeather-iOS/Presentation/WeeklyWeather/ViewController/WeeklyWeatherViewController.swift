@@ -14,13 +14,23 @@ final class WeeklyWeatherViewController: UIViewController {
     // MARK: - Properties
     
     private var weatherDataModel: [WeatherDataModel]?
-    private let weatherService = WeatherService()
+    private let weatherService: WeatherService?
     
     // MARK: - UI Properties
     
-    private let rootView = WeeklyWeatherView()
+    private let rootView: WeeklyWeatherView?
     
     // MARK: - Life Cycle
+    
+    init(weatherService: WeatherService, rootView: WeeklyWeatherView) {
+        self.weatherService = weatherService
+        self.rootView = rootView
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func loadView() {
         view = rootView
@@ -86,15 +96,17 @@ extension WeeklyWeatherViewController: UITableViewDelegate {
 extension WeeklyWeatherViewController {
     private func loadWeeklyWeatherData() {
         Task {
-            let weeklyResponse = try await self.weatherService.fetchWeeklyWeather(city: "Seoul")
+            let weeklyResponse = try await self.weatherService?.fetchWeeklyWeather(city: "Seoul")
             
             var data = [String: WeatherDataModel]()
             
-            for list in weeklyResponse.list {
-                let day = self.convertUnixTimeToDay(unixTime: list.dt)
-                let weatherCondition = list.weather.first?.main ?? ""
-                let temperature = String(list.main.temp)
-                let model = WeatherDataModel(dayOfWeek: day, weatherCondition: weatherCondition, temperature: temperature, dt: list.dt)
+            guard let listArray = weeklyResponse?.list else { return }
+            
+            for i in listArray {
+                let day = self.convertUnixTimeToDay(unixTime: i.dt)
+                let weatherCondition = i.weather.first?.main ?? ""
+                let temperature = String(i.main.temp)
+                let model = WeatherDataModel(dayOfWeek: day, weatherCondition: weatherCondition, temperature: temperature, dt: i.dt)
                 
                 data[day] = self.findClosestData(existingModel: data[day], newModel: model)
             }
@@ -102,7 +114,7 @@ extension WeeklyWeatherViewController {
             self.weatherDataModel = Array(data.values).sorted { $0.dt < $1.dt }
             
             DispatchQueue.main.async {
-                self.rootView.tableView.reloadData()
+                self.rootView?.tableView.reloadData()
             }
         }
     }
@@ -113,9 +125,9 @@ extension WeeklyWeatherViewController {
     // MARK: - Setups
     
     private func setupTableView() {
-        rootView.tableView.dataSource = self
-        rootView.tableView.delegate = self
-        rootView.tableView.register(WeeklyTableViewCell.self, forCellReuseIdentifier: WeeklyTableViewCell.identifier)
+        rootView?.tableView.dataSource = self
+        rootView?.tableView.delegate = self
+        rootView?.tableView.register(WeeklyTableViewCell.self, forCellReuseIdentifier: WeeklyTableViewCell.identifier)
     }
     
     // MARK: - General Helpers
