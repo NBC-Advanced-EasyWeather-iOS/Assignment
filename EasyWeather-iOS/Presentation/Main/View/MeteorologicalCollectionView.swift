@@ -11,13 +11,13 @@ final class MeteorologicalCollectionView: UICollectionView {
     
     // MARK: - Properties
     
-    var tlqkf: WeatherResponseType = WeatherResponseType(
+    var weatherData: WeatherResponseType = WeatherResponseType(
         cityName: "",
         main: Main(temp: 0, feelsLike: 0, tempMin: 0, tempMax: 0, pressure: 0, humidity: 0),
         sys: Sys(country: "", sunrise: 0, sunset: 0)
     ) {
         didSet {
-            print(tlqkf)
+            print(weatherData)
         }
     }
     
@@ -96,9 +96,9 @@ extension MeteorologicalCollectionView: UICollectionViewDataSource {
             
             var dataIndex = 0
             
-            let (formattedSunrise, formattedSunset) = Date().sunriseAndSunsetStringFromUnixTime(sunriseUnixTime: tlqkf.sys.sunrise, sunsetUnixTime: tlqkf.sys.sunset)
-            let minTemperature = String(Int(tlqkf.main.tempMin)).kelvinToCelsius()!
-            let maxTemperature = String(Int(tlqkf.main.tempMax)).kelvinToCelsius()!
+            let (formattedSunrise, formattedSunset) = Date().sunriseAndSunsetStringFromUnixTime(sunriseUnixTime: weatherData.sys.sunrise, sunsetUnixTime: weatherData.sys.sunset)
+            let minTemperature = String(Int(weatherData.main.tempMin)).kelvinToCelsius()!
+            let maxTemperature = String(Int(weatherData.main.tempMax)).kelvinToCelsius()!
             
             if isSun {
                 if indexPath.row == 0 {
@@ -121,14 +121,14 @@ extension MeteorologicalCollectionView: UICollectionViewDataSource {
             if isATM { // 기압
                 if isHumidity {
                     if indexPath.row == dataIndex {
-                        meteorologicalCell.configure(title: "기압", value: "\(tlqkf.main.pressure) hPa", type: "")
+                        meteorologicalCell.configure(title: "기압", value: "\(weatherData.main.pressure) hPa", type: "")
                     } else if indexPath.row == dataIndex + 1 {
-                        meteorologicalCell.configure(title: "습도", value: "\(tlqkf.main.humidity) %", type: "")
+                        meteorologicalCell.configure(title: "습도", value: "\(weatherData.main.humidity) %", type: "")
                     }
                     dataIndex += 2
                 } else {
                     if indexPath.row == dataIndex {
-                        meteorologicalCell.configure(title: "기압", value: "\(tlqkf.main.pressure) hPa", type: "")
+                        meteorologicalCell.configure(title: "기압", value: "\(weatherData.main.pressure) hPa", type: "")
                         dataIndex += 1
                     }
                 }
@@ -136,7 +136,7 @@ extension MeteorologicalCollectionView: UICollectionViewDataSource {
             
             if isHumidity && !isATM {
                 if indexPath.row == dataIndex {
-                    meteorologicalCell.configure(title: "습도", value: "\(tlqkf.main.humidity) %", type: "")
+                    meteorologicalCell.configure(title: "습도", value: "\(weatherData.main.humidity) %", type: "")
                 }
             }
         }
