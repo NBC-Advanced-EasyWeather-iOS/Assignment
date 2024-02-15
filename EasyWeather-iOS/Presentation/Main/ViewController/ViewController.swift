@@ -16,6 +16,7 @@ final class ViewController: UIViewController {
     private var pagingControlView: PagingControlView!
     private var settingsViewController = SettingsViewController()
     private var weeklyTableViewController = WeeklyWeatherViewController()
+    private var locationViewController = LocationViewController()
     
     private let weatherService = WeatherService()
     
@@ -53,6 +54,7 @@ final class ViewController: UIViewController {
 extension ViewController {
     private func setUI() {
         pagingControlView.addTargetSettingMenuButton(self, action: #selector(goToSettingsViewController))
+        pagingControlView.addTargetLocationButton(self, action: #selector(goToLocationViewController))
 
         setBackgroundColor()
         self.navigationController?.isNavigationBarHidden = true
@@ -108,8 +110,8 @@ extension ViewController {
     }
     
     @objc
-    func goToWeeklyTableViewController() {
-        self.navigationController?.pushViewController(weeklyTableViewController, animated: true)
+    func goToLocationViewController() {
+        self.navigationController?.present(locationViewController, animated: true)
     }
 }
 
@@ -130,7 +132,6 @@ extension ViewController {
     }
     
     private func handleWeatherResponse(_ response: WeatherResponseType) {
-//        print(response)
         pagingControlView.weatherResponseData = response
     }
 }
