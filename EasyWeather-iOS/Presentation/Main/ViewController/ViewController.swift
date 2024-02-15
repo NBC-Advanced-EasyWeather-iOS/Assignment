@@ -63,17 +63,27 @@ extension ViewController {
     }
     
     private func setBackgroundColor() {
-        // 낮
-        let topColor = UIColor.dayBackgroundTop.cgColor
-        let bottomColor = UIColor.primaryBackground.cgColor
+        let hour = Calendar.current.component(.hour, from: Date())
         
-        // 오후 ~ 저녁
-//        let topColor = UIColor.eveningBackgroundTop.cgColor
-//        let bottomColor = UIColor.primaryBackground.cgColor
+        var topColor = UIColor.nightBackgroundTop.cgColor
+        var bottomColor = UIColor.nightBackgroundTop.cgColor
         
-        // 밤
-//        let topColor = UIColor.nightBackgroundTop.cgColor
-//        let bottomColor = UIColor.dayBackgroundTop.cgColor
+        switch hour {
+        case 0...5: // 밤
+            topColor = UIColor.nightBackgroundTop.cgColor
+            bottomColor = UIColor.dayBackgroundTop.cgColor
+        case 6...11: // 오전
+            topColor = UIColor.dayBackgroundTop.cgColor
+            bottomColor = UIColor.primaryBackground.cgColor
+        case 12...17: // 오후
+            topColor = UIColor.eveningBackgroundTop.cgColor
+            bottomColor = UIColor.primaryBackground.cgColor
+        case 18...23: // 저녁
+            topColor = UIColor.nightBackgroundTop.cgColor
+            bottomColor = UIColor.dayBackgroundTop.cgColor
+        default:
+            break
+        }
         
         let gradientLayer = CAGradientLayer()
         gradientLayer.colors = [topColor, bottomColor]
@@ -82,6 +92,7 @@ extension ViewController {
         
         view.layer.insertSublayer(gradientLayer, at: 0)
     }
+
 }
 
 extension ViewController {
