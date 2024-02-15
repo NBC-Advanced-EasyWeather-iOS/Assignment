@@ -129,7 +129,7 @@ extension PagingControlCollectionViewCell {
     }
     
     private func createWeatherStackView() -> UIStackView {
-        let stackView = UIStackView(arrangedSubviews: [temperatureLabel, windChillGuideLabel, windChillLabel])
+        let stackView = UIStackView(arrangedSubviews: [temperatureLabel, windChillLabel])
         stackView.axis = .vertical
         stackView.spacing = 10
         stackView.alignment = .center
@@ -148,7 +148,7 @@ extension PagingControlCollectionViewCell {
         let feel = String(Int(data.main.feelsLike)).kelvinToCelsius()!
         
         self.temperatureLabel.text = "\(temp)"
-        self.windChillGuideLabel.text = "어제보다 \(temp) 높아요 😊"
+//        self.windChillGuideLabel.text = "어제보다 \(temp) 높아요 😊"
         self.windChillLabel.text = "체감온도 \(feel)"
         
         meteorologicalCollectionView.tlqkf = data
