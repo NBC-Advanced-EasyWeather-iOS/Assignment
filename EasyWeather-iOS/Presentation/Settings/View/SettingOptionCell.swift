@@ -52,8 +52,8 @@ extension SettingOptionCell {
         checkImageView.snp.makeConstraints { make in
             make.leading.equalToSuperview().offset(16)
             make.centerY.equalToSuperview()
-            make.width.equalToSuperview().multipliedBy(0.15)
-            make.height.equalTo(checkImageView.snp.width).multipliedBy(0.15)
+            make.width.equalTo(24) //
+            make.height.equalTo(24) // settingOptionCell 55,56 코드 변경
         }
 
         titleLabel.snp.makeConstraints { make in
