@@ -48,19 +48,20 @@ extension SettingOptionCell {
     private func setupLayout() {
         addSubview(checkImageView)
         addSubview(titleLabel)
-        checkImageView.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.activate([
-            checkImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            checkImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
-            checkImageView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.15),
-            checkImageView.heightAnchor.constraint(equalTo: widthAnchor, multiplier: 0.15),
-            
-            titleLabel.leadingAnchor.constraint(equalTo: checkImageView.trailingAnchor, constant: 8),
-            titleLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
-            titleLabel.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: -16)
-        ])
+        checkImageView.snp.makeConstraints { make in
+            make.leading.equalToSuperview().offset(16)
+            make.centerY.equalToSuperview()
+            make.width.equalToSuperview().multipliedBy(0.15)
+            make.height.equalTo(checkImageView.snp.width).multipliedBy(0.15)
+        }
+
+        titleLabel.snp.makeConstraints { make in
+            make.leading.equalTo(checkImageView.snp.trailing).offset(8)
+            make.centerY.equalToSuperview()
+            make.trailing.lessThanOrEqualToSuperview().offset(-16)
+        }
+
     }
     
     func configure(with option: SettingOptionModel) {
@@ -72,8 +73,10 @@ extension SettingOptionCell {
         self.titleLabel.textColor = isOn ? .primaryLabel : .tertiaryLabel
         self.backgroundColor = isOn ? .primaryBackground : .tertiaryBackground
         checkImageView.image = isOn ? UIImage(named: "checkedImage") : UIImage(named: "uncheckedImage")
+        
+        print(titleLabel.text!, isOn)
+        UserDefaults.standard.set(isOn, forKey: titleLabel.text!)
     }
-    
     
     private func setupBorder() {
         self.layer.cornerRadius = 20

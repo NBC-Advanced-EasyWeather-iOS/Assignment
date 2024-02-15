@@ -8,8 +8,6 @@
 import UIKit
 import CoreLocation
 
-import SnapKit
-
 final class MainGPSViewController: UIViewController {
     
     // MARK: - Properties
@@ -18,7 +16,6 @@ final class MainGPSViewController: UIViewController {
     
     // MARK: - UI Properties
     
-    private var pagingControlView: PagingControlView!
     private var viewController = ViewController()
     private var settingsViewController = SettingsViewController()
     
@@ -30,9 +27,8 @@ final class MainGPSViewController: UIViewController {
         locationManager = CLLocationManager()
         locationManager?.delegate = self
         
-        pagingControlView = PagingControlView(numberOfPages: 3)
-        
         setUI()
+        setSettingsUserDefaults()
     }
 }
 
@@ -64,5 +60,17 @@ extension MainGPSViewController {
         view.backgroundColor = .mainTheme
         
         self.navigationController?.isNavigationBarHidden = true
+    }
+    
+    private func setSettingsUserDefaults() {
+        SettingOptionUserDefault.shared.optionKeys.forEach { option in
+            if UserDefaults.standard.object(forKey: option) == nil {
+                if option == "화씨온도 °F" {
+                    UserDefaults.standard.set(false, forKey: option)
+                } else {
+                    UserDefaults.standard.set(true, forKey: option)
+                }
+            }
+        }
     }
 }
