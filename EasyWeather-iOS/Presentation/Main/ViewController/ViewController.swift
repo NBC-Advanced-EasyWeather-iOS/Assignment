@@ -31,6 +31,7 @@ final class ViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        pagingControlView.data = SettingOptionUserDefault.shared.loadOptionsFromUserDefaults()
         self.navigationController?.isNavigationBarHidden = true
     }
     

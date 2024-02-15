@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "Frame 23.png",
+      "filename" : "check.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Frame 24.png",
+      "filename" : "check@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Frame 25.png",
+      "filename" : "check@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

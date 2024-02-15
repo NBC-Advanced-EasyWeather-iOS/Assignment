@@ -1,66 +1,78 @@
 
 import UIKit
 
-// MARK: - ViewController
-
-class SettingsViewController: UIViewController {
-    var collectionView: UICollectionView?
+final class SettingsViewController: UIViewController {
     
-    // MARK: - Properties for layout calculation
+    // MARK: - Properties
     
     private let itemsPerRow: CGFloat = 2
     private let sectionInsets = UIEdgeInsets(top: 10.0, left: 20.0, bottom: 10.0, right: 20.0)
     
-    var settingSections: [[SettingOptionModel]] = [
-        [SettingOptionModel(title: "일출/일몰 시간", isOn: true), SettingOptionModel(title: "최저/최고 기온", isOn: false),
-         SettingOptionModel(title: "기압", isOn: true), SettingOptionModel(title: "습도", isOn: false)],
-        [SettingOptionModel(title: "섭씨온도 °C", isOn: true), SettingOptionModel(title: "화씨온도 °F", isOn: false)]
-    ]
+    private var data = SettingOptionUserDefault.shared.loadOptionsFromUserDefaults()
+
+    private var additionalDisplayOptions: [SettingOptionModel] = []
+    private var unitChangeOptions: [SettingOptionModel] = []
+    
+    // MARK: - UI Properties
+    
+    var collectionView: UICollectionView?
     
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        setUI()
         initializeCollectionView()
-        view.backgroundColor = .lightTheme
+        
+        setUserDefaultsData() // 데이터 설정 추가
+    }
+}
+
+// MARK: - Extensions
+
+extension SettingsViewController {
+    private func setUI() {
+        view.backgroundColor = UIColor.secondaryBackground
     }
     
     private func initializeCollectionView() {
-            let layout = UICollectionViewFlowLayout()
-            layout.scrollDirection = .vertical
-            collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-            collectionView?.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-            collectionView?.backgroundColor = .lightTheme
-            collectionView?.dataSource = self
-            collectionView?.delegate = self
-            collectionView?.register(SettingOptionCell.self, forCellWithReuseIdentifier: SettingOptionCell.identifier)
-            collectionView?.register(SettingHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SettingHeader.identifier)
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+
+        collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView?.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        collectionView?.backgroundColor = .lightTheme
+        collectionView?.dataSource = self
+        collectionView?.delegate = self
+        collectionView?.register(SettingOptionCell.self, forCellWithReuseIdentifier: SettingOptionCell.identifier)
+        collectionView?.register(SettingHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SettingHeader.identifier)
+
+        if let collectionView = collectionView {
+            view.addSubview(collectionView)
             
-            if let collectionView = collectionView {
-                view.addSubview(collectionView)
-                collectionView.translatesAutoresizingMaskIntoConstraints = false
-                NSLayoutConstraint.activate([
-                    collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-                    collectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-                    collectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-                    collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
-                ])
+            collectionView.snp.makeConstraints { make in
+                make.edges.equalToSuperview()
             }
         }
+    }
+    
+    private func setUserDefaultsData() {
+        additionalDisplayOptions = Array(data.prefix(4)) // 처음 4개의 데이터를 추가 표시 옵션으로 설정
+        unitChangeOptions = Array(data.suffix(2)) // 마지막 2개의 데이터를 단위 변경 옵션으로 설정
+    }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
         if indexPath.section == 1 {
-            
-            for i in 0..<settingSections[indexPath.section].count {
-                settingSections[indexPath.section][i].isOn = false
+            for i in 0 ..< unitChangeOptions.count {
+                unitChangeOptions[i].isOn = false
             }
-            settingSections[indexPath.section][indexPath.item].isOn = true
+            unitChangeOptions[indexPath.row].isOn = true
             
             collectionView.reloadSections(IndexSet(integer: indexPath.section))
-        } else {
             
-            let option = settingSections[indexPath.section][indexPath.item]
+        } else {
+            let option = additionalDisplayOptions[indexPath.row]
             option.isOn.toggle()
             
             guard let cell = collectionView.cellForItem(at: indexPath) as? SettingOptionCell else { return }
@@ -75,19 +87,28 @@ class SettingsViewController: UIViewController {
 
 extension SettingsViewController: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return settingSections.count
+        return 2
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return settingSections[section].count
+        if section == 0 {
+            return additionalDisplayOptions.count
+        } else {
+            return unitChangeOptions.count
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SettingOptionCell.identifier, for: indexPath) as? SettingOptionCell else {
             fatalError("Unable to dequeue SettingOptionCell")
         }
-        let option = settingSections[indexPath.section][indexPath.item]
-        cell.configure(with: option)
+        
+        if indexPath.section == 0 {
+            cell.configure(with: additionalDisplayOptions[indexPath.row])
+        } else {
+            cell.configure(with: unitChangeOptions[indexPath.row])
+        }
+        
         return cell
     }
     

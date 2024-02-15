@@ -51,6 +51,10 @@ extension UIColor {
         return UIColor(hex: "#F2F2F7")
     }
     
+    static var tertiaryBackground: UIColor {
+        return UIColor(hex: "EBEBF5")
+    }
+    
     // MARK: - Daily Background Colors
     
     static var dayBackgroundTop: UIColor {
