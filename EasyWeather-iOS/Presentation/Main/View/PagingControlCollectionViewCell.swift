@@ -147,6 +147,10 @@ extension PagingControlCollectionViewCell {
         self.windChillLabel.text = "체감온도 \(text)℃"
     }
     
+    func configureSettingOption(data: [SettingOptionModel]) {
+        meteorologicalCollectionView.data = data
+    }
+    
     func addTargetForWeekendWeatherButton(_ target: Any?, action: Selector) {
         weekendWeatherButton.addTarget(target, action: action, for: .touchUpInside)
     }
