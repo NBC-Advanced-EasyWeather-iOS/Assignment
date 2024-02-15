@@ -34,13 +34,10 @@ final class PagingControlView: UIView {
         }
     }
     
-    var locationResponseData: WeatherResponseType = WeatherResponseType(
-        cityName: "",
-        main: Main(temp: 0, feelsLike: 0, tempMin: 0, tempMax: 0, pressure: 0, humidity: 0),
-        sys: Sys(country: "", sunrise: 0, sunset: 0)
-    ) {
+    var locationResponseData: [WeatherResponseType] = [] {
         didSet {
             mainPagingCollectionView.reloadData()
+            print(locationResponseData)
 //            navigationBarView.cityLabel.text = locationResponseData.cityName
         }
     }
@@ -136,6 +133,8 @@ extension PagingControlView: UICollectionViewDataSource {
         
         if indexPath.row == 0 {
             cell.configure(data: weatherResponseData)
+        } else {
+            cell.configure(data: locationResponseData[indexPath.row - 1])
         }
         
         cell.configureSettingOption(data: settingOptions)

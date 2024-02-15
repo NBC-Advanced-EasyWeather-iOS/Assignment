@@ -11,13 +11,21 @@ import SnapKit
 
 final class ViewController: UIViewController {
     
-    var locationUserDefaultsData: [String] = [] {
+    var locationUserDefaultsKey: [String] = [] {
         didSet {
-            print(locationUserDefaultsData)
-            pagingControlView.numberOfPages = locationUserDefaultsData.count + 1
+            print(locationUserDefaultsKey)
+            pagingControlView.numberOfPages = locationUserDefaultsKey.count + 1
         }
     }
     
+    var locationUserDefaultsData: [WeatherResponseType] = [] {
+        didSet {
+            if locationUserDefaultsKey.count == locationUserDefaultsData.count {
+                pagingControlView.locationResponseData = locationUserDefaultsData
+            }
+        }
+    }
+     
     // MARK: - UI Properties
     
     private var pagingControlView: PagingControlView!
@@ -42,9 +50,10 @@ final class ViewController: UIViewController {
         super.viewWillAppear(animated)
         
         pagingControlView.settingOptions = SettingOptionUserDefault.shared.loadOptionsFromUserDefaults()
-        self.locationUserDefaultsData = CityList.shared.loadCity()!
+        self.locationUserDefaultsKey = CityList.shared.loadCity()!
         
         fetchCurrentWeather()
+        fetchLocationWeather()
         
         self.navigationController?.isNavigationBarHidden = true
     }
@@ -140,4 +149,19 @@ extension ViewController {
     private func handleWeatherResponse(_ response: WeatherResponseType) {
         pagingControlView.weatherResponseData = response
     }
+    
+    private func fetchLocationWeather() {
+        for city in locationUserDefaultsKey {
+            Task(priority: .userInitiated) {
+                do {
+                    let response = try await weatherService.fetchCurrnetWeather(city: city)
+                    let data: WeatherResponseType = WeatherResponseType(cityName: response.name, main: response.main, sys: response.sys)
+                    locationUserDefaultsData.append(data)
+                } catch {
+                    print("Error fetching current weather: \(error)")
+                }
+            }
+        }
+    }
+
 }
