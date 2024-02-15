@@ -4,23 +4,29 @@
 //
 //  Created by t2023-m0051 on 2/11/24.
 //
+
 import UIKit
+
+// MARK: - WeeklyWeatherViewController
 
 final class WeeklyWeatherViewController: UIViewController {
     
     // MARK: - Properties
-    let myView = WeeklyWeatherView()
+    
+    let rootView = WeeklyWeatherView()
     var weatherService = WeatherService()
-    var weatherViewModels: [WeeklyResponseDTO] = []
+    private var weatherDataModel: [WeatherDataModel]?
     
     
     // MARK: - Life Cycle
+    
     override func loadView() {
-        view = myView
+        view = rootView
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         loadWeeklyWeatherData()
         setupTableView()
     }
@@ -29,51 +35,29 @@ final class WeeklyWeatherViewController: UIViewController {
 // MARK: - UITableViewDataSource
 extension WeeklyWeatherViewController: UITableViewDataSource {
     
-    func loadWeeklyWeatherData() {
-        Task {
-            do {
-                let weeklyWeatherDTO = try await weatherService.fetchWeeklyWeather(city: "Seoul")
-                DispatchQueue.main.async { [weak self] in
-                    // 메인 스레드에서 UI를 업데이트합니다.
-                    self?.weatherViewModels = [weeklyWeatherDTO] // DTO를 배열에 저장합니다.
-                    self?.myView.tableView.reloadData()
-                }
-            } catch {
-                print("날씨 데이터 로딩 중 에러 발생: \(error)")
-            }
-        }
-    }
-    
     private func setupTableView() {
-        myView.tableView.dataSource = self
-        myView.tableView.delegate = self
-        myView.tableView.register(WeeklyTableViewCell.self, forCellReuseIdentifier: "cell")
+        rootView.tableView.dataSource = self
+        rootView.tableView.delegate = self
+        rootView.tableView.register(WeeklyTableViewCell.self, forCellReuseIdentifier: WeeklyTableViewCell.identifier)
     }
-    
 }
 
 // MARK: - UITableViewDelegate
 
 extension WeeklyWeatherViewController: UITableViewDelegate {
-    
-    private func convertUnixTimeToDayOfWeek(unixTime: Int) -> String {
-        let date = Date(timeIntervalSince1970: TimeInterval(unixTime))
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "ko_KR")
-        dateFormatter.dateFormat = "EEEE"
-        return dateFormatter.string(from: date)
-    }
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return weatherViewModels.count
+        return weatherDataModel?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? WeeklyTableViewCell else {
-            fatalError("The dequeued cell is not an instance of WeeklyTableViewCell.")
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: WeeklyTableViewCell.identifier, for: indexPath) as? WeeklyTableViewCell else {
+            return UITableViewCell()
         }
-        let viewModel = weatherViewModels[indexPath.row]
-        cell.configure(with: viewModel)
+        
+        if let model = weatherDataModel?[indexPath.row] {
+            cell.configure(with: model)
+        }
+        
         return cell
     }
     
@@ -97,29 +81,57 @@ extension WeeklyWeatherViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 80 // 또는 원하는 높이 값
+        return 80
     }
 }
-//
-//#if DEBUG
-//
-//import SwiftUI
-//
-//struct ViewControllerPresentable : UIViewControllerRepresentable {
-//    func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
-//    }
-//    
-//    func makeUIViewController(context: Context) -> some UIViewController {
-//        WeeklyWeatherViewController()
-//    }
-//}
-//
-//struct ViewControllerPresentable_PreviewProvider : PreviewProvider {
-//    static var previews: some View{
-//        ViewControllerPresentable()
-//            .ignoresSafeArea()
-//    }
-//}
-//
-//
-//#endif
+
+// MARK: - Network
+
+extension WeeklyWeatherViewController {
+    private func loadWeeklyWeatherData() {
+        Task {
+            let weeklyResponse = try await self.weatherService.fetchWeeklyWeather(city: "Seoul")
+            
+            let data = weeklyResponse.list.map { list -> WeatherDataModel in
+                let dayOfWeek = self.convertUnixTimeToDayOfWeek(unixTime: list.dt)
+                let weatherCondition = list.weather.first?.main ?? ""
+                let temperature = String(list.main.temp)
+                return WeatherDataModel(dayOfWeek: dayOfWeek, weatherCondition: weatherCondition, temperature: temperature)
+            }
+            
+            self.weatherDataModel = data
+            
+            DispatchQueue.main.async {
+                self.rootView.tableView.reloadData()
+            }
+        }
+    }
+}
+
+extension WeeklyWeatherViewController {
+    private func convertUnixTimeToDayOfWeek(unixTime: Int) -> String {
+        let date = Date(timeIntervalSince1970: TimeInterval(unixTime))
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "ko_KR")
+        dateFormatter.dateFormat = "EEEE"
+        return dateFormatter.string(from: date)
+    }
+    
+    func findClosestWeatherData(weatherData: [[String: Any]]) -> [String: Any]? {
+        let currentTime = Date().timeIntervalSince1970
+        var closestData: [String: Any]? = nil
+        var closestTimeDifference: TimeInterval = Double.infinity
+
+        for data in weatherData {
+            if let timestamp = data["dt"] as? TimeInterval {
+                let timeDifference = abs(timestamp - currentTime)
+                if timeDifference < closestTimeDifference {
+                    closestData = data
+                    closestTimeDifference = timeDifference
+                }
+            }
+        }
+
+        return closestData
+    }
+}

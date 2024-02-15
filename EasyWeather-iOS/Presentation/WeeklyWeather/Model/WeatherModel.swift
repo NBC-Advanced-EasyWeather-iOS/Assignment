@@ -5,7 +5,6 @@
 //  Created by t2023-m0051 on 2/11/24.
 //
 
-
 struct WeatherDataModel {
     let dayOfWeek: String
     let weatherCondition: String
