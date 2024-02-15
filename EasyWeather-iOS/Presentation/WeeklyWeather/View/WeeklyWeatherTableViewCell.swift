@@ -24,7 +24,7 @@ final class WeeklyTableViewCell: UITableViewCell {
     
     let weatherLabel: UILabel = {
         let label = UILabel()
-        label.font = FontLiteral.body(style: .bold)
+        label.font = FontLiteral.body(style: .regular)
         label.text = "소나기"
         return label
     }()

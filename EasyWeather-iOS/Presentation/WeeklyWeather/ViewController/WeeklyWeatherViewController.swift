@@ -13,10 +13,12 @@ final class WeeklyWeatherViewController: UIViewController {
     
     // MARK: - Properties
     
-    let rootView = WeeklyWeatherView()
-    var weatherService = WeatherService()
     private var weatherDataModel: [WeatherDataModel]?
+    private let weatherService = WeatherService()
     
+    // MARK: - UI Properties
+    
+    private let rootView = WeeklyWeatherView()
     
     // MARK: - Life Cycle
     
@@ -33,14 +35,8 @@ final class WeeklyWeatherViewController: UIViewController {
 }
 
 // MARK: - UITableViewDataSource
-extension WeeklyWeatherViewController: UITableViewDataSource {
-    
-    private func setupTableView() {
-        rootView.tableView.dataSource = self
-        rootView.tableView.delegate = self
-        rootView.tableView.register(WeeklyTableViewCell.self, forCellReuseIdentifier: WeeklyTableViewCell.identifier)
-    }
-}
+
+extension WeeklyWeatherViewController: UITableViewDataSource {}
 
 // MARK: - UITableViewDelegate
 
@@ -93,7 +89,6 @@ extension WeeklyWeatherViewController {
             let weeklyResponse = try await self.weatherService.fetchWeeklyWeather(city: "Seoul")
             
             var data = [String: WeatherDataModel]()
-            let currentDate = Date()
             
             for list in weeklyResponse.list {
                 let day = self.convertUnixTimeToDay(unixTime: list.dt)
@@ -101,15 +96,7 @@ extension WeeklyWeatherViewController {
                 let temperature = String(list.main.temp)
                 let model = WeatherDataModel(dayOfWeek: day, weatherCondition: weatherCondition, temperature: temperature, dt: list.dt)
                 
-                if let existingModel = data[day] {
-                    let existingDate = Date(timeIntervalSince1970: TimeInterval(existingModel.dt))
-                    let newDate = Date(timeIntervalSince1970: TimeInterval(model.dt))
-                    if abs(newDate.timeIntervalSince(currentDate)) < abs(existingDate.timeIntervalSince(currentDate)) {
-                        data[day] = model
-                    }
-                } else {
-                    data[day] = model
-                }
+                data[day] = self.findClosestData(existingModel: data[day], newModel: model)
             }
             
             self.weatherDataModel = Array(data.values).sorted { $0.dt < $1.dt }
@@ -122,6 +109,30 @@ extension WeeklyWeatherViewController {
 }
 
 extension WeeklyWeatherViewController {
+    
+    // MARK: - Setups
+    
+    private func setupTableView() {
+        rootView.tableView.dataSource = self
+        rootView.tableView.delegate = self
+        rootView.tableView.register(WeeklyTableViewCell.self, forCellReuseIdentifier: WeeklyTableViewCell.identifier)
+    }
+    
+    // MARK: - General Helpers
+    
+    private func findClosestData(existingModel: WeatherDataModel?, newModel: WeatherDataModel) -> WeatherDataModel {
+        let currentDate = Date()
+        
+        if let existingModel = existingModel {
+            let existingDate = Date(timeIntervalSince1970: TimeInterval(existingModel.dt))
+            let newDate = Date(timeIntervalSince1970: TimeInterval(newModel.dt))
+            
+            return abs(newDate.timeIntervalSince(currentDate)) < abs(existingDate.timeIntervalSince(currentDate)) ? newModel : existingModel
+        } else {
+            return newModel
+        }
+    }
+    
     private func convertUnixTimeToDay(unixTime: Int) -> String {
         let date = Date(timeIntervalSince1970: TimeInterval(unixTime))
         let dateFormatter = DateFormatter()
