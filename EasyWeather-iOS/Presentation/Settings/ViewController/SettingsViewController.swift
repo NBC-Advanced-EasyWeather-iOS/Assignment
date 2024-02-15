@@ -1,17 +1,17 @@
 
 import UIKit
 
-class SettingsViewController: UIViewController {
+final class SettingsViewController: UIViewController {
     
     // MARK: - Properties
     
     private let itemsPerRow: CGFloat = 2
     private let sectionInsets = UIEdgeInsets(top: 10.0, left: 20.0, bottom: 10.0, right: 20.0)
     
-    var data = SettingOptionUserDefault.shared.loadOptionsFromUserDefaults()
+    private var data = SettingOptionUserDefault.shared.loadOptionsFromUserDefaults()
 
-    var additionalDisplayOptions: [SettingOptionModel] = []
-    var unitChangeOptions: [SettingOptionModel] = []
+    private var additionalDisplayOptions: [SettingOptionModel] = []
+    private var unitChangeOptions: [SettingOptionModel] = []
     
     // MARK: - UI Properties
     
@@ -21,22 +21,21 @@ class SettingsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        setUI()
         initializeCollectionView()
-        view.backgroundColor = UIColor.secondaryBackground
         
         setUserDefaultsData() // 데이터 설정 추가
-//        print(data)
-    }
-    
-    private func setUserDefaultsData() {
-        additionalDisplayOptions = Array(data.prefix(4)) // 처음 4개의 데이터를 추가 표시 옵션으로 설정
-        unitChangeOptions = Array(data.suffix(2)) // 마지막 2개의 데이터를 단위 변경 옵션으로 설정
     }
 }
 
 // MARK: - Extensions
 
 extension SettingsViewController {
+    private func setUI() {
+        view.backgroundColor = UIColor.secondaryBackground
+    }
+    
     private func initializeCollectionView() {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -56,6 +55,11 @@ extension SettingsViewController {
                 make.edges.equalToSuperview()
             }
         }
+    }
+    
+    private func setUserDefaultsData() {
+        additionalDisplayOptions = Array(data.prefix(4)) // 처음 4개의 데이터를 추가 표시 옵션으로 설정
+        unitChangeOptions = Array(data.suffix(2)) // 마지막 2개의 데이터를 단위 변경 옵션으로 설정
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

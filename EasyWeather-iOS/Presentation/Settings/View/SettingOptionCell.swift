@@ -7,7 +7,7 @@ import UIKit
 
 // MARK: - Custom UICollectionViewCell
 
-class SettingOptionCell: UICollectionViewCell {
+final class SettingOptionCell: UICollectionViewCell {
     
     // MARK: - Properties
 

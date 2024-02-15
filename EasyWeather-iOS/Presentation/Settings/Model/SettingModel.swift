@@ -13,12 +13,12 @@ class SettingOptionModel {
     }
 }
 
-class SettingOptionUserDefault {
+final class SettingOptionUserDefault {
     static let shared = SettingOptionUserDefault()
     
     private init() {}
     
-    let optionKeys: [String] = [
+    private let optionKeys: [String] = [
         "일출/일몰 시간",
         "최저/최고 기온",
         "기압",
@@ -27,8 +27,8 @@ class SettingOptionUserDefault {
         "화씨온도 °F"
     ]
     
-    let settingOptions: [String] = ["일출","일몰","최저 기온","최고 기온","기압","습도"]
-    var settingOptionsData: [SettingOptionModel] = []
+    private let settingOptions: [String] = ["일출","일몰","최저 기온","최고 기온","기압","습도"]
+    private var settingOptionsData: [SettingOptionModel] = []
     
     func loadOptionsFromUserDefaults() -> [SettingOptionModel] {
         settingOptionsData = []
