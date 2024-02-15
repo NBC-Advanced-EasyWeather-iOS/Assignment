@@ -248,7 +248,7 @@ extension LocationView {
         //검색 결과 테이블뷰
         self.addSubview(searchResultTableView)
     }
-    
+
     private func setLayout() {
         //타이틀
         titleLabel.snp.makeConstraints { make in
@@ -373,6 +373,11 @@ extension LocationView: UITextFieldDelegate {
         
         searchResultTableView.reloadData()
     }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder() // 키보드 내리기
+        return true
+    }
 }
 
 // MARK: - Extensions : UITableViewDelegate
@@ -382,10 +387,9 @@ extension LocationView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tableView == addedCityListTableView {
             
-//            데이터 연결
-//            guard let citys = CityList.shared.addedCity else { return 0 }
-//            return citys.count
-            return 3
+            guard let citys = CityList.shared.addedCity else { return 0 }
+            return citys.count
+            
         } else if tableView == searchResultTableView {
             
             guard let citys = CityList.shared.searchedCity else { return 0 }
@@ -420,7 +424,19 @@ extension LocationView: UITableViewDelegate, UITableViewDataSource {
             
             let deleteAction = UIContextualAction(style: .normal, title: "삭제", handler: {(action, view, completionHandler) in
                 
-                //삭제 로직 구현부
+                //바인딩
+                guard var citys = CityList.shared.addedCity else { return }
+                
+                //삭제
+                citys.remove(at: indexPath.row)
+                
+                //삭제 적용
+                CityList.shared.addedCity = citys
+                
+                //저장
+                CityList.shared.saveCity()
+                
+                //테이블 뷰 리로드
                 tableView.reloadData()
             })
             deleteAction.backgroundColor = .red
@@ -437,15 +453,21 @@ extension LocationView: UITableViewDelegate, UITableViewDataSource {
         
         if tableView == searchResultTableView {
             
-            
+            //바인딩
             guard let Citys = CityList.shared.searchedCity else { return }
             
             let selectedCity = Citys[indexPath.row]
             
+            //배열에 추가
             CityList.shared.add(city: selectedCity)
             
-            //dismiss 추가 예정
+            //userDefaults에 저장
+            CityList.shared.saveCity()
             
+            //테이블 뷰 리로드
+            addedCityListTableView.reloadData()
+            
+            //dismiss 추가 예정
         }
     }
 }
