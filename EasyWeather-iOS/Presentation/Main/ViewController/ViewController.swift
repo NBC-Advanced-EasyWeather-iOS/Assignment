@@ -11,6 +11,10 @@ import SnapKit
 
 final class ViewController: UIViewController {
     
+   // MARK: - Properties
+    
+    private let weatherService = WeatherService()
+    
     var locationUserDefaultsKey: [String] = [] {
         didSet {
             print(locationUserDefaultsKey)
@@ -32,8 +36,6 @@ final class ViewController: UIViewController {
     private var settingsViewController = SettingsViewController()
     private var weeklyTableViewController = WeeklyWeatherViewController()
     private var locationViewController = LocationViewController()
-    
-    private let weatherService = WeatherService()
     
     // MARK: - Life Cycle
     
@@ -164,5 +166,4 @@ extension ViewController {
             }
         }
     }
-
 }

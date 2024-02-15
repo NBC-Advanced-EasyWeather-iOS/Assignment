@@ -141,6 +141,14 @@ extension PagingControlView: UICollectionViewDataSource {
         
         return cell
     }
+    
+    func updateCityLabel(for indexPath: IndexPath) {
+        if indexPath.row == 0 {
+            navigationBarView.cityLabel.text = weatherResponseData.cityName
+        } else {
+            navigationBarView.cityLabel.text = locationResponseData[indexPath.row - 1].cityName
+        }
+    }
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout
@@ -161,6 +169,10 @@ extension PagingControlView: UIScrollViewDelegate {
         
         let pageIndex = round(scrollView.contentOffset.x / scrollView.frame.width)
         pageControl.currentPage = Int(pageIndex)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        updateCityLabel(for: indexPath)
     }
 }
 
