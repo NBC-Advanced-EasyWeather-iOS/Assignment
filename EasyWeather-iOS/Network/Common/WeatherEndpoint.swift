@@ -35,7 +35,7 @@ extension WeatherEndpoint {
         case .currentWeather(let city):
             return "q=\(city)&appid=\(APIKeys.openWeatherKey)"
         case .weeklyWeather(let city):
-            return "q=\(city)&appid=\(APIKeys.openWeatherKey)"
+            return "q=\(city)&kr&appid=\(APIKeys.openWeatherKey)"
         }
     }
     
