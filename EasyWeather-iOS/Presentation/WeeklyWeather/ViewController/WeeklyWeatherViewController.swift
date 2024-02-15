@@ -92,14 +92,27 @@ extension WeeklyWeatherViewController {
         Task {
             let weeklyResponse = try await self.weatherService.fetchWeeklyWeather(city: "Seoul")
             
-            let data = weeklyResponse.list.map { list -> WeatherDataModel in
-                let dayOfWeek = self.convertUnixTimeToDayOfWeek(unixTime: list.dt)
+            var data = [String: WeatherDataModel]()
+            let currentDate = Date()
+            
+            for list in weeklyResponse.list {
+                let day = self.convertUnixTimeToDay(unixTime: list.dt)
                 let weatherCondition = list.weather.first?.main ?? ""
                 let temperature = String(list.main.temp)
-                return WeatherDataModel(dayOfWeek: dayOfWeek, weatherCondition: weatherCondition, temperature: temperature)
+                let model = WeatherDataModel(dayOfWeek: day, weatherCondition: weatherCondition, temperature: temperature, dt: list.dt)
+                
+                if let existingModel = data[day] {
+                    let existingDate = Date(timeIntervalSince1970: TimeInterval(existingModel.dt))
+                    let newDate = Date(timeIntervalSince1970: TimeInterval(model.dt))
+                    if abs(newDate.timeIntervalSince(currentDate)) < abs(existingDate.timeIntervalSince(currentDate)) {
+                        data[day] = model
+                    }
+                } else {
+                    data[day] = model
+                }
             }
             
-            self.weatherDataModel = data
+            self.weatherDataModel = Array(data.values).sorted { $0.dt < $1.dt }
             
             DispatchQueue.main.async {
                 self.rootView.tableView.reloadData()
@@ -109,29 +122,11 @@ extension WeeklyWeatherViewController {
 }
 
 extension WeeklyWeatherViewController {
-    private func convertUnixTimeToDayOfWeek(unixTime: Int) -> String {
+    private func convertUnixTimeToDay(unixTime: Int) -> String {
         let date = Date(timeIntervalSince1970: TimeInterval(unixTime))
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "ko_KR")
         dateFormatter.dateFormat = "EEEE"
         return dateFormatter.string(from: date)
-    }
-    
-    func findClosestWeatherData(weatherData: [[String: Any]]) -> [String: Any]? {
-        let currentTime = Date().timeIntervalSince1970
-        var closestData: [String: Any]? = nil
-        var closestTimeDifference: TimeInterval = Double.infinity
-
-        for data in weatherData {
-            if let timestamp = data["dt"] as? TimeInterval {
-                let timeDifference = abs(timestamp - currentTime)
-                if timeDifference < closestTimeDifference {
-                    closestData = data
-                    closestTimeDifference = timeDifference
-                }
-            }
-        }
-
-        return closestData
     }
 }

@@ -9,6 +9,7 @@ struct WeatherDataModel {
     let dayOfWeek: String
     let weatherCondition: String
     let temperature: String
+    let dt: Int
 }
 
 class WeatherData {
@@ -20,14 +21,14 @@ class WeatherData {
     let weathers = ["Sunny", "Cloudy", "Rainy", "Snowy", "Windy", "Foggy", "Thunderstorms"]
     let temperatures = ["20°C", "18°C", "22°C", "17°C", "19°C", "21°C", "23°C"]
     
-    func getWeatherData() -> [WeatherDataModel] {
-        var weatherData = [WeatherDataModel]()
-        
-        for index in 0..<daysOfWeek.count {
-            let weather = WeatherDataModel(dayOfWeek: daysOfWeek[index], weatherCondition: weathers[index], temperature: temperatures[index])
-            weatherData.append(weather)
-        }
-        
-        return weatherData
-    }
+//    func getWeatherData() -> [WeatherDataModel] {
+//        var weatherData = [WeatherDataModel]()
+//        
+//        for index in 0..<daysOfWeek.count {
+//            let weather = WeatherDataModel(dayOfWeek: daysOfWeek[index], weatherCondition: weathers[index], temperature: temperatures[index])
+//            weatherData.append(weather)
+//        }
+//        
+//        return weatherData
+//    }
 }
