@@ -53,13 +53,20 @@ extension addedCityListTableViewCell {
     
     func setCell(indexPath: IndexPath) {
         
-//        데이터 연결
+        //데이터 연결
         guard let citys = CityList.shared.addedCity else { return }
         nameLabel.text = citys[indexPath.row]
         
-//        데이터 연결
-//        temperatureLabel.text =
-        temperatureLabel.text = "0℃"
+        //네트워크 요청
+        Task{
+            let dailyResponse = try? await WeatherService().fetchCurrnetWeather(city: citys[indexPath.row])
+            if let temp = dailyResponse?.main.temp {
+//                캘빈 to 섭씨로 수정해야함
+//                if let celsiusTemp = String(temp).fahrenheitToCelsius() {
+//                    temperatureLabel.text = celsiusTemp + "℃"
+//                }
+            }
+        }
     }
 }
 

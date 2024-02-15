@@ -70,17 +70,15 @@ final class LocationView: UIView {
         
         return label
     }()
-    private lazy var userLocationCaptionLabel: UILabel = {
+    lazy var userLocationCaptionLabel: UILabel = {
         let label = UILabel()
-        label.text = "서울시"
         label.textColor = UIColor.systemGray5
         label.font = UIFont.systemFont(ofSize: 11, weight: .regular)
         
         return label
     }()
-    private lazy var userLocationTemperatureLabel: UILabel = {
+    lazy var userLocationTemperatureLabel: UILabel = {
         let label = UILabel()
-        label.text = "0℃"
         label.textColor = .white
         label.font = FontLiteral.body(style: .regular)
         
@@ -467,7 +465,8 @@ extension LocationView: UITableViewDelegate, UITableViewDataSource {
             //테이블 뷰 리로드
             addedCityListTableView.reloadData()
             
-            //dismiss 추가 예정
+            //텍스트 필드 편집 상태 종료
+            locationTextField.resignFirstResponder()
         }
     }
 }
