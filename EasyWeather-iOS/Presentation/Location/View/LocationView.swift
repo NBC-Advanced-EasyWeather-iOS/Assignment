@@ -12,7 +12,7 @@ final class LocationView: UIView {
     
     // MARK: - Properties
     
-    var locationManager = CLLocationManager()
+    private var locationManager = CLLocationManager()
     
     // MARK: - UI Properties
     
@@ -160,6 +160,7 @@ final class LocationView: UIView {
         super.init(frame: .zero)
         checkLocationPermission()
         setDelegate()
+        setRegister()
         setUI()
         setLayout()
     }
@@ -173,7 +174,7 @@ final class LocationView: UIView {
 
 extension LocationView {
         
-    private func setDelegate () {
+    private func setDelegate() {
         //delegate
         locationTextField.delegate = self
         
@@ -184,7 +185,9 @@ extension LocationView {
         searchResultTableView.dataSource = self
         
         locationManager.delegate = self
-        
+    }
+    
+    private func setRegister() {
         //cell register
         addedCityListTableView.register(addedCityListTableViewCell.self, forCellReuseIdentifier: "CityList")
         searchResultTableView.register(searchResultTableViewCell.self, forCellReuseIdentifier: "ResultList")
