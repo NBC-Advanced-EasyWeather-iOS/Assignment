@@ -141,12 +141,19 @@ extension PagingControlCollectionViewCell {
 // MARK: - Configure Cell
 
 extension PagingControlCollectionViewCell {
-    func configure(withText text: String) {
+    func configure(data: WeatherResponseType) {
         self.weatherIcon.image = UIImage(named: "Weather/DayPartlyCloudy")
-        self.temperatureLabel.text = "\(text)"
-        self.windChillGuideLabel.text = "어제보다 \(text) 높아요 😊"
-        self.windChillLabel.text = "체감온도 \(text)"
+        
+        let temp = String(Int(data.main.temp)).kelvinToCelsius()!
+        let feel = String(Int(data.main.feelsLike)).kelvinToCelsius()!
+        
+        self.temperatureLabel.text = "\(temp)"
+        self.windChillGuideLabel.text = "어제보다 \(temp) 높아요 😊"
+        self.windChillLabel.text = "체감온도 \(feel)"
+        
+        meteorologicalCollectionView.tlqkf = data
     }
+    
     
     func configureSettingOption(data: [SettingOptionModel]) {
         meteorologicalCollectionView.data = data

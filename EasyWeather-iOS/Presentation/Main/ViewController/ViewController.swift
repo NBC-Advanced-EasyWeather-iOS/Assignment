@@ -25,7 +25,7 @@ final class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        pagingControlView = PagingControlView(numberOfPages: 3)
+        pagingControlView = PagingControlView(numberOfPages: 1)
         
         setUI()
         setLayout()

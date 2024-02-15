@@ -19,17 +19,13 @@ final class PagingControlView: UIView {
         }
     }
     
-    var weatherResponseData: WeatherResponseType? = nil {
+    var weatherResponseData: WeatherResponseType = WeatherResponseType(
+        cityName: "",
+        main: Main(temp: 0, feelsLike: 0, tempMin: 0, tempMax: 0, pressure: 0, humidity: 0),
+        sys: Sys(country: "", sunrise: 0, sunset: 0)
+    ) {
         didSet {
-            print(weatherResponseData!.cityName,
-                  weatherResponseData!.main.temp,
-                  weatherResponseData!.main.temp_max,
-                  weatherResponseData!.main.temp_min,
-                  weatherResponseData!.main.pressure,
-                  weatherResponseData!.main.humidity,
-                  weatherResponseData!.sys.sunrise,
-                  weatherResponseData!.sys.sunset
-            )
+            navigationBarView.cityLabel.text = weatherResponseData.cityName
             mainPagingCollectionView.reloadData()
         }
     }
@@ -123,14 +119,7 @@ extension PagingControlView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PagingControlCollectionViewCell.identifier, for: indexPath) as! PagingControlCollectionViewCell
         
-//        let temp = weatherResponseData?.main.temp
-//        cell.configure(withText: "\(String(describing: temp))")
-        if let temp = weatherResponseData?.main.temp {
-//            print(String(temp).celsiusToFahrenheit()!)
-            cell.configure(withText: String(Int(temp)).kelvinToCelsius()!)
-        } else {
-            // TODO: temp가 nil인 경우 처리할 로직 추가
-        }
+        cell.configure(data: weatherResponseData)
         
         cell.configureSettingOption(data: settingOptions)
         

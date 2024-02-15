@@ -26,7 +26,7 @@ final class NavigationBarView: UIView {
         return button
     }()
 
-    private lazy var cityLabel: UILabel = {
+    lazy var cityLabel: UILabel = {
         let label = UILabel()
         label.text = "수원시"
         label.font = FontLiteral.title3(style: .bold)
