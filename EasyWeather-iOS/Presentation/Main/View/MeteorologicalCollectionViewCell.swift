@@ -102,9 +102,9 @@ extension MeteorologicalCollectionViewCell {
 // MARK: - Configure Cell
 
 extension MeteorologicalCollectionViewCell {
-    func configure(title: String, type: String) {
+    func configure(title: String, value: String, type: String) {
         self.titleLabel.text = title
-        self.contentLabel.text = "1030 hPa"
+        self.contentLabel.text = value
         self.iconImage.isHidden = false
         
         if type == "일출" {

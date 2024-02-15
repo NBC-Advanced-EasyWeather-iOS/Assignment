@@ -123,12 +123,13 @@ extension PagingControlCollectionViewCell {
         let label = UILabel()
         label.font = font
         label.textColor = .primaryLabel
+        label.text = "-"
         
         return label
     }
     
     private func createWeatherStackView() -> UIStackView {
-        let stackView = UIStackView(arrangedSubviews: [temperatureLabel, windChillGuideLabel, windChillLabel])
+        let stackView = UIStackView(arrangedSubviews: [temperatureLabel, windChillLabel])
         stackView.axis = .vertical
         stackView.spacing = 10
         stackView.alignment = .center
@@ -140,12 +141,18 @@ extension PagingControlCollectionViewCell {
 // MARK: - Configure Cell
 
 extension PagingControlCollectionViewCell {
-    func configure(withText text: String) {
+    func configure(data: WeatherResponseType) {
         self.weatherIcon.image = UIImage(named: "Weather/DayPartlyCloudy")
-        self.temperatureLabel.text = "\(text)°C"
-        self.windChillGuideLabel.text = "어제보다 \(text)도 높아요 😊"
-        self.windChillLabel.text = "체감온도 \(text)℃"
+        
+        let temp = String(Int(data.main.temp)).kelvinToCelsius()!
+        let feel = String(Int(data.main.feelsLike)).kelvinToCelsius()!
+        
+        self.temperatureLabel.text = "\(temp)"
+        self.windChillLabel.text = "체감온도 \(feel)"
+        
+        meteorologicalCollectionView.weatherData = data
     }
+    
     
     func configureSettingOption(data: [SettingOptionModel]) {
         meteorologicalCollectionView.data = data

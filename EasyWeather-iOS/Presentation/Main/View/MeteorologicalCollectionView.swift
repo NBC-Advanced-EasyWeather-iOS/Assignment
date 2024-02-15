@@ -11,6 +11,16 @@ final class MeteorologicalCollectionView: UICollectionView {
     
     // MARK: - Properties
     
+    var weatherData: WeatherResponseType = WeatherResponseType(
+        cityName: "",
+        main: Main(temp: 0, feelsLike: 0, tempMin: 0, tempMax: 0, pressure: 0, humidity: 0),
+        sys: Sys(country: "", sunrise: 0, sunset: 0)
+    ) {
+        didSet {
+            print(weatherData)
+        }
+    }
+    
     var data: [SettingOptionModel] = [] {
         didSet {
             self.isSun = self.data[0].isOn
@@ -86,35 +96,39 @@ extension MeteorologicalCollectionView: UICollectionViewDataSource {
             
             var dataIndex = 0
             
-            if isSun { // 일출,일몰
+            let (formattedSunrise, formattedSunset) = Date().sunriseAndSunsetStringFromUnixTime(sunriseUnixTime: weatherData.sys.sunrise, sunsetUnixTime: weatherData.sys.sunset)
+            let minTemperature = String(Int(weatherData.main.tempMin)).kelvinToCelsius()!
+            let maxTemperature = String(Int(weatherData.main.tempMax)).kelvinToCelsius()!
+            
+            if isSun {
                 if indexPath.row == 0 {
-                    meteorologicalCell.configure(title: "일출", type: "일출")
+                    meteorologicalCell.configure(title: "일출", value: String(describing: formattedSunrise), type: "일출")
                 } else if indexPath.row == 1 {
-                    meteorologicalCell.configure(title: "일몰", type: "일몰")
+                    meteorologicalCell.configure(title: "일몰", value: String(describing: formattedSunset), type: "일몰")
                 }
                 dataIndex += 2
             }
             
-            if isTemperature { // 최저,최고 기온
+            if isTemperature {
                 if indexPath.row == dataIndex {
-                    meteorologicalCell.configure(title: "최저 기온", type: "")
+                    meteorologicalCell.configure(title: "최저 기온", value: minTemperature, type: "")
                 } else if indexPath.row == dataIndex + 1 {
-                    meteorologicalCell.configure(title: "최고 기온", type: "")
+                    meteorologicalCell.configure(title: "최고 기온", value: maxTemperature, type: "")
                 }
                 dataIndex += 2
             }
             
             if isATM { // 기압
-                if isHumidity { // 습도
+                if isHumidity {
                     if indexPath.row == dataIndex {
-                        meteorologicalCell.configure(title: "기압", type: "")
+                        meteorologicalCell.configure(title: "기압", value: "\(weatherData.main.pressure) hPa", type: "")
                     } else if indexPath.row == dataIndex + 1 {
-                        meteorologicalCell.configure(title: "습도", type: "")
+                        meteorologicalCell.configure(title: "습도", value: "\(weatherData.main.humidity) %", type: "")
                     }
                     dataIndex += 2
                 } else {
                     if indexPath.row == dataIndex {
-                        meteorologicalCell.configure(title: "기압", type: "")
+                        meteorologicalCell.configure(title: "기압", value: "\(weatherData.main.pressure) hPa", type: "")
                         dataIndex += 1
                     }
                 }
@@ -122,7 +136,7 @@ extension MeteorologicalCollectionView: UICollectionViewDataSource {
             
             if isHumidity && !isATM {
                 if indexPath.row == dataIndex {
-                    meteorologicalCell.configure(title: "습도", type: "")
+                    meteorologicalCell.configure(title: "습도", value: "\(weatherData.main.humidity) %", type: "")
                 }
             }
         }

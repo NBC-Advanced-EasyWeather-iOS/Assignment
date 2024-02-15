@@ -44,12 +44,41 @@ extension MainGPSViewController: CLLocationManagerDelegate {
         case .authorizedWhenInUse, .authorizedAlways:
             // MARK: 위치 권한을 얻은 경우 - 메인화면 이동
             self.navigationController?.pushViewController(viewController, animated: true)
+            manager.requestLocation()
         case .denied, .restricted:
             // MARK: 위치 권한을 얻지 못한 경우 - 위치 검색 페이지로 이동
             self.navigationController?.pushViewController(settingsViewController, animated: true)
         @unknown default:
             fatalError("Unknown location authorization status")
         }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let location = locations.first else { return }
+        
+        let geocoder = CLGeocoder()
+        geocoder.reverseGeocodeLocation(location) { placemarks, error in
+            if let error = error {
+                print("Reverse geocoding error: \(error.localizedDescription)")
+                return
+            }
+            
+            guard let placemark = placemarks?.first else {
+                print("No placemark found")
+                return
+            }
+            
+            if let city = placemark.locality {
+//                print("도시: \(city)")
+                UserDefaults.standard.set(city, forKey: "city")
+            } else {
+                print("City information not found")
+            }
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print("Failed to get user's location: \(error.localizedDescription)")
     }
 }
 
