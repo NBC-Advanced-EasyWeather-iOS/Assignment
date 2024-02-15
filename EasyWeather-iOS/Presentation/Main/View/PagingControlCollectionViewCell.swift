@@ -123,6 +123,7 @@ extension PagingControlCollectionViewCell {
         let label = UILabel()
         label.font = font
         label.textColor = .primaryLabel
+        label.text = "-"
         
         return label
     }
@@ -142,9 +143,9 @@ extension PagingControlCollectionViewCell {
 extension PagingControlCollectionViewCell {
     func configure(withText text: String) {
         self.weatherIcon.image = UIImage(named: "Weather/DayPartlyCloudy")
-        self.temperatureLabel.text = "\(text)°C"
-        self.windChillGuideLabel.text = "어제보다 \(text)도 높아요 😊"
-        self.windChillLabel.text = "체감온도 \(text)℃"
+        self.temperatureLabel.text = "\(text)"
+        self.windChillGuideLabel.text = "어제보다 \(text) 높아요 😊"
+        self.windChillLabel.text = "체감온도 \(text)"
     }
     
     func configureSettingOption(data: [SettingOptionModel]) {

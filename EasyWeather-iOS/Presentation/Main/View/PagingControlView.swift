@@ -13,8 +13,23 @@ final class PagingControlView: UIView {
     
     private let numberOfPages: Int
     
-    var data: [SettingOptionModel] = [] {
+    var settingOptions: [SettingOptionModel] = [] {
         didSet {
+            mainPagingCollectionView.reloadData()
+        }
+    }
+    
+    var weatherResponseData: WeatherResponseType? = nil {
+        didSet {
+            print(weatherResponseData!.cityName,
+                  weatherResponseData!.main.temp,
+                  weatherResponseData!.main.temp_max,
+                  weatherResponseData!.main.temp_min,
+                  weatherResponseData!.main.pressure,
+                  weatherResponseData!.main.humidity,
+                  weatherResponseData!.sys.sunrise,
+                  weatherResponseData!.sys.sunset
+            )
             mainPagingCollectionView.reloadData()
         }
     }
@@ -108,8 +123,16 @@ extension PagingControlView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PagingControlCollectionViewCell.identifier, for: indexPath) as! PagingControlCollectionViewCell
         
-        cell.configure(withText: "\(indexPath.row + 1)")
-        cell.configureSettingOption(data: data)
+//        let temp = weatherResponseData?.main.temp
+//        cell.configure(withText: "\(String(describing: temp))")
+        if let temp = weatherResponseData?.main.temp {
+//            print(String(temp).celsiusToFahrenheit()!)
+            cell.configure(withText: String(Int(temp)).kelvinToCelsius()!)
+        } else {
+            // TODO: temp가 nil인 경우 처리할 로직 추가
+        }
+        
+        cell.configureSettingOption(data: settingOptions)
         cell.addTargetForWeekendWeatherButton(target, action: #selector(ViewController.goToWeeklyTableViewController))
         
         return cell

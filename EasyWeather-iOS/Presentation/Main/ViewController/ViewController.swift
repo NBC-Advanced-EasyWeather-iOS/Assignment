@@ -33,7 +33,7 @@ final class ViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        pagingControlView.data = SettingOptionUserDefault.shared.loadOptionsFromUserDefaults()
+        pagingControlView.settingOptions = SettingOptionUserDefault.shared.loadOptionsFromUserDefaults()
         
 //        print(UserDefaults.standard.string(forKey: "city")!)
         fetchCurrentWeather()
@@ -109,14 +109,17 @@ extension ViewController {
         Task(priority: .userInitiated) {
             do {
                 let response = try await weatherService.fetchCurrnetWeather(city: city)
-                handleWeatherResponse(response)
+                let data: WeatherResponseType = WeatherResponseType(cityName: response.name, main: response.main, sys: response.sys)
+                handleWeatherResponse(data)
+//                print(response)
             } catch {
                 print("Error fetching current weather: \(error)")
             }
         }
     }
     
-    private func handleWeatherResponse(_ response: DailyResponseDTO) {
-        print(response.name)
+    private func handleWeatherResponse(_ response: WeatherResponseType) {
+//        print(response)
+        pagingControlView.weatherResponseData = response
     }
 }
