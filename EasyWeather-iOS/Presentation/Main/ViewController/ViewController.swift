@@ -138,11 +138,6 @@ extension ViewController {
         let weeklyTableViewController = WeeklyWeatherViewController()
         self.navigationController?.pushViewController(weeklyTableViewController, animated: true)
     }
-    
-    @objc
-    func goToLocationViewController() {
-    self.navigationController?.present(locationViewController, animated: true)
-    }
 }
 
 extension ViewController {
