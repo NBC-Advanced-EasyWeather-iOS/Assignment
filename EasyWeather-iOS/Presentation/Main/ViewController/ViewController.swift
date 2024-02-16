@@ -11,14 +11,29 @@ import SnapKit
 
 final class ViewController: UIViewController {
     
-    // MARK: - UI Properties
-    
-    private var pagingControlView: PagingControlView!
-    private var settingsViewController = SettingsViewController()
-    private var weeklyTableViewController = WeeklyWeatherViewController()
-    private var locationViewController = LocationViewController()
+   // MARK: - Properties
     
     private let weatherService = WeatherService()
+    
+    var locationUserDefaultsKey: [String] = [] {
+        didSet {
+            print(locationUserDefaultsKey)
+            pagingControlView?.numberOfPages = locationUserDefaultsKey.count + 1
+        }
+    }
+    
+    var locationUserDefaultsData: [WeatherResponseType] = [] {
+        didSet {
+            if locationUserDefaultsKey.count == locationUserDefaultsData.count {
+                pagingControlView?.locationResponseData = locationUserDefaultsData
+            }
+        }
+    }
+     
+    // MARK: - UI Properties
+    
+    private var pagingControlView: PagingControlView?
+    private var locationViewController = LocationViewController()
     
     // MARK: - Life Cycle
     
@@ -34,9 +49,11 @@ final class ViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        pagingControlView.settingOptions = SettingOptionUserDefault.shared.loadOptionsFromUserDefaults()
+        pagingControlView?.settingOptions = SettingOptionUserDefault.shared.loadOptionsFromUserDefaults()
+        self.locationUserDefaultsKey = CityList.shared.loadCity() ?? []
         
         fetchCurrentWeather()
+        fetchLocationWeather()
         
         self.navigationController?.isNavigationBarHidden = true
     }
@@ -52,19 +69,21 @@ final class ViewController: UIViewController {
 
 extension ViewController {
     private func setUI() {
-        pagingControlView.addTargetSettingMenuButton(self, action: #selector(goToSettingsViewController))
-        pagingControlView.addTargetLocationButton(self, action: #selector(goToLocationViewController))
+        pagingControlView?.addTargetSettingMenuButton(self, action: #selector(goToSettingsViewController))
+        pagingControlView?.addTargetLocationButton(self, action: #selector(goToLocationViewController))
 
         setBackgroundColor()
         self.navigationController?.isNavigationBarHidden = true
         
-        [pagingControlView].forEach {
+        guard let pagingControl = pagingControlView else { return }
+        
+        [pagingControl].forEach {
             view.addSubview($0)
         }
     }
 
     private func setLayout() {
-        pagingControlView.snp.makeConstraints { make in
+        pagingControlView?.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
     }
@@ -105,23 +124,30 @@ extension ViewController {
 extension ViewController {
     @objc
     func goToSettingsViewController() {
+        let settingsViewController = SettingsViewController()
         self.navigationController?.pushViewController(settingsViewController, animated: true)
     }
     
     @objc
     func goToLocationViewController() {
-        self.navigationController?.present(locationViewController, animated: true)
+        self.navigationController?.pushViewController(locationViewController, animated: true)
+    }
+
+    @objc
+    func goToWeeklyTableViewController() {
+        let weeklyTableViewController = WeeklyWeatherViewController()
+        self.navigationController?.pushViewController(weeklyTableViewController, animated: true)
     }
 }
 
 extension ViewController {
     private func fetchCurrentWeather() {
-        let city = UserDefaults.standard.string(forKey: "city")!
+        let city = UserDefaults.standard.string(forKey: "city") ?? "-"
         
         Task(priority: .userInitiated) {
             do {
                 let response = try await weatherService.fetchCurrnetWeather(city: city)
-                let data: WeatherResponseType = WeatherResponseType(cityName: response.name, main: response.main, sys: response.sys)
+                let data: WeatherResponseType = WeatherResponseType(cityName: response.name, weather: response.weather, main: response.main, sys: response.sys)
                 handleWeatherResponse(data)
             } catch {
                 print("Error fetching current weather: \(error)")
@@ -130,6 +156,21 @@ extension ViewController {
     }
     
     private func handleWeatherResponse(_ response: WeatherResponseType) {
-        pagingControlView.weatherResponseData = response
+        pagingControlView?.weatherResponseData = response
+        locationViewController.configure(city: response.cityName, temp: "\(String(Int(response.main.temp)).kelvinToCelsius()!) °C")
+    }
+    
+    private func fetchLocationWeather() {
+        for city in locationUserDefaultsKey {
+            Task(priority: .userInitiated) {
+                do {
+                    let response = try await weatherService.fetchCurrnetWeather(city: city)
+                    let data: WeatherResponseType = WeatherResponseType(cityName: response.name, weather: response.weather, main: response.main, sys: response.sys)
+                    locationUserDefaultsData.append(data)
+                } catch {
+                    print("Error fetching current weather: \(error)")
+                }
+            }
+        }
     }
 }

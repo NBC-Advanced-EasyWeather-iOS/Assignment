@@ -11,18 +11,28 @@ final class LocationViewController: UIViewController {
     
     // MARK: - UI Properties
     
-    private var locationView = LocationView()
+    private var locationView: LocationView
     
     // MARK: - Life Cycle
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    init(locationView: LocationView = LocationView()) {
+        self.locationView = locationView
         
-        CityList.shared.loadCity()
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     override func loadView() {
         view = locationView
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+//        CityList.shared.loadCity()
     }
 }
 

@@ -15,7 +15,7 @@ final class SettingsViewController: UIViewController {
     
     // MARK: - UI Properties
     
-    var collectionView: UICollectionView?
+    private var collectionView: UICollectionView?
     
     // MARK: - Life Cycle
     

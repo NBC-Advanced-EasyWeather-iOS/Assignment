@@ -12,7 +12,7 @@ final class MeteorologicalCollectionView: UICollectionView {
     // MARK: - Properties
     
     var weatherData: WeatherResponseType = WeatherResponseType(
-        cityName: "",
+        cityName: "", weather: [],
         main: Main(temp: 0, feelsLike: 0, tempMin: 0, tempMax: 0, pressure: 0, humidity: 0),
         sys: Sys(country: "", sunrise: 0, sunset: 0)
     ) {
@@ -21,12 +21,12 @@ final class MeteorologicalCollectionView: UICollectionView {
         }
     }
     
-    var data: [SettingOptionModel] = [] {
+    var settingData: [SettingOptionModel] = [] {
         didSet {
-            self.isSun = self.data[0].isOn
-            self.isTemperature = self.data[1].isOn
-            self.isATM = self.data[2].isOn
-            self.isHumidity = self.data[3].isOn
+            self.isSun = self.settingData[0].isOn
+            self.isTemperature = self.settingData[1].isOn
+            self.isATM = self.settingData[2].isOn
+            self.isHumidity = self.settingData[3].isOn
             
             reloadData()
         }
@@ -108,17 +108,19 @@ extension MeteorologicalCollectionView: UICollectionViewDataSource {
                 }
                 dataIndex += 2
             }
-            
+        
             if isTemperature {
                 if indexPath.row == dataIndex {
-                    meteorologicalCell.configure(title: "최저 기온", value: minTemperature, type: "")
+                    let temperature = minTemperature == "-0" ? "0" : minTemperature
+                    meteorologicalCell.configure(title: "최저 기온", value: "\(temperature) °C", type: "")
                 } else if indexPath.row == dataIndex + 1 {
-                    meteorologicalCell.configure(title: "최고 기온", value: maxTemperature, type: "")
+                    let temperature = maxTemperature == "-0" ? "0" : maxTemperature
+                    meteorologicalCell.configure(title: "최고 기온", value: "\(temperature) °C", type: "")
                 }
                 dataIndex += 2
             }
             
-            if isATM { // 기압
+            if isATM {
                 if isHumidity {
                     if indexPath.row == dataIndex {
                         meteorologicalCell.configure(title: "기압", value: "\(weatherData.main.pressure) hPa", type: "")

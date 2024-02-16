@@ -9,6 +9,7 @@
 
 struct WeatherResponseType {
     let cityName: String
+    let weather: [Weather]
     let main: Main
     let sys: Sys
 }
@@ -30,7 +31,8 @@ struct DailyResponseDTO: Codable {
 
 struct WeeklyResponseDTO: Codable {
     let city: City
-    let list: [List]
+    var list: [List]
+    var dayOfWeek: [String]?
 }
 
 // MARK: - Common
@@ -76,11 +78,6 @@ struct City: Codable {
 
 struct List: Codable {
     let dt: Int
-    let temp: Temp
-    let weather: Weather
+    let main: Main
+    let weather: [Weather]
 }
-
-struct Temp: Codable {
-    let day: Float
-}
-

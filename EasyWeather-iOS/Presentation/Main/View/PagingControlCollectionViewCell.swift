@@ -141,24 +141,58 @@ extension PagingControlCollectionViewCell {
 // MARK: - Configure Cell
 
 extension PagingControlCollectionViewCell {
-    func configure(data: WeatherResponseType) {
-        self.weatherIcon.image = UIImage(named: "Weather/DayPartlyCloudy")
+    func configure(weatherData: WeatherResponseType, settingData: [SettingOptionModel]) {
+        meteorologicalCollectionView.weatherData = weatherData
+        meteorologicalCollectionView.settingData = settingData
         
-        let temp = String(Int(data.main.temp)).kelvinToCelsius()!
-        let feel = String(Int(data.main.feelsLike)).kelvinToCelsius()!
+        selectWeatherImage(weatherData: weatherData)
+//        if weatherData.weather.first?.main == "Clear" {
+//            self.weatherIcon.image = UIImage(named: "Weather/DayPartlyCloudy")
+//        }
+//        Clear
+//        Drizzle
+//        Rain
+//        Snow
+//        Mist
+//        Clouds
         
-        self.temperatureLabel.text = "\(temp)"
-        self.windChillLabel.text = "체감온도 \(feel)"
+        let temp = String(Int(weatherData.main.temp)).kelvinToCelsius() ?? "N/A"
+        let feel = String(Int(weatherData.main.feelsLike)).kelvinToCelsius() ?? "N/A"
         
-        meteorologicalCollectionView.weatherData = data
-    }
-    
-    
-    func configureSettingOption(data: [SettingOptionModel]) {
-        meteorologicalCollectionView.data = data
+        if settingData[4].isOn == true {
+            self.temperatureLabel.text = "\(String(describing: temp))°C"
+        } else {
+            self.temperatureLabel.text = "\(String(describing: temp.celsiusToKelvin()!))°F"
+        }
+        
+        self.windChillLabel.text = "체감온도 \(feel)°C"
     }
     
     func addTargetForWeekendWeatherButton(_ target: Any?, action: Selector) {
         weekendWeatherButton.addTarget(target, action: action, for: .touchUpInside)
+    }
+    
+    private func selectWeatherImage(weatherData: WeatherResponseType) {
+        guard let weatherMain = weatherData.weather.first?.main else {
+            return
+        }
+
+        switch weatherMain {
+        case "Clear":
+            self.weatherIcon.image = UIImage(named: "Weather/Clear")
+        case "Drizzle":
+            self.weatherIcon.image = UIImage(named: "Weather/Drizzle")
+        case "Rain":
+            self.weatherIcon.image = UIImage(named: "Weather/Rain")
+        case "Snow":
+            self.weatherIcon.image = UIImage(named: "Weather/Snow")
+        case "Clouds":
+            self.weatherIcon.image = UIImage(named: "Weather/DayPartlyCloudy")
+        default:
+            if ["Mist", "Smoke", "Haze", "Dust", "Fog", "Sand", "Ash", "Squall", "Tornado"].contains(weatherMain) {
+                self.weatherIcon.image = UIImage(named: "Weather/Wind")
+            }
+            break
+        }
     }
 }

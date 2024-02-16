@@ -9,28 +9,40 @@ import UIKit
 
 import SnapKit
 
-class WeeklyWeatherView: UIView {
-    let stackView = UIStackView()
+// MARK: - WeeklyWeatherView
+
+final class WeeklyWeatherView: UIView {
+    let stackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.distribution = .fill
+        stackView.alignment = .fill
+        stackView.backgroundColor = UIColor.lightTheme
+        return stackView
+    }()
+    
     let leftSpacerView = UIView()
     let weeklyWeatherImageView = UIImageView()
     let tableView: UITableView = UITableView(frame: .zero, style: .insetGrouped)
     
+    // MARK: - Life Cycle
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
         setupViews()
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        setupViews()
     }
-    
+}
+
+// MARK: - WeeklyWeatherView
+
+extension WeeklyWeatherView {
     private func setupViews() {
         addSubview(stackView)
-        stackView.axis = .horizontal
-        stackView.distribution = .fill
-        stackView.alignment = .fill
-        stackView.backgroundColor = UIColor.lightTheme
         
         stackView.snp.makeConstraints { make in
             make.top.leading.trailing.equalToSuperview()
@@ -51,17 +63,15 @@ class WeeklyWeatherView: UIView {
         }
         
         // 테이블 뷰 설정
-        tableView.register(WeeklyTableViewCell.self, forCellReuseIdentifier: "cell")
+        tableView.register(WeeklyTableViewCell.self, forCellReuseIdentifier: WeeklyTableViewCell.identifier)
         addSubview(tableView)
         
-        // SnapKit을 사용하여 오토레이아웃 설정
         leftSpacerView.snp.makeConstraints { make in
             make.width.equalToSuperview().dividedBy(2)
         }
         
         weeklyWeatherImageView.snp.makeConstraints { make in
-            make.trailing.bottom.equalToSuperview() // 우측 하단에 붙임
-
+            make.trailing.bottom.equalToSuperview()
         }
         
         tableView.snp.makeConstraints { make in
@@ -70,4 +80,3 @@ class WeeklyWeatherView: UIView {
         }
     }
 }
-

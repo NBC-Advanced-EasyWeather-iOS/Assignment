@@ -48,11 +48,13 @@ extension CityList {
         print ("사용자 도시목록 저장")
     }
     
-    func loadCity() {
+    func loadCity() -> [String]? {
         if let city = UserDefaults.standard.object(forKey: key) as? [String] {
             addedCity = city
-            
-            print ("사용자 도시목록 로드")
+            print("사용자 도시목록 로드")
+            return city
+        } else {
+            return nil
         }
     }
 }
