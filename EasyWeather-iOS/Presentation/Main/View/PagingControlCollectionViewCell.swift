@@ -11,6 +11,8 @@ final class PagingControlCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Properties
     
+    weak var delegate: WeekendWeatherDelegate?
+    
     static let identifier = "PagingControlCollectionViewCellIdentifier"
     
     private var width: CGFloat = UIScreen.screenWidth
@@ -146,15 +148,6 @@ extension PagingControlCollectionViewCell {
         meteorologicalCollectionView.settingData = settingData
         
         selectWeatherImage(weatherData: weatherData)
-//        if weatherData.weather.first?.main == "Clear" {
-//            self.weatherIcon.image = UIImage(named: "Weather/DayPartlyCloudy")
-//        }
-//        Clear
-//        Drizzle
-//        Rain
-//        Snow
-//        Mist
-//        Clouds
         
         let temp = String(Int(weatherData.main.temp)).kelvinToCelsius() ?? "N/A"
         let feel = String(Int(weatherData.main.feelsLike)).kelvinToCelsius() ?? "N/A"
@@ -194,5 +187,15 @@ extension PagingControlCollectionViewCell {
             }
             break
         }
+    }
+}
+
+extension PagingControlCollectionViewCell {
+    @objc private func weekendWeatherButtonTapped() {
+        delegate?.didTapWeekendWeatherButton()
+    }
+
+    func addTargetForWeekendWeatherButton() {
+        weekendWeatherButton.addTarget(self, action: #selector(weekendWeatherButtonTapped), for: .touchUpInside)
     }
 }

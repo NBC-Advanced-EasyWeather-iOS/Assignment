@@ -11,6 +11,8 @@ final class PagingControlView: UIView {
     
     // MARK: - Properties
     
+    weak var delegate: WeekendWeatherDelegate?
+    
     var numberOfPages: Int {
         didSet {
             pageControl.numberOfPages = self.numberOfPages
@@ -128,6 +130,9 @@ extension PagingControlView: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PagingControlCollectionViewCell.identifier, for: indexPath) as! PagingControlCollectionViewCell
+        
+        cell.delegate = delegate
+        cell.addTargetForWeekendWeatherButton()
         
         if indexPath.row == 0 {
             cell.configure(weatherData: weatherResponseData, settingData: settingOptions)

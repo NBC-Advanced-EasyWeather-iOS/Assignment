@@ -6,3 +6,7 @@
 //
 
 import Foundation
+
+protocol WeekendWeatherDelegate: AnyObject {
+    func didTapWeekendWeatherButton()
+}
