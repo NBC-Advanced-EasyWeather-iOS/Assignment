@@ -36,6 +36,7 @@ final class LocationView: UIView {
     private lazy var locationTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "위치 검색 및 추가"
+        textField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         
         return textField
     }()
@@ -204,6 +205,15 @@ extension LocationView {
             }
         }
     }
+    
+    @objc func textFieldDidChange(_ textField: UITextField) {
+        // 텍스트 필드의 텍스트가 변경될 때 실행할 코드
+        if let term = locationTextField.text {
+            CityList.shared.search(term: term)
+            print(term)
+            searchResultTableView.reloadData()
+        }
+    }
 }
 
 // MARK: - Extensions : UI & Layout
@@ -354,24 +364,6 @@ extension LocationView: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
         searchResultTableView.isHidden = true
     }
-    
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        // 입력된 문자열을 검색 쿼리로 사용하여 검색을 수행하고, 검색 결과를 업데이트합니다.
-        let searchString = (textField.text! as NSString).replacingCharacters(in: range, with: string)
-        updateSearchResults(for: searchString)
-        
-        return true
-    }
-
-    func updateSearchResults(for searchText: String) {
-        
-        CityList.shared.search(term: searchText)
-        
-//        print("검색 결과: \(CityList.shared.searchedCity)")
-        
-        searchResultTableView.reloadData()
-    }
-    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder() // 키보드 내리기
         return true

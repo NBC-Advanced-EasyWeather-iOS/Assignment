@@ -286,8 +286,8 @@
 		37072C2F2B73164B00F4B744 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				FF63FBE62B78DF100011C9A5 /* WeeklyWeatherTableViewCell.swift */,
 				FF63FBE82B78DF1B0011C9A5 /* WeeklyWeatherView.swift */,
+				FF63FBE62B78DF100011C9A5 /* WeeklyWeatherTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
