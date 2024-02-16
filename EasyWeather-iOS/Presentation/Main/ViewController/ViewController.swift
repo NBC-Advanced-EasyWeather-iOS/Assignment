@@ -13,9 +13,7 @@ final class ViewController: UIViewController {
     
     // MARK: - UI Properties
     
-    private var pagingControlView: PagingControlView!
-    private var settingsViewController = SettingsViewController()
-
+    private var pagingControlView: PagingControlView?
     
     // MARK: - Life Cycle
     
@@ -31,7 +29,7 @@ final class ViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        pagingControlView.data = SettingOptionUserDefault.shared.loadOptionsFromUserDefaults()
+        pagingControlView?.data = SettingOptionUserDefault.shared.loadOptionsFromUserDefaults()
         self.navigationController?.isNavigationBarHidden = true
     }
     
@@ -46,18 +44,20 @@ final class ViewController: UIViewController {
 
 extension ViewController {
     private func setUI() {
-        pagingControlView.addTargetSettingMenuButton(self, action: #selector(goToSettingsViewController))
+        pagingControlView?.addTargetSettingMenuButton(self, action: #selector(goToSettingsViewController))
 
         setBackgroundColor()
         self.navigationController?.isNavigationBarHidden = true
         
-        [pagingControlView].forEach {
+        guard let pagingControl = pagingControlView else { return }
+        
+        [pagingControl].forEach {
             view.addSubview($0)
         }
     }
 
     private func setLayout() {
-        pagingControlView.snp.makeConstraints { make in
+        pagingControlView?.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
     }
@@ -98,12 +98,13 @@ extension ViewController {
 extension ViewController {
     @objc
     func goToSettingsViewController() {
+        let settingsViewController = SettingsViewController()
         self.navigationController?.pushViewController(settingsViewController, animated: true)
     }
     
     @objc
     func goToWeeklyTableViewController() {
-        let weeklyTableViewController = WeeklyWeatherViewController(weatherService: WeatherService(), rootView: WeeklyWeatherView())
+        let weeklyTableViewController = WeeklyWeatherViewController()
         self.navigationController?.pushViewController(weeklyTableViewController, animated: true)
     }
 }

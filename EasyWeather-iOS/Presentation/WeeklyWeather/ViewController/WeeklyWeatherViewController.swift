@@ -22,7 +22,7 @@ final class WeeklyWeatherViewController: UIViewController {
     
     // MARK: - Life Cycle
     
-    init(weatherService: WeatherService, rootView: WeeklyWeatherView) {
+    init(weatherService: WeatherService = WeatherService(), rootView: WeeklyWeatherView = WeeklyWeatherView()) {
         self.weatherService = weatherService
         self.rootView = rootView
         super.init(nibName: nil, bundle: nil)
