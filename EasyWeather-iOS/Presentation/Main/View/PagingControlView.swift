@@ -30,7 +30,6 @@ final class PagingControlView: UIView {
     ) {
         didSet {
             mainPagingCollectionView.reloadData()
-//            navigationBarView.cityLabel.text = weatherResponseData.cityName
         }
     }
     
@@ -38,7 +37,6 @@ final class PagingControlView: UIView {
         didSet {
             mainPagingCollectionView.reloadData()
             print(locationResponseData)
-//            navigationBarView.cityLabel.text = locationResponseData.cityName
         }
     }
 

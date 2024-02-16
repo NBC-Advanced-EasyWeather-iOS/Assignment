@@ -52,7 +52,7 @@ final class ViewController: UIViewController {
         super.viewWillAppear(animated)
         
         pagingControlView.settingOptions = SettingOptionUserDefault.shared.loadOptionsFromUserDefaults()
-        self.locationUserDefaultsKey = CityList.shared.loadCity()!
+        self.locationUserDefaultsKey = CityList.shared.loadCity() ?? []
         
         fetchCurrentWeather()
         fetchLocationWeather()
@@ -135,7 +135,7 @@ extension ViewController {
 
 extension ViewController {
     private func fetchCurrentWeather() {
-        let city = UserDefaults.standard.string(forKey: "city")!
+        let city = UserDefaults.standard.string(forKey: "city") ?? "-"
         
         Task(priority: .userInitiated) {
             do {

@@ -108,17 +108,19 @@ extension MeteorologicalCollectionView: UICollectionViewDataSource {
                 }
                 dataIndex += 2
             }
-            
+        
             if isTemperature {
                 if indexPath.row == dataIndex {
-                    meteorologicalCell.configure(title: "최저 기온", value: "\(minTemperature) °C", type: "")
+                    let temperature = minTemperature == "-0" ? "0" : minTemperature
+                    meteorologicalCell.configure(title: "최저 기온", value: "\(temperature) °C", type: "")
                 } else if indexPath.row == dataIndex + 1 {
-                    meteorologicalCell.configure(title: "최고 기온", value: "\(maxTemperature) °C", type: "")
+                    let temperature = maxTemperature == "-0" ? "0" : maxTemperature
+                    meteorologicalCell.configure(title: "최고 기온", value: "\(temperature) °C", type: "")
                 }
                 dataIndex += 2
             }
             
-            if isATM { // 기압
+            if isATM {
                 if isHumidity {
                     if indexPath.row == dataIndex {
                         meteorologicalCell.configure(title: "기압", value: "\(weatherData.main.pressure) hPa", type: "")
