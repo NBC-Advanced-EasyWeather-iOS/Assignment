@@ -39,7 +39,30 @@ final class LocationViewController: UIViewController {
 // MARK: - 데이터 configure 메서드
 extension LocationViewController {
     func configure(city: String, temp: String) {
-        locationView.userLocationCaptionLabel.text = city
+        cityNameText(data: city)
         locationView.userLocationTemperatureLabel.text = temp
+    }
+    
+    private func cityNameText(data: String) {
+        switch data {
+        case "Suwon-si":
+            locationView.userLocationCaptionLabel.text = "수원시"
+        case "Seoul":
+            locationView.userLocationCaptionLabel.text = "서울특별시"
+        case "Busan":
+            locationView.userLocationCaptionLabel.text = "부산광역시"
+        case "Daegu":
+            locationView.userLocationCaptionLabel.text = "대구광역시"
+        case "Incheon":
+            locationView.userLocationCaptionLabel.text = "인천광역시"
+        case "Gwangju":
+            locationView.userLocationCaptionLabel.text = "광주광역시"
+        case "Daejeon":
+            locationView.userLocationCaptionLabel.text = "대전광역시"
+        case "Ulsan":
+            locationView.userLocationCaptionLabel.text = "울산광역시"
+        default:
+            break
+        }
     }
 }
