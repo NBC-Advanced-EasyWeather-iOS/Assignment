@@ -16,6 +16,12 @@ final class WeeklyWeatherViewController: UIViewController {
     private var weatherDataModel: [WeatherDataModel]? 
     private let weatherService: WeatherService?
     
+    let weatherConditionsKorean = [
+        "Clear": "☀️맑음",
+        "Clouds": "☁️구름",
+        "Rain": "🌧비",
+    ]
+    
     var cityName = "" {
         didSet {
             loadWeeklyWeatherData(cityName: self.cityName)
@@ -116,8 +122,10 @@ extension WeeklyWeatherViewController {
             for i in listArray {
                 let day = self.convertUnixTimeToDay(unixTime: i.dt)
                 let weatherCondition = i.weather.first?.main ?? ""
-                let temperature = String(i.main.temp)
-                let model = WeatherDataModel(dayOfWeek: day, weatherCondition: weatherCondition, temperature: temperature, dt: i.dt)
+                let weatherConditionKorean = weatherConditionsKorean[weatherCondition] ?? "알 수 없음"
+                let temperatureTemp = String(i.main.temp).kelvinToCelsius() ?? "N/A"
+                let temperature = temperatureTemp + "°C"
+                let model = WeatherDataModel(dayOfWeek: day, weatherCondition: weatherConditionKorean, temperature: temperature, dt: i.dt)
                 
                 data[day] = self.findClosestData(existingModel: data[day], newModel: model)
             }
