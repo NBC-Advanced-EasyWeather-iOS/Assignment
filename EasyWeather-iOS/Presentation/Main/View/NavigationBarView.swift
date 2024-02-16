@@ -38,6 +38,7 @@ final class NavigationBarView: UIView {
         let stackView = UIStackView(arrangedSubviews: [countryButton, cityLabel])
         stackView.axis = .vertical
         stackView.spacing = 5
+        stackView.alignment = .leading
         
         return stackView
     }()
