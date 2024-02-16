@@ -9,6 +9,7 @@
 
 struct WeatherResponseType {
     let cityName: String
+    let weather: [Weather]
     let main: Main
     let sys: Sys
 }

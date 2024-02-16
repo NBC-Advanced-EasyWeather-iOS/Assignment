@@ -140,7 +140,7 @@ extension ViewController {
         Task(priority: .userInitiated) {
             do {
                 let response = try await weatherService.fetchCurrnetWeather(city: city)
-                let data: WeatherResponseType = WeatherResponseType(cityName: response.name, main: response.main, sys: response.sys)
+                let data: WeatherResponseType = WeatherResponseType(cityName: response.name, weather: response.weather, main: response.main, sys: response.sys)
                 handleWeatherResponse(data)
             } catch {
                 print("Error fetching current weather: \(error)")
@@ -158,7 +158,7 @@ extension ViewController {
             Task(priority: .userInitiated) {
                 do {
                     let response = try await weatherService.fetchCurrnetWeather(city: city)
-                    let data: WeatherResponseType = WeatherResponseType(cityName: response.name, main: response.main, sys: response.sys)
+                    let data: WeatherResponseType = WeatherResponseType(cityName: response.name, weather: response.weather, main: response.main, sys: response.sys)
                     locationUserDefaultsData.append(data)
                 } catch {
                     print("Error fetching current weather: \(error)")

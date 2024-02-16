@@ -24,7 +24,7 @@ final class PagingControlView: UIView {
     }
     
     var weatherResponseData: WeatherResponseType = WeatherResponseType(
-        cityName: "",
+        cityName: "", weather: [],
         main: Main(temp: 0, feelsLike: 0, tempMin: 0, tempMax: 0, pressure: 0, humidity: 0),
         sys: Sys(country: "", sunrise: 0, sunset: 0)
     ) {
