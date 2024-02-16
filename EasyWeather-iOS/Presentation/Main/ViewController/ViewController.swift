@@ -32,7 +32,7 @@ final class ViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        pagingControlView?.data = SettingOptionUserDefault.shared.loadOptionsFromUserDefaults()
+        pagingControlView?.settingOptions = SettingOptionUserDefault.shared.loadOptionsFromUserDefaults()
         fetchCurrentWeather()
         self.navigationController?.isNavigationBarHidden = true
     }
@@ -49,7 +49,7 @@ final class ViewController: UIViewController {
 extension ViewController {
     private func setUI() {
         pagingControlView?.addTargetSettingMenuButton(self, action: #selector(goToSettingsViewController))
-        pagingControlView.addTargetLocationButton(self, action: #selector(goToLocationViewController))
+        pagingControlView?.addTargetLocationButton(self, action: #selector(goToLocationViewController))
 
         setBackgroundColor()
         self.navigationController?.isNavigationBarHidden = true
@@ -112,11 +112,16 @@ extension ViewController {
         let weeklyTableViewController = WeeklyWeatherViewController()
         self.navigationController?.pushViewController(weeklyTableViewController, animated: true)
     }
+    
+    @objc
+    func goToLocationViewController() {
+    self.navigationController?.present(locationViewController, animated: true)
+    }
 }
 
 extension ViewController {
     private func fetchCurrentWeather() {
-        let city = UserDefaults.standard.string(forKey: "city")!
+        guard let city = UserDefaults.standard.string(forKey: "city") else { return }
         
         Task(priority: .userInitiated) {
             do {
@@ -130,6 +135,6 @@ extension ViewController {
     }
     
     private func handleWeatherResponse(_ response: WeatherResponseType) {
-        pagingControlView.weatherResponseData = response
+        pagingControlView?.weatherResponseData = response
     }
 }
