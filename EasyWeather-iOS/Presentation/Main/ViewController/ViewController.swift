@@ -41,6 +41,7 @@ final class ViewController: UIViewController {
         super.viewDidLoad()
         
         pagingControlView = PagingControlView(numberOfPages: 1)
+        pagingControlView?.delegate = self
         
         setUI()
         setLayout()
@@ -172,5 +173,12 @@ extension ViewController {
                 }
             }
         }
+    }
+}
+
+extension ViewController: WeekendWeatherDelegate {
+    func didTapWeekendWeatherButton() {
+        let weeklyTableViewController = WeeklyWeatherViewController()
+        self.navigationController?.pushViewController(weeklyTableViewController, animated: true)
     }
 }
