@@ -179,6 +179,7 @@ extension ViewController {
 extension ViewController: WeekendWeatherDelegate {
     func didTapWeekendWeatherButton() {
         let weeklyTableViewController = WeeklyWeatherViewController()
+        weeklyTableViewController.cityName = UserDefaults.standard.string(forKey: "city") ?? ""
         self.navigationController?.pushViewController(weeklyTableViewController, animated: true)
     }
 }

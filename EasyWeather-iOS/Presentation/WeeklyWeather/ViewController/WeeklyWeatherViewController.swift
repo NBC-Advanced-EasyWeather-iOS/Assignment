@@ -13,8 +13,14 @@ final class WeeklyWeatherViewController: UIViewController {
     
     // MARK: - Properties
     
-    private var weatherDataModel: [WeatherDataModel]?
+    private var weatherDataModel: [WeatherDataModel]? 
     private let weatherService: WeatherService?
+    
+    var cityName = "" {
+        didSet {
+            loadWeeklyWeatherData(cityName: self.cityName)
+        }
+    }
     
     // MARK: - UI Properties
     
@@ -39,7 +45,7 @@ final class WeeklyWeatherViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        loadWeeklyWeatherData()
+//        loadWeeklyWeatherData()
         setupTableView()
     }
 }
@@ -94,9 +100,14 @@ extension WeeklyWeatherViewController: UITableViewDelegate {
 // MARK: - Network
 
 extension WeeklyWeatherViewController {
-    private func loadWeeklyWeatherData() {
+    
+    func configure(cityName data: String) {
+        self.cityName = data
+    }
+    
+    private func loadWeeklyWeatherData(cityName data: String) {
         Task {
-            let weeklyResponse = try await self.weatherService?.fetchWeeklyWeather(city: "Seoul")
+            let weeklyResponse = try await self.weatherService?.fetchWeeklyWeather(city: data)
             
             var data = [String: WeatherDataModel]()
             
