@@ -7,6 +7,19 @@
 
 // MARK: - Models
 
+struct WeatherResponseType {
+    let cityName: String
+    let main: Main
+    let sys: Sys
+}
+
+struct WeatherDTO {
+    let cityName: String
+    let temperature: String
+    let condition: String
+    let dateString: String // 요일 정보를 포함시키는 속성 추가
+}
+
 struct DailyResponseDTO: Codable {
     let weather: [Weather]
     let main: Main

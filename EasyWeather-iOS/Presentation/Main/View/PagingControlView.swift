@@ -13,8 +13,19 @@ final class PagingControlView: UIView {
     
     private let numberOfPages: Int
     
-    var data: [SettingOptionModel] = [] {
+    var settingOptions: [SettingOptionModel] = [] {
         didSet {
+            mainPagingCollectionView.reloadData()
+        }
+    }
+    
+    var weatherResponseData: WeatherResponseType = WeatherResponseType(
+        cityName: "",
+        main: Main(temp: 0, feelsLike: 0, tempMin: 0, tempMax: 0, pressure: 0, humidity: 0),
+        sys: Sys(country: "", sunrise: 0, sunset: 0)
+    ) {
+        didSet {
+            navigationBarView.cityLabel.text = weatherResponseData.cityName
             mainPagingCollectionView.reloadData()
         }
     }
@@ -108,9 +119,9 @@ extension PagingControlView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PagingControlCollectionViewCell.identifier, for: indexPath) as! PagingControlCollectionViewCell
         
-        cell.configure(withText: "\(indexPath.row + 1)")
-        cell.configureSettingOption(data: data)
-        cell.addTargetForWeekendWeatherButton(target, action: #selector(ViewController.goToWeeklyTableViewController))
+        cell.configure(data: weatherResponseData)
+        
+        cell.configureSettingOption(data: settingOptions)
         
         return cell
     }
@@ -142,5 +153,9 @@ extension PagingControlView: UIScrollViewDelegate {
 extension PagingControlView {
     func addTargetSettingMenuButton(_ target: Any?, action: Selector) {
         navigationBarView.settingMenuButton.addTarget(target, action: action, for: .touchUpInside)
+    }
+    
+    func addTargetLocationButton(_ target: Any?, action: Selector) {
+        navigationBarView.locationPlusButton.addTarget(target, action: action, for: .touchUpInside)
     }
 }
