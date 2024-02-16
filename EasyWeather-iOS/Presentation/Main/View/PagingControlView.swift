@@ -107,7 +107,7 @@ extension PagingControlView {
         }
         
         mainPagingCollectionView.snp.makeConstraints { make in
-            make.top.equalTo(navigationBarView.snp.bottom)
+            make.top.equalTo(navigationBarView.snp.bottom).offset(30)
             make.leading.trailing.equalToSuperview()
             make.bottom.equalTo(pageControl.snp.top)
         }
@@ -140,9 +140,32 @@ extension PagingControlView: UICollectionViewDataSource {
     
     func updateCityLabel(for indexPath: IndexPath) {
         if indexPath.row == 0 {
-            navigationBarView.cityLabel.text = weatherResponseData.cityName
+            cityNameText(data: weatherResponseData)
         } else {
-            navigationBarView.cityLabel.text = locationResponseData[indexPath.row - 1].cityName
+            cityNameText(data: locationResponseData[indexPath.row - 1])
+        }
+    }
+    
+    private func cityNameText(data: WeatherResponseType) {
+        switch data.cityName {
+        case "Suwon-si":
+            navigationBarView.cityLabel.text = "수원시"
+        case "Seoul":
+            navigationBarView.cityLabel.text = "서울특별시"
+        case "Busan":
+            navigationBarView.cityLabel.text = "부산광역시"
+        case "Daegu":
+            navigationBarView.cityLabel.text = "대구광역시"
+        case "Incheon":
+            navigationBarView.cityLabel.text = "인천광역시"
+        case "Gwangju":
+            navigationBarView.cityLabel.text = "광주광역시"
+        case "Daejeon":
+            navigationBarView.cityLabel.text = "대전광역시"
+        case "Ulsan":
+            navigationBarView.cityLabel.text = "울산광역시"
+        default:
+            break
         }
     }
 }
